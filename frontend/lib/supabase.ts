@@ -43,8 +43,8 @@ export const subscribeToPrices = (
   callback: (price: any) => void
 ) => {
   const subscription = supabase
-    .from(`prices:commodity_id=eq.${commodity}`)
-    .on('INSERT', (payload) => {
+    .channel('prices')
+    .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'prices', filter: `commodity_id=eq.${commodity}` }, (payload) => {
       callback(payload.new);
     })
     .subscribe();
