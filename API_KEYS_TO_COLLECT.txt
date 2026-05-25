@@ -1,0 +1,161 @@
+═══════════════════════════════════════════════════════════════════════════════
+                        API KEYS TO COLLECT
+═══════════════════════════════════════════════════════════════════════════════
+
+Fill in these values as you get them from each service. Save this file.
+Share with Claude when ready.
+
+═══════════════════════════════════════════════════════════════════════════════
+PHASE 1: CRITICAL (Required to test locally)
+═══════════════════════════════════════════════════════════════════════════════
+
+SUPABASE (https://supabase.com)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1. Project URL:
+   NEXT_PUBLIC_SUPABASE_URL=
+
+2. Anon Key:
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=
+
+3. Service Role Key (SECRET):
+   SUPABASE_SERVICE_ROLE_KEY=
+
+Status: [ ] Collected
+
+
+STRIPE (https://stripe.com - Use TEST MODE for now)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1. Secret Key (starts with sk_test_):
+   STRIPE_SECRET_KEY=
+
+2. Publishable Key (starts with pk_test_):
+   NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=
+
+3. Webhook Secret (starts with whsec_):
+   STRIPE_WEBHOOK_SECRET=
+
+4. Pro Price ID (Product → $1/month → Get price ID):
+   STRIPE_PRO_PRICE_ID=
+
+5. Enterprise Price ID (Product → $25/month → Get price ID):
+   STRIPE_ENTERPRISE_PRICE_ID=
+
+Status: [ ] Collected
+
+
+VERCEL (https://vercel.com)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1. Deployed Domain (copy from Vercel project):
+   NEXT_PUBLIC_APP_URL=
+
+Status: [ ] Collected
+
+
+═══════════════════════════════════════════════════════════════════════════════
+PHASE 2: RECOMMENDED (Before going live)
+═══════════════════════════════════════════════════════════════════════════════
+
+EMAIL SERVICE (Choose one: SendGrid OR Resend)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Option A - SendGrid (https://sendgrid.com):
+   SENDGRID_API_KEY=
+
+Option B - Resend (https://resend.com):
+   RESEND_API_KEY=
+
+Status: [ ] Collected (Optional for now)
+
+
+═══════════════════════════════════════════════════════════════════════════════
+PHASE 3: OPTIONAL (Future enhancements - Week 3+)
+═══════════════════════════════════════════════════════════════════════════════
+
+ANTHROPIC (For sentiment analysis with Claude)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Get from: https://api.anthropic.com
+   ANTHROPIC_API_KEY=
+
+Status: [ ] Collected (Optional)
+
+
+REDDIT (For market sentiment from WSB, commodities subreddits)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Get from: https://reddit.com/prefs/apps (Create "script" app)
+   REDDIT_CLIENT_ID=
+   REDDIT_CLIENT_SECRET=
+   REDDIT_USER_AGENT=
+
+Status: [ ] Collected (Optional)
+
+
+BOT SECURITY (Generate a random secret for signal verification)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Generate a secure random string (e.g., with: openssl rand -hex 32)
+   SIGNAL_WEBHOOK_SECRET=
+
+Status: [ ] Collected (Optional - for extra security)
+
+
+═══════════════════════════════════════════════════════════════════════════════
+CHECKLIST
+═══════════════════════════════════════════════════════════════════════════════
+
+BEFORE YOU START:
+[ ] Created Supabase account
+[ ] Created Stripe account (test mode is fine)
+[ ] Created Vercel account
+[ ] Linked GitHub repo to Vercel
+[ ] Read API_KEYS_CHECKLIST.md for detailed instructions
+
+PHASE 1 STATUS:
+[ ] Supabase keys collected (3 keys)
+[ ] Stripe test keys collected (5 keys)
+[ ] Vercel domain collected (1 domain)
+
+READY TO PROCEED?
+[ ] All Phase 1 items checked
+[ ] Keys filled in below
+[ ] Ready to share with Claude
+
+
+═══════════════════════════════════════════════════════════════════════════════
+NOTES
+═══════════════════════════════════════════════════════════════════════════════
+
+🔒 SECURITY:
+   - Keep SECRET keys (SERVICE_ROLE, SECRET_KEY) private
+   - Never commit .env.local to git
+   - Use different keys for dev (test mode) vs production (live mode)
+   - Rotate keys every 3 months
+
+📝 WHERE TO FIND KEYS:
+   - Supabase: Dashboard → Settings → API
+   - Stripe: Dashboard → API Keys (toggle Test/Live mode)
+   - Vercel: Project → Settings → Domains
+   - SendGrid: Account → API Keys
+   - Resend: Dashboard → API Keys
+   - Anthropic: Settings → API Keys
+   - Reddit: reddit.com/prefs/apps
+
+⏱️ TIME ESTIMATE:
+   - Supabase: 10 minutes (create project + copy keys)
+   - Stripe: 15 minutes (create products + copy keys)
+   - Vercel: 5 minutes (deploy + copy domain)
+   - Total: ~30 minutes
+
+
+═══════════════════════════════════════════════════════════════════════════════
+NEXT STEPS
+═══════════════════════════════════════════════════════════════════════════════
+
+1. Collect all Phase 1 keys from above
+2. Message Claude: "I have the API keys ready"
+3. Share this filled-in file
+4. Claude will:
+   - Add keys to Mac keychain
+   - Configure .env.local
+   - Deploy to Vercel
+   - Test all endpoints
+5. Start building!
+
+═══════════════════════════════════════════════════════════════════════════════
