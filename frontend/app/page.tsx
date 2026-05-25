@@ -6,7 +6,7 @@ import { supabase } from '@/lib/supabase';
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<any>(null);
   const router = useRouter();
 
   useEffect(() => {
