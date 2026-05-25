@@ -7,7 +7,7 @@ export const mockCommodities = [
     symbol: 'CU',
     currentPrice: 4.65,
     change24h: 2.34,
-    sentiment: 'bullish', // bullish | bearish | neutral
+    sentiment: 'bullish' as const, // bullish | bearish | neutral
     volatility: 8.5,
     emoji: '🟠',
   },
@@ -17,7 +17,7 @@ export const mockCommodities = [
     symbol: 'NI',
     currentPrice: 8.92,
     change24h: -1.22,
-    sentiment: 'bearish',
+    sentiment: 'bearish' as const,
     volatility: 12.3,
     emoji: '🩶',
   },
@@ -27,7 +27,7 @@ export const mockCommodities = [
     symbol: 'ZN',
     currentPrice: 2.67,
     change24h: 0.45,
-    sentiment: 'neutral',
+    sentiment: 'neutral' as const,
     volatility: 5.2,
     emoji: '⚪',
   },
@@ -37,7 +37,7 @@ export const mockCommodities = [
     symbol: 'AU',
     currentPrice: 2078.50,
     change24h: 1.89,
-    sentiment: 'bullish',
+    sentiment: 'bullish' as const,
     volatility: 3.1,
     emoji: '🟡',
   },
@@ -47,7 +47,7 @@ export const mockNews = [
   {
     id: 1,
     title: 'Copper prices hit 5-year high amid supply concerns',
-    sentiment: 'bullish',
+    sentiment: 'bullish' as const,
     source: 'Reuters',
     timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000), // 2 hours ago
     excerpt: 'Global supply constraints drive copper demand higher as construction activity rebounds.',
@@ -55,7 +55,7 @@ export const mockNews = [
   {
     id: 2,
     title: 'Nickel market faces pressure from oversupply',
-    sentiment: 'bearish',
+    sentiment: 'bearish' as const,
     source: 'Bloomberg',
     timestamp: new Date(Date.now() - 4 * 60 * 60 * 1000), // 4 hours ago
     excerpt: 'Indonesian production surge weighs on prices as inventories accumulate at London Metal Exchange.',
@@ -63,7 +63,7 @@ export const mockNews = [
   {
     id: 3,
     title: 'Gold strengthens as bond yields decline',
-    sentiment: 'bullish',
+    sentiment: 'bullish' as const,
     source: 'CNBC',
     timestamp: new Date(Date.now() - 6 * 60 * 60 * 1000), // 6 hours ago
     excerpt: 'Falling interest rates make gold more attractive, with central banks continuing to buy.',
@@ -71,7 +71,7 @@ export const mockNews = [
   {
     id: 4,
     title: 'Zinc storage at Shanghai falls to 3-year lows',
-    sentiment: 'neutral',
+    sentiment: 'neutral' as const,
     source: 'MarketWatch',
     timestamp: new Date(Date.now() - 8 * 60 * 60 * 1000), // 8 hours ago
     excerpt: 'While inventory draws support prices, industrial demand growth remains uncertain.',
@@ -79,7 +79,7 @@ export const mockNews = [
   {
     id: 5,
     title: 'ECB signals potential rate cuts later this year',
-    sentiment: 'bullish',
+    sentiment: 'bullish' as const,
     source: 'FT',
     timestamp: new Date(Date.now() - 10 * 60 * 60 * 1000), // 10 hours ago
     excerpt: 'Easier monetary policy expected to boost commodity prices as inflation moderates.',
