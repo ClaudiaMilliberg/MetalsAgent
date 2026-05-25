@@ -26,8 +26,8 @@ export const subscribeToSignals = (
   callback: (signal: any) => void
 ) => {
   const subscription = supabase
-    .from(`signals:commodity_id=eq.${commodity}`)
-    .on('INSERT', (payload) => {
+    .channel('signals')
+    .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'signals', filter: `commodity_id=eq.${commodity}` }, (payload) => {
       callback(payload.new);
     })
     .subscribe();
