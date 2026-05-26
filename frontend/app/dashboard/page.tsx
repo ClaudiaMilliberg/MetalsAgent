@@ -122,7 +122,7 @@ export default function Dashboard() {
 
       <Navbar />
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 relative z-10">
         {/* Hero Section with Bubble Map */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
           {/* Bubble Map - Takes 2/3 on desktop */}
@@ -328,18 +328,18 @@ export default function Dashboard() {
       </main>
 
       {/* Footer */}
-      <footer className="mt-16 border-t border-white/10 relative z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 mb-8">
+      <footer className="mt-20 border-t border-white/10 relative z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-12 mb-12">
             {/* Company */}
             <div>
-              <h4 className="text-white font-semibold mb-4">CommodityBubbles</h4>
+              <h4 className="text-white font-bold text-lg mb-4">CommodityBubbles</h4>
               <p className="text-gray-400 text-xs leading-relaxed">Real-time commodity market intelligence for modern traders.</p>
             </div>
 
             {/* Links */}
             <div>
-              <h4 className="text-white font-semibold mb-4">Legal</h4>
+              <h4 className="text-white font-bold text-lg mb-4">Legal</h4>
               <div className="space-y-2">
                 <a href="#" className="text-gray-400 text-xs hover:text-blue-400 transition duration-300">
                   Privacy Policy
@@ -353,7 +353,7 @@ export default function Dashboard() {
 
             {/* Support */}
             <div>
-              <h4 className="text-white font-semibold mb-4">Support</h4>
+              <h4 className="text-white font-bold text-lg mb-4">Support</h4>
               <p className="text-gray-400 text-xs">
                 Questions? Reach out at
                 <br />
