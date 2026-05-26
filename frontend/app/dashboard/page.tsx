@@ -273,9 +273,9 @@ export default function Dashboard() {
           <div className="glass-premium-strong p-6 sm:p-8">
             <h3 className="text-2xl sm:text-3xl font-black text-white mb-6 leading-tight">Sentiment Overview</h3>
 
-            <div className="space-y-3">
+            <div className="space-y-4">
               {/* Bullish Card */}
-              <div className="group rounded-lg p-4 border border-white/5 bg-gradient-to-r from-green-500/5 to-transparent hover:border-green-500/30 hover:bg-green-500/10 transition-all duration-300 ease-premium cursor-pointer">
+              <div className="group rounded-lg p-5 border border-white/10 bg-gradient-to-r from-green-500/5 to-transparent hover:border-green-500/40 hover:bg-green-500/15 transition-all duration-300 ease-premium cursor-pointer hover:-translate-y-1">
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-2">
                     <div className="w-2.5 h-2.5 rounded-full bg-green-400 shadow-lg shadow-green-500/50"></div>
@@ -283,13 +283,13 @@ export default function Dashboard() {
                   </div>
                   <span className="text-lg font-black text-green-400">50%</span>
                 </div>
-                <div className="w-full bg-gray-700/20 rounded-full h-1.5 overflow-hidden">
-                  <div className="bg-gradient-to-r from-green-500 to-green-400 h-full rounded-full shadow-lg shadow-green-500/50" style={{ width: '50%' }}></div>
+                <div className="w-full bg-gray-700/30 rounded-full h-2 overflow-hidden">
+                  <div className="bg-gradient-to-r from-green-500 to-green-400 h-full rounded-full shadow-lg shadow-green-500/60 transition-all duration-500" style={{ width: '50%' }}></div>
                 </div>
               </div>
 
               {/* Bearish Card */}
-              <div className="group rounded-lg p-4 border border-white/5 bg-gradient-to-r from-red-500/5 to-transparent hover:border-red-500/30 hover:bg-red-500/10 transition-all duration-300 ease-premium cursor-pointer">
+              <div className="group rounded-lg p-5 border border-white/10 bg-gradient-to-r from-red-500/5 to-transparent hover:border-red-500/40 hover:bg-red-500/15 transition-all duration-300 ease-premium cursor-pointer hover:-translate-y-1">
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-2">
                     <div className="w-2.5 h-2.5 rounded-full bg-red-400 shadow-lg shadow-red-500/50"></div>
@@ -297,13 +297,13 @@ export default function Dashboard() {
                   </div>
                   <span className="text-lg font-black text-red-400">25%</span>
                 </div>
-                <div className="w-full bg-gray-700/20 rounded-full h-1.5 overflow-hidden">
-                  <div className="bg-gradient-to-r from-red-500 to-red-400 h-full rounded-full shadow-lg shadow-red-500/50" style={{ width: '25%' }}></div>
+                <div className="w-full bg-gray-700/30 rounded-full h-2 overflow-hidden">
+                  <div className="bg-gradient-to-r from-red-500 to-red-400 h-full rounded-full shadow-lg shadow-red-500/60 transition-all duration-500" style={{ width: '25%' }}></div>
                 </div>
               </div>
 
               {/* Neutral Card */}
-              <div className="group rounded-lg p-4 border border-white/5 bg-gradient-to-r from-amber-500/5 to-transparent hover:border-amber-500/30 hover:bg-amber-500/10 transition-all duration-300 ease-premium cursor-pointer">
+              <div className="group rounded-lg p-5 border border-white/10 bg-gradient-to-r from-amber-500/5 to-transparent hover:border-amber-500/40 hover:bg-amber-500/15 transition-all duration-300 ease-premium cursor-pointer hover:-translate-y-1">
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-2">
                     <div className="w-2.5 h-2.5 rounded-full bg-amber-400 shadow-lg shadow-amber-500/50"></div>
@@ -311,8 +311,8 @@ export default function Dashboard() {
                   </div>
                   <span className="text-lg font-black text-amber-400">25%</span>
                 </div>
-                <div className="w-full bg-gray-700/20 rounded-full h-1.5 overflow-hidden">
-                  <div className="bg-gradient-to-r from-amber-500 to-amber-400 h-full rounded-full shadow-lg shadow-amber-500/50" style={{ width: '25%' }}></div>
+                <div className="w-full bg-gray-700/30 rounded-full h-2 overflow-hidden">
+                  <div className="bg-gradient-to-r from-amber-500 to-amber-400 h-full rounded-full shadow-lg shadow-amber-500/60 transition-all duration-500" style={{ width: '25%' }}></div>
                 </div>
               </div>
             </div>
