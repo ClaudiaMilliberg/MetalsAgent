@@ -43,8 +43,12 @@ export default function Navbar() {
           </Link>
 
           <Link href="/bubbles" className={`px-6 py-2.5 rounded-full font-semibold transition-all flex items-center gap-2 ${isActive('/bubbles') ? 'bg-gradient-to-r from-emerald-500 to-cyan-500 text-white shadow-lg shadow-emerald-500/50' : 'bg-slate-800/50 text-slate-300 hover:bg-slate-700/50 border border-slate-700/50'}`}>
-            🫧 Bubbles
+            🫧 Sentiment
             <span className="h-2 w-2 rounded-full bg-red-500 animate-pulse"></span>
+          </Link>
+
+          <Link href="/bubbles/clusters" className={`px-6 py-2.5 rounded-full font-semibold transition-all flex items-center gap-2 ${isActive('/bubbles/clusters') ? 'bg-gradient-to-r from-emerald-500 to-cyan-500 text-white shadow-lg shadow-emerald-500/50' : 'bg-slate-800/50 text-slate-300 hover:bg-slate-700/50 border border-slate-700/50'}`}>
+            📊 Clusters
           </Link>
 
           <Link href="/mines" className={`px-6 py-2.5 rounded-full font-semibold transition-all flex items-center gap-2 ${isActive('/mines') ? 'bg-gradient-to-r from-emerald-500 to-cyan-500 text-white shadow-lg shadow-emerald-500/50' : 'bg-slate-800/50 text-slate-300 hover:bg-slate-700/50 border border-slate-700/50'}`}>
