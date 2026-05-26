@@ -94,7 +94,7 @@ export default function NewsFeed({ news }: NewsFeedProps) {
           return (
             <div
               key={item.id}
-              className="group p-4 rounded-lg border-l-4 transition-all duration-300 cursor-pointer hover:shadow-md hover:-translate-y-0.5"
+              className="group p-4 rounded-lg border-l-4 transition-all duration-300 ease-premium cursor-pointer hover:-translate-y-1"
               style={{
                 borderLeftColor: styles.border,
                 backgroundColor: styles.bg,
@@ -102,6 +102,15 @@ export default function NewsFeed({ news }: NewsFeedProps) {
                 borderTopColor: 'rgba(107, 114, 128, 0.2)',
                 borderBottomColor: 'rgba(107, 114, 128, 0.2)',
                 borderWidth: '1px',
+                boxShadow: `inset 0 0 0 1px ${styles.border}20`,
+              }}
+              onMouseEnter={(e) => {
+                const el = e.currentTarget as HTMLDivElement;
+                el.style.boxShadow = `0 10px 25px -5px ${styles.border}30, inset 0 0 0 1px ${styles.border}40`;
+              }}
+              onMouseLeave={(e) => {
+                const el = e.currentTarget as HTMLDivElement;
+                el.style.boxShadow = `inset 0 0 0 1px ${styles.border}20`;
               }}
             >
               {/* Header with title and sentiment */}

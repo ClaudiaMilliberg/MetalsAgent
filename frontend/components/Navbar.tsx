@@ -44,19 +44,19 @@ export default function Navbar() {
 
             {/* Dropdown Menu */}
             {userMenuOpen && (
-              <div className="absolute right-0 mt-2 w-48 glass-premium border-white/10 rounded-lg shadow-2xl overflow-hidden">
-                <button className="w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-white/10 transition duration-300">
+              <div className="absolute right-0 mt-2 w-48 glass-premium border border-white/10 rounded-lg shadow-2xl shadow-blue-500/20 overflow-hidden">
+                <button className="w-full text-left px-4 py-3 text-sm text-gray-200 hover:bg-white/10 hover:text-white transition duration-300 ease-premium">
                   Profile
                 </button>
-                <button className="w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-white/10 transition duration-300">
+                <button className="w-full text-left px-4 py-3 text-sm text-gray-200 hover:bg-white/10 hover:text-white transition duration-300 ease-premium">
                   Settings
                 </button>
-                <button className="w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-white/10 transition duration-300 border-t border-white/10">
+                <button className="w-full text-left px-4 py-3 text-sm text-gray-200 hover:bg-white/10 hover:text-white transition duration-300 ease-premium border-t border-white/10">
                   Help
                 </button>
                 <button
                   onClick={handleLogout}
-                  className="w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-red-500/10 transition duration-300 border-t border-white/10"
+                  className="w-full text-left px-4 py-3 text-sm text-red-400 hover:bg-red-500/15 hover:text-red-300 transition duration-300 ease-premium border-t border-white/10"
                 >
                   Logout
                 </button>
