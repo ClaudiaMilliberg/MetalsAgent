@@ -337,6 +337,17 @@ select:focus {
       transform: translateY(30px) translateX(-20px);
     }
   }
+
+  @keyframes breathing {
+    0%, 100% {
+      r: 1;
+      opacity: 0.8;
+    }
+    50% {
+      r: 1.02;
+      opacity: 1;
+    }
+  }
 }
 
 /* ====== REDUCED MOTION SUPPORT ====== */

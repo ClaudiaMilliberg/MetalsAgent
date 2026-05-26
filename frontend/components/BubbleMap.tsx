@@ -101,15 +101,17 @@ export default function BubbleMap({ commodities = mockCommodities }: { commoditi
                 }}
               />
 
-              {/* LAYER 2: Outer glow (sentiment color) */}
+              {/* LAYER 2: Outer glow halo (sentiment color, scales with intensity) */}
               <circle
                 cx={pos.x}
                 cy={pos.y}
-                r={pos.size + (isHovered ? 30 : 15)}
+                r={pos.size + (isHovered ? 40 : 20)}
                 fill={color}
-                opacity={isHovered ? 0.2 : 0.08}
+                opacity={isHovered ? 0.25 : 0.12}
                 style={{
                   transition: 'all 300ms cubic-bezier(0.34, 1.56, 0.64, 1)',
+                  filter: `blur(${isHovered ? 12 : 8}px)`,
+                  animation: 'breathing 5s ease-in-out infinite',
                 }}
               />
 
@@ -141,16 +143,30 @@ export default function BubbleMap({ commodities = mockCommodities }: { commoditi
                 }}
               />
 
-              {/* LAYER 5: Rim light - top-left highlight */}
+              {/* LAYER 5: Rim light - top-left highlight (enhanced) */}
               <circle
-                cx={pos.x - pos.size * 0.25}
-                cy={pos.y - pos.size * 0.25}
-                r={pos.size * 0.4}
+                cx={pos.x - pos.size * 0.3}
+                cy={pos.y - pos.size * 0.3}
+                r={pos.size * 0.5}
                 fill="white"
-                opacity={isHovered ? 0.25 : 0.15}
+                opacity={isHovered ? 0.35 : 0.2}
                 style={{
                   mixBlendMode: 'screen',
                   transition: 'all 300ms cubic-bezier(0.34, 1.56, 0.64, 1)',
+                }}
+              />
+
+              {/* LAYER 5.5: Specular highlight dot - bright light source */}
+              <circle
+                cx={pos.x - pos.size * 0.35}
+                cy={pos.y - pos.size * 0.35}
+                r={pos.size * 0.12}
+                fill="white"
+                opacity={isHovered ? 0.8 : 0.6}
+                style={{
+                  mixBlendMode: 'screen',
+                  transition: 'all 300ms cubic-bezier(0.34, 1.56, 0.64, 1)',
+                  filter: 'blur(1px)',
                 }}
               />
 
