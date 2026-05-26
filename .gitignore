@@ -1,3 +1,4 @@
 node_modules/
 cardedge-ai/
 .env.local
+frontend/.next/

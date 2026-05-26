@@ -187,7 +187,7 @@ export default function Home() {
                 <button
                   onClick={() => handleCheckout('pro')}
                   disabled={authLoading}
-                  className="w-full bg-white/10 border border-white/20 rounded-lg py-3 text-sm font-semibold hover:bg-white/15 transition-colors disabled:opacity-50"
+                  className="w-full bg-white/10 border border-white/20 rounded-lg py-3 text-sm font-semibold hover:bg-white/20 transition-colors disabled:opacity-50"
                 >
                   Start Trial →
                 </button>
