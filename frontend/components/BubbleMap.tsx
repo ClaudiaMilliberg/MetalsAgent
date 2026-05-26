@@ -257,7 +257,7 @@ export default function BubbleMap({ commodities = mockCommodities }: { commoditi
           animate={{ opacity: 1, x: 0, y: 0 }}
           exit={{ opacity: 0, x: -20 }}
           transition={{ duration: 0.35, ease: [0.34, 1.56, 0.64, 1] }}
-          className="absolute bottom-12 left-6 glass-premium-strong rounded-xl p-7 min-w-[320px] pointer-events-none z-50"
+          className="absolute bottom-12 left-4 right-4 sm:left-6 sm:right-auto sm:min-w-[340px] glass-premium-strong rounded-xl p-6 sm:p-7 pointer-events-none z-50"
         >
           {commodities.find((c) => c.id === hoveredBubble) && (
             <div className="space-y-5">

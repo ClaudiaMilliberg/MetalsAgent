@@ -52,14 +52,14 @@ export default function PriceCard({
 
   return (
     <div
-      className="glass-premium rounded-xl p-6 group cursor-pointer transition-all duration-500 ease-premium hover:-translate-y-2 relative overflow-hidden border-t-2"
+      className="glass-premium rounded-xl p-5 sm:p-6 group cursor-pointer transition-all duration-500 ease-premium hover:-translate-y-3 hover:shadow-xl relative overflow-hidden border-t-2"
       style={{
         borderTopColor: colors.bg,
         boxShadow: `inset 0 0 0 1px rgba(255,255,255,0.05)`,
       }}
       onMouseEnter={(e) => {
         const el = e.currentTarget as HTMLDivElement;
-        el.style.boxShadow = `0 0 30px ${colors.bg}40, inset 0 0 0 1px rgba(255,255,255,0.05)`;
+        el.style.boxShadow = `0 0 40px ${colors.bg}50, inset 0 0 0 1px rgba(255,255,255,0.08)`;
       }}
       onMouseLeave={(e) => {
         const el = e.currentTarget as HTMLDivElement;
@@ -88,7 +88,7 @@ export default function PriceCard({
 
       {/* Price - Large and Dominant */}
       <div className="mb-4">
-        <p className="text-3xl font-black text-white font-mono tracking-tight">${currentPrice.toFixed(2)}</p>
+        <p className="text-2xl sm:text-3xl font-black text-white font-mono tracking-tight leading-tight">${currentPrice.toFixed(2)}</p>
         <div className="flex items-center gap-2 mt-2">
           <span
             className="text-lg font-bold font-mono"

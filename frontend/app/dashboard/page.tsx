@@ -137,7 +137,7 @@ export default function Dashboard() {
               <div>
                 <p className="text-xs text-gray-500 uppercase tracking-widest mb-3">Total Portfolio Value</p>
                 <div className="relative">
-                  <h2 className="text-5xl sm:text-7xl font-black text-white font-mono mb-4 tracking-tight bg-clip-text">
+                  <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-7xl font-black text-white font-mono mb-4 tracking-tight bg-clip-text leading-tight">
                     ${portfolioValue.total.toLocaleString('en-US', { maximumFractionDigits: 2 })}
                   </h2>
                   <div className="absolute -inset-2 bg-gradient-to-r from-blue-500/10 via-cyan-500/10 to-blue-500/10 rounded-lg blur-lg opacity-50 -z-10"></div>
@@ -223,11 +223,11 @@ export default function Dashboard() {
         </div>
 
         {/* Price Cards Grid */}
-        <div className="mb-8">
-          <div className="flex justify-between items-center mb-8">
+        <div className="mb-12">
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 sm:gap-0 mb-8">
             <div>
-              <h2 className="text-3xl font-black text-white mb-2">Commodities</h2>
-              <p className="text-xs text-gray-500 uppercase tracking-widest">Live Market Data — 24 Assets</p>
+              <h2 className="text-3xl sm:text-4xl font-black text-white mb-2 leading-tight">Commodities</h2>
+              <p className="text-xs text-gray-500 uppercase tracking-widest font-semibold">Live Market Data — Real-Time Prices</p>
             </div>
             <button className="px-4 py-2 text-blue-300 text-sm font-semibold hover:text-blue-200 hover:bg-blue-500/10 border border-blue-500/30 rounded-lg transition-all duration-300 ease-premium hover:border-blue-500/50">
               View All →
@@ -256,11 +256,11 @@ export default function Dashboard() {
         {/* News Feed Section */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* News Feed - Takes 2/3 on desktop */}
-          <div className="lg:col-span-2 glass-premium-strong p-8">
-            <div className="flex justify-between items-center mb-8">
+          <div className="lg:col-span-2 glass-premium-strong p-6 sm:p-8">
+            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4 sm:gap-0 mb-8">
               <div>
-                <h2 className="text-3xl font-black text-white mb-2">Latest News</h2>
-                <p className="text-xs text-gray-500 uppercase tracking-widest">Market Intel — Real-Time Updates</p>
+                <h2 className="text-3xl sm:text-4xl font-black text-white mb-2 leading-tight">Latest News</h2>
+                <p className="text-xs text-gray-500 uppercase tracking-widest font-semibold">Market Intel — Real-Time Updates</p>
               </div>
               <button className="px-4 py-2 text-blue-300 text-sm font-semibold hover:text-blue-200 hover:bg-blue-500/10 border border-blue-500/30 rounded-lg transition-all duration-300 ease-premium hover:border-blue-500/50">
                 See All →
@@ -270,8 +270,8 @@ export default function Dashboard() {
           </div>
 
           {/* Sentiment Summary - Takes 1/3 on desktop */}
-          <div className="glass-premium-strong p-8">
-            <h3 className="text-xl font-bold text-white mb-6">Sentiment Overview</h3>
+          <div className="glass-premium-strong p-6 sm:p-8">
+            <h3 className="text-2xl sm:text-3xl font-black text-white mb-6 leading-tight">Sentiment Overview</h3>
 
             <div className="space-y-3">
               {/* Bullish Card */}
