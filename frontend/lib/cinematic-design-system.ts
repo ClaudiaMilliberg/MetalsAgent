@@ -750,7 +750,7 @@ export function vignette(intensity: number = 0.3): string {
 /**
  * Get commodity color configuration by symbol
  */
-export function getCommodityColor(symbol: string): typeof COMMODITY_COLORS.copper {
+export function getCommodityColor(symbol: string): (typeof COMMODITY_COLORS)[keyof typeof COMMODITY_COLORS] {
   const commodityKey = symbol.toLowerCase();
   return COMMODITY_COLORS[commodityKey as keyof typeof COMMODITY_COLORS] || COMMODITY_COLORS.gold;
 }
