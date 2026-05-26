@@ -149,35 +149,35 @@ export default function DisruptionPanel({ disruptions, loading }: Props) {
   };
 
   return (
-    <div className="bg-slate-800/50 rounded-lg border border-slate-700 p-6 h-96 overflow-y-auto">
+    <div className="glass-premium-strong rounded-2xl border-slate-600 p-6 sm:p-7 min-h-96 sm:h-96 overflow-y-auto shadow-2xl">
       {/* Tabs */}
-      <div className="flex gap-2 mb-4 border-b border-slate-600">
+      <div className="flex gap-2 mb-6 border-b border-white/10 pb-3">
         <button
           onClick={() => setActiveTab('disruptions')}
-          className={`px-3 py-2 text-sm font-semibold transition ${
+          className={`px-3 py-2 text-sm font-semibold transition duration-300 ease-premium rounded-lg ${
             activeTab === 'disruptions'
-              ? 'text-emerald-400 border-b-2 border-emerald-400'
-              : 'text-slate-400 hover:text-slate-300'
+              ? 'text-white bg-emerald-600/30 border border-emerald-500/50 shadow-lg shadow-emerald-500/20'
+              : 'text-slate-400 hover:text-slate-300 hover:bg-white/5'
           }`}
         >
           🚨 Disruptions
         </button>
         <button
           onClick={() => setActiveTab('supply')}
-          className={`px-3 py-2 text-sm font-semibold transition ${
+          className={`px-3 py-2 text-sm font-semibold transition duration-300 ease-premium rounded-lg ${
             activeTab === 'supply'
-              ? 'text-emerald-400 border-b-2 border-emerald-400'
-              : 'text-slate-400 hover:text-slate-300'
+              ? 'text-white bg-blue-600/30 border border-blue-500/50 shadow-lg shadow-blue-500/20'
+              : 'text-slate-400 hover:text-slate-300 hover:bg-white/5'
           }`}
         >
           ⬆️ Supply Add
         </button>
         <button
           onClick={() => setActiveTab('futures')}
-          className={`px-3 py-2 text-sm font-semibold transition ${
+          className={`px-3 py-2 text-sm font-semibold transition duration-300 ease-premium rounded-lg ${
             activeTab === 'futures'
-              ? 'text-emerald-400 border-b-2 border-emerald-400'
-              : 'text-slate-400 hover:text-slate-300'
+              ? 'text-white bg-purple-600/30 border border-purple-500/50 shadow-lg shadow-purple-500/20'
+              : 'text-slate-400 hover:text-slate-300 hover:bg-white/5'
           }`}
         >
           📈 Futures

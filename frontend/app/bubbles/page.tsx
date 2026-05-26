@@ -165,111 +165,145 @@ export default function BubblesPage() {
     <div className="min-h-screen bg-gradient-to-br from-[#030810] via-[#0a0e1f] to-[#0f0820] p-4 sm:p-6">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="mb-12">
-          <h1 className="text-4xl sm:text-5xl font-black text-white mb-3 leading-tight">🫧 Sentiment Bubbles</h1>
+        <div className="mb-8 sm:mb-12">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-3">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white leading-tight">🫧 Sentiment Bubbles</h1>
+            <button
+              onClick={() => {
+                setLoading(true);
+                fetch('/api/bubbles/sentiment')
+                  .then((res) => res.json())
+                  .then((data) => {
+                    setCommodities(data.commodities);
+                    setLoading(false);
+                  })
+                  .catch(() => {
+                    setLoading(false);
+                  });
+              }}
+              className="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-lg glass-premium text-white hover:glass-premium-strong transition-all duration-300 font-semibold text-sm"
+              title="Manually refresh sentiment data"
+            >
+              ⟲ Refresh
+            </button>
+          </div>
           <p className="text-gray-400 text-sm sm:text-base">
-            Multi-source sentiment analysis from Reddit, News, X, and On-chain data
+            Multi-source sentiment analysis from Reddit, News, X, and On-chain data • Auto-updates every 30s
           </p>
         </div>
 
         {/* Controls */}
-        <div className="mb-8 grid grid-cols-1 md:grid-cols-4 gap-3 sm:gap-4">
-          {/* Search */}
-          <input
-            type="text"
-            placeholder="Search..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="col-span-1 md:col-span-2 px-4 py-3 rounded-lg glass-premium text-white placeholder-gray-500 focus:outline-none focus:border-blue-400 transition"
-          />
+        <div className="mb-8 space-y-4">
+          {/* Search and Sort Row */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
+            {/* Search */}
+            <input
+              type="text"
+              placeholder="Search commodities..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="sm:col-span-2 px-4 py-3 rounded-lg glass-premium text-white placeholder-gray-500 focus:outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-500/50 transition"
+            />
 
-          {/* Sort */}
-          <select
-            value={sortBy}
-            onChange={(e) => setSortBy(e.target.value as any)}
-            className="px-4 py-3 rounded-lg glass-premium text-white focus:outline-none focus:border-blue-400 transition"
-          >
-            <option value="sentiment">Sort: Sentiment</option>
-            <option value="volatility">Sort: Volatility</option>
-            <option value="change">Sort: 24h Change</option>
-          </select>
+            {/* Sort */}
+            <select
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value as any)}
+              className="px-4 py-3 rounded-lg glass-premium text-white focus:outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-500/50 transition cursor-pointer"
+            >
+              <option value="sentiment">Sentiment ↓</option>
+              <option value="volatility">Volatility ↓</option>
+              <option value="change">24h Change ↓</option>
+            </select>
+          </div>
 
-          {/* Sources */}
-          <div className="flex gap-2">
+          {/* Source Filter Row */}
+          <div className="flex flex-wrap gap-2 md:gap-3">
+            <span className="text-xs text-gray-400 uppercase tracking-wider self-center font-semibold">Signals:</span>
             <button
               onClick={() => setVisibleSources((v) => ({ ...v, reddit: !v.reddit }))}
-              className={`px-3 py-2 rounded text-sm font-semibold transition ${
+              className={`px-3 py-2 rounded-lg text-sm font-semibold transition duration-300 ease-premium border ${
                 visibleSources.reddit
-                  ? 'bg-orange-600/50 text-orange-200 border border-orange-500/50'
-                  : 'bg-slate-800 text-slate-400 border border-slate-700'
+                  ? 'bg-orange-600/50 text-orange-200 border-orange-500/50 shadow-lg shadow-orange-500/20'
+                  : 'bg-slate-800/50 text-slate-400 border-slate-700 hover:bg-slate-700/50'
               }`}
-              title="Reddit signals"
+              title="Toggle Reddit signals"
             >
-              🔴
+              🔴 Reddit
             </button>
             <button
               onClick={() => setVisibleSources((v) => ({ ...v, news: !v.news }))}
-              className={`px-3 py-2 rounded text-sm font-semibold transition ${
+              className={`px-3 py-2 rounded-lg text-sm font-semibold transition duration-300 ease-premium border ${
                 visibleSources.news
-                  ? 'bg-white/20 text-white border border-white/50'
-                  : 'bg-slate-800 text-slate-400 border border-slate-700'
+                  ? 'bg-white/20 text-white border-white/50 shadow-lg shadow-white/20'
+                  : 'bg-slate-800/50 text-slate-400 border-slate-700 hover:bg-slate-700/50'
               }`}
-              title="News signals"
+              title="Toggle News signals"
             >
-              📰
+              📰 News
             </button>
             <button
               onClick={() => setVisibleSources((v) => ({ ...v, twitter: !v.twitter }))}
-              className={`px-3 py-2 rounded text-sm font-semibold transition ${
+              className={`px-3 py-2 rounded-lg text-sm font-semibold transition duration-300 ease-premium border ${
                 visibleSources.twitter
-                  ? 'bg-blue-600/50 text-blue-200 border border-blue-500/50'
-                  : 'bg-slate-800 text-slate-400 border border-slate-700'
+                  ? 'bg-blue-600/50 text-blue-200 border-blue-500/50 shadow-lg shadow-blue-500/20'
+                  : 'bg-slate-800/50 text-slate-400 border-slate-700 hover:bg-slate-700/50'
               }`}
-              title="X/Twitter signals"
+              title="Toggle X/Twitter signals"
             >
-              𝕏
+              𝕏 Twitter
             </button>
             <button
               onClick={() => setVisibleSources((v) => ({ ...v, onchain: !v.onchain }))}
-              className={`px-3 py-2 rounded text-sm font-semibold transition ${
+              className={`px-3 py-2 rounded-lg text-sm font-semibold transition duration-300 ease-premium border ${
                 visibleSources.onchain
-                  ? 'bg-purple-600/50 text-purple-200 border border-purple-500/50'
-                  : 'bg-slate-800 text-slate-400 border border-slate-700'
+                  ? 'bg-purple-600/50 text-purple-200 border-purple-500/50 shadow-lg shadow-purple-500/20'
+                  : 'bg-slate-800/50 text-slate-400 border-slate-700 hover:bg-slate-700/50'
               }`}
-              title="On-chain signals"
+              title="Toggle On-chain signals"
             >
-              ⛓️
+              ⛓️ On-chain
             </button>
           </div>
         </div>
 
-        {/* Last Updated */}
-        <div className="mb-6 text-sm text-slate-400">
-          Last updated {secondsAgo}s ago
+        {/* Last Updated & Data Stats */}
+        <div className="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 text-xs sm:text-sm text-slate-400">
+          <div className="flex items-center gap-2">
+            <span className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
+            <span>Last updated <span className="text-emerald-400 font-semibold">{secondsAgo}s</span> ago</span>
+          </div>
+          <div className="text-slate-500">
+            Showing {filteredCommodities.length} of {commodities.length} commodities
+          </div>
         </div>
 
         {/* Main Content */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-12">
           {/* Bubble Visualization */}
-          <div className="lg:col-span-2">
-            <div className="glass-premium-strong rounded-2xl p-6 h-96">
+          <div className="lg:col-span-2 order-1 lg:order-1">
+            <div className="glass-premium-strong rounded-2xl p-4 sm:p-6 h-80 sm:h-96 shadow-2xl hover:shadow-2xl transition-shadow duration-300">
               <BubbleVisualization
                 commodities={filteredCommodities}
                 selectedCommodity={selectedCommodity}
                 onSelect={setSelectedCommodity}
               />
             </div>
+            <div className="mt-4 text-center text-xs text-gray-400 hidden sm:block">
+              💡 Tip: Click bubbles to see detailed sentiment analysis
+            </div>
           </div>
 
           {/* Detail Card */}
-          <div>
+          <div className="order-2 lg:order-2">
             {selectedCommodity ? (
               <BubbleDetailCard commodity={selectedCommodity} />
             ) : (
-              <div className="glass-premium-strong rounded-2xl p-8 h-96 flex items-center justify-center">
+              <div className="glass-premium-strong rounded-2xl p-6 sm:p-8 min-h-96 sm:h-96 flex flex-col items-center justify-center shadow-2xl">
                 <div className="text-center">
-                  <p className="text-4xl mb-3">👆</p>
-                  <p className="text-gray-400 font-semibold">Click a bubble for details</p>
+                  <p className="text-5xl sm:text-6xl mb-4">👆</p>
+                  <p className="text-gray-300 font-semibold text-lg mb-2">Select a bubble</p>
+                  <p className="text-gray-400 text-sm">Click any commodity bubble to view detailed sentiment analysis, signal breakdown, and market headlines</p>
                 </div>
               </div>
             )}
@@ -277,27 +311,34 @@ export default function BubblesPage() {
         </div>
 
         {/* Legend */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="glass-premium rounded-xl p-4">
-            <p className="font-bold text-white mb-2">Signal Sources</p>
-            <p className="text-xs text-gray-400 mb-1">🔴 Reddit</p>
-            <p className="text-xs text-gray-400 mb-1">📰 News</p>
-            <p className="text-xs text-gray-400 mb-1">𝕏 Twitter</p>
-            <p className="text-xs text-gray-400">⛓️ On-chain</p>
-          </div>
-          <div className="glass-premium rounded-xl p-4">
-            <p className="font-bold text-white mb-2">Sentiment</p>
-            <p className="text-xs text-green-400 mb-1">🟢 Bullish</p>
-            <p className="text-xs text-red-400 mb-1">🔴 Bearish</p>
-            <p className="text-xs text-amber-400">🟡 Neutral</p>
-          </div>
-          <div className="glass-premium rounded-xl p-4">
-            <p className="font-bold text-white mb-2">Size = Volatility</p>
-            <p className="text-xs text-gray-400">Larger bubbles indicate higher volatility</p>
-          </div>
-          <div className="glass-premium rounded-xl p-4">
-            <p className="font-bold text-white mb-2">Glow = Signal Source</p>
-            <p className="text-xs text-gray-400">Glow color shows dominant signal source</p>
+        <div>
+          <h2 className="text-lg font-bold text-white mb-4">Quick Reference</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="glass-premium rounded-xl p-5 sm:p-6 hover:glass-premium-strong transition-all duration-300">
+              <p className="font-bold text-white mb-3 text-sm">Signal Sources</p>
+              <div className="space-y-1.5">
+                <p className="text-xs text-orange-400 font-medium">🔴 Reddit</p>
+                <p className="text-xs text-gray-300 font-medium">📰 News</p>
+                <p className="text-xs text-blue-400 font-medium">𝕏 Twitter</p>
+                <p className="text-xs text-purple-400 font-medium">⛓️ On-chain</p>
+              </div>
+            </div>
+            <div className="glass-premium rounded-xl p-5 sm:p-6 hover:glass-premium-strong transition-all duration-300">
+              <p className="font-bold text-white mb-3 text-sm">Sentiment</p>
+              <div className="space-y-1.5">
+                <p className="text-xs text-green-400 font-medium">🟢 Bullish</p>
+                <p className="text-xs text-red-400 font-medium">🔴 Bearish</p>
+                <p className="text-xs text-amber-400 font-medium">🟡 Neutral</p>
+              </div>
+            </div>
+            <div className="glass-premium rounded-xl p-5 sm:p-6 hover:glass-premium-strong transition-all duration-300">
+              <p className="font-bold text-white mb-3 text-sm">Bubble Size</p>
+              <p className="text-xs text-gray-300 leading-relaxed">Larger bubbles = higher volatility. Smaller bubbles = lower volatility.</p>
+            </div>
+            <div className="glass-premium rounded-xl p-5 sm:p-6 hover:glass-premium-strong transition-all duration-300">
+              <p className="font-bold text-white mb-3 text-sm">Glow Color</p>
+              <p className="text-xs text-gray-300 leading-relaxed">Glow indicates the dominant signal source driving the sentiment score.</p>
+            </div>
           </div>
         </div>
       </div>
