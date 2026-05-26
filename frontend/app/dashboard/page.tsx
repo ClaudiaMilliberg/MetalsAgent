@@ -140,14 +140,14 @@ export default function Dashboard() {
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 relative z-10">
         {/* Hero Section with Bubble Map */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8 sm:mb-12">
           {/* Bubble Map - Takes 2/3 on desktop */}
-          <div className="lg:col-span-2 h-96 lg:h-[500px]">
+          <div className="lg:col-span-2 h-72 sm:h-96 lg:h-[500px] rounded-2xl overflow-hidden shadow-2xl">
             <BubbleMap commodities={commodities} />
           </div>
 
           {/* Quick Stats Panel - Takes 1/3 on desktop */}
-          <div className="glass-premium-strong p-8">
+          <div className="glass-premium-strong p-6 sm:p-8 rounded-2xl shadow-2xl">
             <div className="space-y-8">
               {/* Portfolio Value */}
               <div>
@@ -184,11 +184,11 @@ export default function Dashboard() {
 
               {/* Action Buttons */}
               <div className="pt-6 border-t border-white/10 space-y-3">
-                <button className="w-full px-6 py-4 bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-bold rounded-lg hover:shadow-2xl hover:shadow-blue-500/60 transition duration-500 transform hover:scale-105 active:scale-98 relative overflow-hidden group ease-premium">
+                <button className="w-full px-6 py-3 sm:py-4 bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-bold text-sm sm:text-base rounded-lg hover:shadow-2xl hover:shadow-blue-500/60 transition duration-500 transform hover:scale-105 active:scale-98 relative overflow-hidden group ease-premium shadow-lg">
                   <span className="relative z-10">View Prices</span>
                   <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/25 to-white/0 transform translate-x-full group-hover:translate-x-0 transition duration-700"></div>
                 </button>
-                <button className="w-full px-6 py-4 border-2 border-blue-500/50 text-blue-300 font-bold rounded-lg hover:bg-blue-500/10 hover:border-blue-400 transition duration-500 ease-premium transform hover:scale-105 active:scale-98">
+                <button className="w-full px-6 py-3 sm:py-4 border-2 border-blue-500/50 text-blue-300 font-bold text-sm sm:text-base rounded-lg hover:bg-blue-500/10 hover:border-blue-400 transition duration-500 ease-premium transform hover:scale-105 active:scale-98 bg-blue-500/5">
                   Set Alerts
                 </button>
               </div>
@@ -197,7 +197,7 @@ export default function Dashboard() {
         </div>
 
         {/* Premium Navigation Tabs - Control Surface */}
-        <div className="mb-12 flex gap-3 border-b border-white/20 pb-6 overflow-x-auto group scroll-smooth">
+        <div className="mb-8 sm:mb-12 flex gap-2 sm:gap-3 border-b border-white/20 pb-4 sm:pb-6 overflow-x-auto group scroll-smooth snap-x snap-mandatory">
           {[
             { label: 'All Commodities', icon: '⊚', color: 'blue' },
             { label: 'Metals', icon: '▪', color: 'cyan' },
@@ -207,8 +207,8 @@ export default function Dashboard() {
             <button
               key={tab.label}
               className={`
-                relative px-6 py-3 font-semibold text-sm whitespace-nowrap transition-all duration-400 ease-premium
-                rounded-lg border flex items-center gap-3 group/tab
+                relative px-4 sm:px-6 py-2.5 sm:py-3 font-semibold text-xs sm:text-sm whitespace-nowrap transition-all duration-400 ease-premium
+                rounded-lg border flex items-center gap-2 sm:gap-3 group/tab snap-center flex-shrink-0
                 ${
                   tab.label === 'All Commodities'
                     ? `
@@ -239,18 +239,18 @@ export default function Dashboard() {
         </div>
 
         {/* Price Cards Grid */}
-        <div className="mb-12">
-          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 sm:gap-0 mb-8">
+        <div className="mb-12 sm:mb-16">
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 sm:gap-0 mb-6 sm:mb-8">
             <div>
-              <h2 className="text-3xl sm:text-4xl font-black text-white mb-2 leading-tight">Commodities</h2>
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white mb-2 leading-tight">Commodities</h2>
               <p className="text-xs text-gray-500 uppercase tracking-widest font-semibold">Live Market Data — Real-Time Prices</p>
             </div>
-            <button className="px-4 py-2 text-blue-300 text-sm font-semibold hover:text-blue-200 hover:bg-blue-500/10 border border-blue-500/30 rounded-lg transition-all duration-300 ease-premium hover:border-blue-500/50">
+            <button className="px-4 py-2 text-blue-300 text-sm font-semibold hover:text-blue-200 hover:bg-blue-500/10 border border-blue-500/30 rounded-lg transition-all duration-300 ease-premium hover:border-blue-500/50 hidden sm:block">
               View All →
             </button>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
             {commodities.map((commodity) => (
               <PriceCard
                 key={commodity.id}
@@ -270,15 +270,15 @@ export default function Dashboard() {
         </div>
 
         {/* News Feed Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
           {/* News Feed - Takes 2/3 on desktop */}
-          <div className="lg:col-span-2 glass-premium-strong p-6 sm:p-8">
+          <div className="lg:col-span-2 glass-premium-strong p-6 sm:p-8 rounded-2xl shadow-2xl">
             <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4 sm:gap-0 mb-8">
               <div>
-                <h2 className="text-3xl sm:text-4xl font-black text-white mb-2 leading-tight">Latest News</h2>
+                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white mb-2 leading-tight">Latest News</h2>
                 <p className="text-xs text-gray-500 uppercase tracking-widest font-semibold">Market Intel — Real-Time Updates</p>
               </div>
-              <button className="px-4 py-2 text-blue-300 text-sm font-semibold hover:text-blue-200 hover:bg-blue-500/10 border border-blue-500/30 rounded-lg transition-all duration-300 ease-premium hover:border-blue-500/50">
+              <button className="px-4 py-2 text-blue-300 text-sm font-semibold hover:text-blue-200 hover:bg-blue-500/10 border border-blue-500/30 rounded-lg transition-all duration-300 ease-premium hover:border-blue-500/50 hidden sm:block">
                 See All →
               </button>
             </div>
@@ -286,10 +286,10 @@ export default function Dashboard() {
           </div>
 
           {/* Sentiment Summary - Takes 1/3 on desktop */}
-          <div className="glass-premium-strong p-6 sm:p-8">
-            <h3 className="text-2xl sm:text-3xl font-black text-white mb-6 leading-tight">Sentiment Overview</h3>
+          <div className="glass-premium-strong p-6 sm:p-8 rounded-2xl shadow-2xl">
+            <h3 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white mb-6 leading-tight">Sentiment Overview</h3>
 
-            <div className="space-y-4">
+            <div className="space-y-4 sm:space-y-5">
               {/* Bullish Card */}
               <div className="group rounded-lg p-5 border border-white/10 bg-gradient-to-r from-green-500/5 to-transparent hover:border-green-500/40 hover:bg-green-500/15 transition-all duration-300 ease-premium cursor-pointer hover:-translate-y-1">
                 <div className="flex items-center justify-between mb-3">
@@ -333,19 +333,19 @@ export default function Dashboard() {
               </div>
             </div>
 
-            <div className="mt-8 pt-6 border-t border-white/10">
-              <button className="w-full px-4 py-3 bg-gradient-to-r from-blue-600 to-blue-500 text-white font-bold rounded-lg hover:shadow-lg hover:shadow-blue-500/50 transition duration-500 ease-premium transform hover:scale-103 active:scale-98">
+            <div className="mt-8 sm:mt-10 pt-6 sm:pt-8 border-t border-white/10">
+              <button className="w-full px-4 py-3 sm:py-4 bg-gradient-to-r from-blue-600 to-blue-500 text-white font-bold text-sm sm:text-base rounded-lg hover:shadow-lg hover:shadow-blue-500/50 transition duration-500 ease-premium transform hover:scale-105 active:scale-98 shadow-md">
                 Upgrade to Pro
               </button>
-              <p className="text-xs text-gray-500 text-center mt-3">Unlock advanced analytics</p>
+              <p className="text-xs text-gray-500 text-center mt-3 sm:mt-4">Unlock advanced analytics</p>
             </div>
           </div>
         </div>
       </main>
 
       {/* Footer */}
-      <footer className="mt-20 border-t border-white/10 relative z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
+      <footer className="mt-16 sm:mt-20 border-t border-white/10 relative z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-12 mb-12">
             {/* Company */}
             <div>
@@ -357,23 +357,26 @@ export default function Dashboard() {
             <div>
               <h4 className="text-white font-bold text-lg mb-4">Legal</h4>
               <div className="space-y-2">
-                <a href="#" className="text-gray-400 text-xs hover:text-blue-400 transition duration-300">
-                  Privacy Policy
-                </a>
-                <br />
-                <a href="#" className="text-gray-400 text-xs hover:text-blue-400 transition duration-300">
-                  Terms of Service
-                </a>
+                <div>
+                  <a href="#" className="text-gray-400 text-xs hover:text-blue-400 transition duration-300">
+                    Privacy Policy
+                  </a>
+                </div>
+                <div>
+                  <a href="#" className="text-gray-400 text-xs hover:text-blue-400 transition duration-300">
+                    Terms of Service
+                  </a>
+                </div>
               </div>
             </div>
 
             {/* Support */}
             <div>
               <h4 className="text-white font-bold text-lg mb-4">Support</h4>
-              <p className="text-gray-400 text-xs">
+              <p className="text-gray-400 text-xs leading-relaxed">
                 Questions? Reach out at
                 <br />
-                <a href="mailto:support@example.com" className="text-blue-400 hover:text-blue-300 transition">
+                <a href="mailto:support@example.com" className="text-blue-400 hover:text-blue-300 transition font-semibold">
                   support@example.com
                 </a>
               </p>
@@ -381,9 +384,9 @@ export default function Dashboard() {
           </div>
 
           {/* Bottom bar */}
-          <div className="border-t border-white/5 pt-8 flex flex-col sm:flex-row justify-between items-center text-gray-500 text-xs">
+          <div className="border-t border-white/5 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-0 text-gray-500 text-xs">
             <p>© 2026 CommodityBubbles. All rights reserved.</p>
-            <div className="flex items-center gap-2 mt-4 sm:mt-0">
+            <div className="flex items-center gap-2">
               <span className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse shadow-lg shadow-green-500/50"></span>
               <span className="text-gray-400">All Systems Operational</span>
             </div>
