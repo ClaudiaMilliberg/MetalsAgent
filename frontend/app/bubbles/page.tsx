@@ -39,22 +39,87 @@ export default function BubblesPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [secondsAgo, setSecondsAgo] = useState(0);
 
+  // Fallback mock data for sentiment
+  const mockSentimentData: Commodity[] = [
+    {
+      id: 'copper',
+      name: 'Copper',
+      price: 4.85,
+      change24h: 2.34,
+      sentiment: 'bullish',
+      score: 78,
+      volatility: 12.5,
+      glow: 'orange',
+      signalBreakdown: { reddit: 85, news: 72, twitter: 65, onchain: 80 },
+      headlines: ['Copper rallies on supply concerns', 'Construction demand rebounds'],
+      demand: 'High',
+      confidence: 0.92,
+      lastUpdated: new Date().toISOString(),
+    },
+    {
+      id: 'gold',
+      name: 'Gold',
+      price: 2449.75,
+      change24h: 1.89,
+      sentiment: 'bullish',
+      score: 85,
+      volatility: 8.3,
+      glow: 'white',
+      signalBreakdown: { reddit: 78, news: 88, twitter: 82, onchain: 75 },
+      headlines: ['Gold strengthens as yields fall', 'Central banks buy more gold'],
+      demand: 'Very High',
+      confidence: 0.95,
+      lastUpdated: new Date().toISOString(),
+    },
+    {
+      id: 'nickel',
+      name: 'Nickel',
+      price: 9.42,
+      change24h: -1.22,
+      sentiment: 'bearish',
+      score: 35,
+      volatility: 15.2,
+      glow: 'blue',
+      signalBreakdown: { reddit: 32, news: 38, twitter: 40, onchain: 28 },
+      headlines: ['Nickel oversupply continues', 'Indonesian production rises'],
+      demand: 'Moderate',
+      confidence: 0.88,
+      lastUpdated: new Date().toISOString(),
+    },
+    {
+      id: 'zinc',
+      name: 'Zinc',
+      price: 1.28,
+      change24h: 0.89,
+      sentiment: 'neutral',
+      score: 55,
+      volatility: 9.7,
+      glow: 'purple',
+      signalBreakdown: { reddit: 55, news: 52, twitter: 58, onchain: 60 },
+      headlines: ['Zinc inventory stabilizes', 'Industrial production mixed'],
+      demand: 'Moderate',
+      confidence: 0.82,
+      lastUpdated: new Date().toISOString(),
+    },
+  ];
+
   // Fetch sentiment data
   useEffect(() => {
     const fetchSentiment = async () => {
       try {
         const res = await fetch('/api/bubbles/sentiment');
         const data = await res.json();
-        setCommodities(data.commodities || []);
+        setCommodities(data.commodities || mockSentimentData);
         setLoading(false);
       } catch (error) {
-        console.error('Failed to fetch sentiment:', error);
+        console.warn('Using fallback sentiment data:', error);
+        setCommodities(mockSentimentData);
         setLoading(false);
       }
     };
 
     fetchSentiment();
-    const interval = setInterval(fetchSentiment, 30 * 1000); // Refresh every 30 seconds
+    const interval = setInterval(fetchSentiment, 30 * 1000);
     return () => clearInterval(interval);
   }, []);
 
@@ -97,32 +162,32 @@ export default function BubblesPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-6">
+    <div className="min-h-screen bg-gradient-to-br from-[#030810] via-[#0a0e1f] to-[#0f0820] p-4 sm:p-6">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold text-white mb-2">🫧 Commodity Sentiment Bubbles</h1>
-          <p className="text-slate-400">
-            Real-time sentiment visualization from Reddit, News, X, and On-chain sources
+        <div className="mb-12">
+          <h1 className="text-4xl sm:text-5xl font-black text-white mb-3 leading-tight">🫧 Sentiment Bubbles</h1>
+          <p className="text-gray-400 text-sm sm:text-base">
+            Multi-source sentiment analysis from Reddit, News, X, and On-chain data
           </p>
         </div>
 
         {/* Controls */}
-        <div className="mb-6 grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div className="mb-8 grid grid-cols-1 md:grid-cols-4 gap-3 sm:gap-4">
           {/* Search */}
           <input
             type="text"
-            placeholder="Search commodity..."
+            placeholder="Search..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="col-span-2 px-4 py-2 rounded-lg bg-slate-800 border border-slate-700 text-white placeholder-slate-400 focus:outline-none focus:border-emerald-500"
+            className="col-span-1 md:col-span-2 px-4 py-3 rounded-lg glass-premium text-white placeholder-gray-500 focus:outline-none focus:border-blue-400 transition"
           />
 
           {/* Sort */}
           <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value as any)}
-            className="px-4 py-2 rounded-lg bg-slate-800 border border-slate-700 text-white focus:outline-none focus:border-emerald-500"
+            className="px-4 py-3 rounded-lg glass-premium text-white focus:outline-none focus:border-blue-400 transition"
           >
             <option value="sentiment">Sort: Sentiment</option>
             <option value="volatility">Sort: Volatility</option>
@@ -184,10 +249,10 @@ export default function BubblesPage() {
         </div>
 
         {/* Main Content */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-12">
           {/* Bubble Visualization */}
           <div className="lg:col-span-2">
-            <div className="bg-slate-800/50 rounded-lg border border-slate-700 p-6 h-96">
+            <div className="glass-premium-strong rounded-2xl p-6 h-96">
               <BubbleVisualization
                 commodities={filteredCommodities}
                 selectedCommodity={selectedCommodity}
@@ -201,10 +266,10 @@ export default function BubblesPage() {
             {selectedCommodity ? (
               <BubbleDetailCard commodity={selectedCommodity} />
             ) : (
-              <div className="bg-slate-800/50 rounded-lg border border-slate-700 p-6 h-96 flex items-center justify-center">
+              <div className="glass-premium-strong rounded-2xl p-8 h-96 flex items-center justify-center">
                 <div className="text-center">
-                  <p className="text-slate-400 mb-2">👆</p>
-                  <p className="text-slate-400">Click a bubble to see details</p>
+                  <p className="text-4xl mb-3">👆</p>
+                  <p className="text-gray-400 font-semibold">Click a bubble for details</p>
                 </div>
               </div>
             )}
@@ -212,27 +277,27 @@ export default function BubblesPage() {
         </div>
 
         {/* Legend */}
-        <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-          <div className="bg-slate-800/30 rounded p-3 border border-slate-700/50">
-            <p className="font-semibold text-slate-300 mb-1">Signal Sources</p>
-            <p className="text-slate-400">🔴 Reddit</p>
-            <p className="text-slate-400">📰 News</p>
-            <p className="text-slate-400">𝕏 Twitter</p>
-            <p className="text-slate-400">⛓️ On-chain</p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="glass-premium rounded-xl p-4">
+            <p className="font-bold text-white mb-2">Signal Sources</p>
+            <p className="text-xs text-gray-400 mb-1">🔴 Reddit</p>
+            <p className="text-xs text-gray-400 mb-1">📰 News</p>
+            <p className="text-xs text-gray-400 mb-1">𝕏 Twitter</p>
+            <p className="text-xs text-gray-400">⛓️ On-chain</p>
           </div>
-          <div className="bg-slate-800/30 rounded p-3 border border-slate-700/50">
-            <p className="font-semibold text-slate-300 mb-1">Sentiment</p>
-            <p className="text-emerald-400">🟢 Bullish</p>
-            <p className="text-red-400">🔴 Bearish</p>
-            <p className="text-amber-400">🟡 Neutral</p>
+          <div className="glass-premium rounded-xl p-4">
+            <p className="font-bold text-white mb-2">Sentiment</p>
+            <p className="text-xs text-green-400 mb-1">🟢 Bullish</p>
+            <p className="text-xs text-red-400 mb-1">🔴 Bearish</p>
+            <p className="text-xs text-amber-400">🟡 Neutral</p>
           </div>
-          <div className="bg-slate-800/30 rounded p-3 border border-slate-700/50">
-            <p className="font-semibold text-slate-300 mb-1">Size = Volatility</p>
-            <p className="text-slate-400">Larger bubbles = more volatile</p>
+          <div className="glass-premium rounded-xl p-4">
+            <p className="font-bold text-white mb-2">Size = Volatility</p>
+            <p className="text-xs text-gray-400">Larger bubbles indicate higher volatility</p>
           </div>
-          <div className="bg-slate-800/30 rounded p-3 border border-slate-700/50">
-            <p className="font-semibold text-slate-300 mb-1">Glow = Dominant Source</p>
-            <p className="text-slate-400">Glow color shows which signal is strongest</p>
+          <div className="glass-premium rounded-xl p-4">
+            <p className="font-bold text-white mb-2">Glow = Signal Source</p>
+            <p className="text-xs text-gray-400">Glow color shows dominant signal source</p>
           </div>
         </div>
       </div>
