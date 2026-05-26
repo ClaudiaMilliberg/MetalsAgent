@@ -137,20 +137,43 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Commodity Filter Tabs */}
-        <div className="mb-8 flex gap-3 border-b border-white/10 pb-4 overflow-x-auto">
-          {['All Commodities', 'Metals', 'Energy', 'Agriculture'].map((tab) => (
+        {/* Premium Navigation Tabs - Control Surface */}
+        <div className="mb-12 flex gap-2 border-b border-white/10 pb-6 overflow-x-auto group">
+          {[
+            { label: 'All Commodities', icon: '⊚' },
+            { label: 'Metals', icon: '▪' },
+            { label: 'Energy', icon: '⚡' },
+            { label: 'Agriculture', icon: '🌾' }
+          ].map((tab) => (
             <button
-              key={tab}
-              className={`px-6 py-2.5 font-semibold text-sm whitespace-nowrap transition-all duration-300 ease-premium relative rounded-lg ${
-                tab === 'All Commodities'
-                  ? 'text-white bg-blue-500/10 border border-blue-500/30'
-                  : 'text-gray-400 hover:text-gray-200 border border-transparent hover:border-white/10 hover:bg-white/5'
-              }`}
+              key={tab.label}
+              className={`
+                relative px-5 py-3 font-semibold text-sm whitespace-nowrap transition-all duration-300 ease-premium
+                rounded-lg border flex items-center gap-2.5
+                ${
+                  tab.label === 'All Commodities'
+                    ? `
+                      text-white bg-gradient-to-b from-blue-500/20 to-blue-500/5 border border-blue-400/50
+                      shadow-lg shadow-blue-500/20
+                      before:absolute before:inset-0 before:rounded-lg before:bg-gradient-to-r before:from-blue-400/0 before:via-white/5 before:to-blue-400/0 before:animate-shimmer
+                      after:absolute after:top-0 after:inset-x-0 after:h-px after:bg-gradient-to-r after:from-transparent after:via-blue-400 after:to-transparent
+                      hover:shadow-xl hover:shadow-blue-500/30 hover:from-blue-500/30
+                    `
+                    : `
+                      text-gray-400 hover:text-gray-200 border border-transparent hover:border-white/20
+                      hover:bg-white/5 hover:text-white
+                    `
+                }
+              `}
             >
-              {tab}
-              {tab === 'All Commodities' && (
-                <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-blue-500/0 via-blue-500/10 to-blue-500/0 pointer-events-none"></div>
+              <span className="text-lg opacity-70">{tab.icon}</span>
+              <span className="relative z-10">{tab.label}</span>
+
+              {tab.label === 'All Commodities' && (
+                <>
+                  <div className="absolute inset-0 rounded-lg ring-1 ring-blue-400/50 pointer-events-none"></div>
+                  <div className="absolute -bottom-px left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-400 to-transparent"></div>
+                </>
               )}
             </button>
           ))}

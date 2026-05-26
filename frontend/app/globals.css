@@ -306,6 +306,19 @@ select:focus {
         inset 0 0 0 1px rgba(255, 255, 255, 0.1);
     }
   }
+
+  @keyframes shimmer {
+    0% {
+      background-position: -1000px 0;
+    }
+    100% {
+      background-position: 1000px 0;
+    }
+  }
+
+  .animate-shimmer {
+    animation: shimmer 2s infinite;
+  }
 }
 
 /* ====== REDUCED MOTION SUPPORT ====== */
