@@ -1,20 +1,20 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, memo, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { Menu, X } from 'lucide-react';
 
-export default function Navbar() {
+function NavbarComponent() {
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const router = useRouter();
 
-  const handleLogout = async () => {
+  const handleLogout = useCallback(async () => {
     router.push('/');
-  };
+  }, [router]);
 
   return (
-    <nav className="sticky top-0 z-50 glass-premium-strong border-b border-white/10 shadow-xl">
+    <nav className="sticky top-0 z-50 glass-premium-strong border-b border-white/10 shadow-xl" aria-label="Main navigation">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-14 sm:h-16 lg:h-20">
           {/* Logo Section */}
@@ -139,3 +139,6 @@ export default function Navbar() {
     </nav>
   );
 }
+
+// Memoize to prevent unnecessary re-renders
+export default memo(NavbarComponent);

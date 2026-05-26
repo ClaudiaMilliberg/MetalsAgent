@@ -656,3 +656,55 @@ select:focus {
     transform: none;
   }
 }
+
+/* ====== HIGH CONTRAST MODE SUPPORT ====== */
+@media (prefers-contrast: more) {
+  :root {
+    --color-bullish: #00A854;
+    --color-bearish: #FF0000;
+    --color-neutral: #FF8800;
+    --color-accent: #00CCFF;
+  }
+
+  .glass-premium {
+    border-width: 2px;
+    border-color: rgba(255, 255, 255, 0.4);
+  }
+
+  .glass-premium-strong {
+    border-width: 2px;
+    border-color: rgba(255, 255, 255, 0.5);
+  }
+
+  button:focus-visible {
+    outline-width: 3px;
+  }
+
+  input:focus,
+  textarea:focus,
+  select:focus {
+    border-width: 2px;
+  }
+}
+
+/* ====== FORCED COLORS MODE (Windows High Contrast) ====== */
+@media (forced-colors: active) {
+  .glass-premium,
+  .glass-premium-strong,
+  .detail-card,
+  .data-card {
+    border: 2px solid;
+    background-color: Canvas;
+    color: CanvasText;
+  }
+
+  button {
+    border: 2px solid ButtonBorder;
+    background-color: ButtonFace;
+    color: ButtonText;
+  }
+
+  button:focus-visible {
+    outline: 3px solid;
+  }
+}

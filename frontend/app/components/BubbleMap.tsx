@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, memo } from 'react';
 import { motion } from 'framer-motion';
 import { mockCommodities, mockBubblePositions } from '@/lib/mockData';
 
@@ -29,7 +29,7 @@ interface Bubble {
   emoji: string;
 }
 
-export default function BubbleMap({ commodities = mockCommodities }: { commodities?: Bubble[] }) {
+function BubbleMapComponent({ commodities = mockCommodities }: { commodities?: Bubble[] }) {
   const [hoveredBubble, setHoveredBubble] = useState<string | null>(null);
 
   const viewBox = '0 0 1000 600';
@@ -52,6 +52,8 @@ export default function BubbleMap({ commodities = mockCommodities }: { commoditi
         viewBox={viewBox}
         className="w-full h-full"
         style={{ backgroundColor: 'transparent' }}
+        role="img"
+        aria-label="Interactive commodity bubble map visualization showing real-time prices and sentiment"
       >
         {/* Grid background */}
         <defs>
@@ -373,3 +375,6 @@ export default function BubbleMap({ commodities = mockCommodities }: { commoditi
     </div>
   );
 }
+
+// Memoize component to prevent unnecessary re-renders when parent updates
+export default memo(BubbleMapComponent);

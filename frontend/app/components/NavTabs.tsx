@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, memo, useCallback } from 'react';
 import { Atom, Coins, Zap, Leaf } from 'lucide-react';
 
 interface NavTab {
@@ -13,7 +13,7 @@ interface NavTabsProps {
   onTabChange?: (label: string) => void;
 }
 
-export default function NavTabs({ onTabChange }: NavTabsProps) {
+function NavTabsComponent({ onTabChange }: NavTabsProps) {
   const [activeTab, setActiveTab] = useState(0);
   const [hoveredTab, setHoveredTab] = useState<number | null>(null);
   const [ripple, setRipple] = useState<{ x: number; y: number } | null>(null);
@@ -26,6 +26,13 @@ export default function NavTabs({ onTabChange }: NavTabsProps) {
     { label: 'Energy', icon: <Zap size={18} />, color: 'yellow' },
     { label: 'Agriculture', icon: <Leaf size={18} />, color: 'green' },
   ];
+
+  // Memoized tab change handler to prevent unnecessary re-renders
+  const handleTabChange = useCallback((index: number) => {
+    setActiveTab(index);
+    tabRefs.current[index]?.focus();
+    onTabChange?.(tabs[index].label);
+  }, [tabs, onTabChange]);
 
   // Keyboard navigation
   useEffect(() => {
@@ -54,15 +61,9 @@ export default function NavTabs({ onTabChange }: NavTabsProps) {
 
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [activeTab, tabs.length]);
+  }, [activeTab, tabs.length, handleTabChange]);
 
-  const handleTabChange = (index: number) => {
-    setActiveTab(index);
-    tabRefs.current[index]?.focus();
-    onTabChange?.(tabs[index].label);
-  };
-
-  const handleRipple = (e: React.MouseEvent<HTMLButtonElement>, index: number) => {
+  const handleRipple = useCallback((e: React.MouseEvent<HTMLButtonElement>, index: number) => {
     const button = e.currentTarget;
     const rect = button.getBoundingClientRect();
     const x = e.clientX - rect.left;
@@ -72,7 +73,7 @@ export default function NavTabs({ onTabChange }: NavTabsProps) {
 
     setTimeout(() => setRipple(null), 600);
     handleTabChange(index);
-  };
+  }, [handleTabChange]);
 
   const getColorClasses = (color: string, isActive: boolean) => {
     const colors: Record<string, { active: string; inactive: string }> = {
@@ -103,6 +104,7 @@ export default function NavTabs({ onTabChange }: NavTabsProps) {
       className="mb-8 sm:mb-12 flex gap-2 sm:gap-3 border-b border-white/20 pb-4 sm:pb-6 overflow-x-auto group scroll-smooth snap-x snap-mandatory"
       role="tablist"
       aria-label="Commodity categories"
+      aria-description="Filter commodities by category using keyboard arrows or click to select"
     >
       {tabs.map((tab, index) => (
         <button
@@ -176,3 +178,6 @@ export default function NavTabs({ onTabChange }: NavTabsProps) {
     </div>
   );
 }
+
+// Memoize to prevent unnecessary re-renders
+export default memo(NavTabsComponent);

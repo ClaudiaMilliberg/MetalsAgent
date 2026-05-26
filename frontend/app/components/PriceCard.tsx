@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo } from 'react';
+import { useMemo, memo } from 'react';
 
 type Sentiment = 'bullish' | 'bearish' | 'neutral';
 
@@ -21,7 +21,7 @@ interface PriceCardProps {
   priceHistory: number[];
 }
 
-export default function PriceCard({
+function PriceCard({
   name,
   symbol,
   currentPrice,
@@ -150,3 +150,6 @@ export default function PriceCard({
     </div>
   );
 }
+
+// Memoize to prevent unnecessary re-renders
+export default memo(PriceCard)
