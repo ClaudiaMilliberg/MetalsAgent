@@ -84,56 +84,63 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#030810] via-[#0a0e1f] to-[#0f0820] text-white relative overflow-hidden">
-      {/* Ultra-deep cinematic background layers */}
+    <div className="min-h-screen bg-gradient-to-br from-[#030409] via-[#0a0d1f] to-[#0d0920] text-white relative overflow-hidden">
+      {/* Ultra-premium cinematic background layers with enhanced depth */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {/* Radial grid structure - subtle spatial reference */}
-        <div className="absolute inset-0 opacity-[0.02]" style={{
-          backgroundImage: 'radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.3) 1px, transparent 1px)',
-          backgroundSize: '100px 100px'
+        {/* Very faint radial grid - almost invisible spatial reference */}
+        <div className="absolute inset-0 opacity-[0.01]" style={{
+          backgroundImage: 'radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.2) 0.5px, transparent 0.5px)',
+          backgroundSize: '120px 120px'
         }}></div>
 
-        {/* PRIMARY ATMOSPHERIC ORB - Top Right (Blue dominant) */}
-        <div className="absolute -top-96 -right-96 w-[900px] h-[900px] bg-blue-600/20 rounded-full blur-3xl opacity-60 animate-pulse" style={{
-          animationDuration: '7s',
-          filter: 'blur(60px)',
-          boxShadow: '0 0 120px rgba(37, 99, 235, 0.4), inset 0 0 80px rgba(59, 130, 246, 0.2)'
-        }}></div>
-
-        {/* SECONDARY ATMOSPHERIC ORB - Bottom Left (Cyan accent) */}
-        <div className="absolute -bottom-80 -left-80 w-[700px] h-[700px] rounded-full opacity-50" style={{
-          background: 'radial-gradient(circle, rgba(34, 211, 238, 0.25) 0%, transparent 70%)',
+        {/* PRIMARY ATMOSPHERIC ORB - Top Right (Blue dominant with enhanced glow) */}
+        <div className="absolute -top-96 -right-96 w-[950px] h-[950px] rounded-full opacity-65 animate-pulse" style={{
+          animationDuration: '8s',
+          background: 'radial-gradient(circle at 40% 40%, rgba(59, 130, 246, 0.3) 0%, rgba(37, 99, 235, 0.1) 50%, transparent 100%)',
           filter: 'blur(80px)',
-          animation: 'float 18s ease-in-out infinite',
-          boxShadow: '0 0 100px rgba(34, 211, 238, 0.3)'
+          boxShadow: '0 0 180px rgba(59, 130, 246, 0.3), inset 0 0 120px rgba(59, 130, 246, 0.2), 0 0 60px rgba(37, 99, 235, 0.15)'
         }}></div>
 
-        {/* TERTIARY ATMOSPHERIC ORB - Center (Purple accent) */}
-        <div className="absolute top-1/3 left-1/4 w-[500px] h-[500px] rounded-full opacity-40" style={{
-          background: 'radial-gradient(circle, rgba(168, 85, 247, 0.15) 0%, transparent 70%)',
-          filter: 'blur(70px)',
-          animation: 'float-reverse 20s ease-in-out infinite',
-          boxShadow: '0 0 80px rgba(168, 85, 247, 0.25)'
+        {/* SECONDARY ATMOSPHERIC ORB - Bottom Left (Cyan with rim light) */}
+        <div className="absolute -bottom-72 -left-72 w-[750px] h-[750px] rounded-full opacity-55" style={{
+          background: 'radial-gradient(circle at 30% 30%, rgba(34, 211, 238, 0.35) 0%, rgba(34, 211, 238, 0.1) 45%, transparent 100%)',
+          filter: 'blur(90px)',
+          animation: 'float 16s ease-in-out infinite',
+          boxShadow: '0 0 140px rgba(34, 211, 238, 0.25), inset 0 0 80px rgba(34, 211, 238, 0.15), 0 0 50px rgba(6, 182, 212, 0.2)'
         }}></div>
 
-        {/* FOURTH ORB - Accent glow (right center) */}
-        <div className="absolute top-1/2 -right-40 w-[400px] h-[400px] rounded-full opacity-35" style={{
-          background: 'radial-gradient(circle, rgba(6, 182, 212, 0.2) 0%, transparent 70%)',
-          filter: 'blur(60px)',
-          animation: 'float 25s ease-in-out infinite',
-          boxShadow: '0 0 60px rgba(6, 182, 212, 0.2)'
+        {/* TERTIARY ATMOSPHERIC ORB - Center-left (Purple with depth) */}
+        <div className="absolute top-1/3 left-1/4 w-[550px] h-[550px] rounded-full opacity-45" style={{
+          background: 'radial-gradient(circle at 35% 35%, rgba(168, 85, 247, 0.25) 0%, rgba(168, 85, 247, 0.08) 50%, transparent 100%)',
+          filter: 'blur(85px)',
+          animation: 'float-reverse 22s ease-in-out infinite',
+          boxShadow: '0 0 110px rgba(168, 85, 247, 0.2), inset 0 0 70px rgba(168, 85, 247, 0.12)'
         }}></div>
 
-        {/* Vignette effect - edges darker */}
-        <div className="absolute inset-0 bg-radial-gradient" style={{
-          background: 'radial-gradient(ellipse at center, transparent 0%, rgba(0, 0, 0, 0.4) 100%)',
+        {/* FOURTH ORB - Right center accent (Cyan rim) */}
+        <div className="absolute top-1/2 -right-36 w-[450px] h-[450px] rounded-full opacity-40" style={{
+          background: 'radial-gradient(circle at 30% 30%, rgba(6, 182, 212, 0.3) 0%, rgba(6, 182, 212, 0.08) 50%, transparent 100%)',
+          filter: 'blur(75px)',
+          animation: 'float 28s ease-in-out infinite',
+          boxShadow: '0 0 100px rgba(6, 182, 212, 0.25), inset 0 0 60px rgba(6, 182, 212, 0.15)'
+        }}></div>
+
+        {/* Depth vignette - edges darker with smooth falloff */}
+        <div className="absolute inset-0" style={{
+          background: 'radial-gradient(ellipse 180% 80% at 50% 50%, transparent 0%, rgba(0, 0, 0, 0.2) 40%, rgba(0, 0, 0, 0.6) 100%)',
           pointerEvents: 'none'
         }}></div>
 
-        {/* Subtle noise texture overlay */}
-        <div className="absolute inset-0 opacity-[0.02]" style={{
-          backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" /%3E%3C/filter%3E%3Crect width="400" height="400" filter="url(%23noiseFilter)" /%3E%3C/svg%3E")',
-          backgroundSize: '400px 400px'
+        {/* Subtle noise texture overlay - barely visible */}
+        <div className="absolute inset-0 opacity-[0.01]" style={{
+          backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="1.2" numOctaves="5" seed="2" /%3E%3C/filter%3E%3Crect width="400" height="400" fill="%23000" filter="url(%23noiseFilter)" /%3E%3C/svg%3E")',
+          backgroundSize: '500px 500px'
+        }}></div>
+
+        {/* Bottom edge light leak (subtle) */}
+        <div className="absolute bottom-0 left-0 right-0 h-64 pointer-events-none" style={{
+          background: 'linear-gradient(to top, rgba(59, 130, 246, 0.08) 0%, transparent 100%)',
+          filter: 'blur(40px)'
         }}></div>
       </div>
 

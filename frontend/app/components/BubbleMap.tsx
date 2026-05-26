@@ -131,42 +131,71 @@ export default function BubbleMap({ commodities = mockCommodities }: { commoditi
                 }}
               />
 
-              {/* LAYER 5: Rim light - top-left highlight */}
+              {/* LAYER 5: Primary rim light - top-left with strong highlight */}
               <circle
-                cx={pos.x - pos.size * 0.25}
-                cy={pos.y - pos.size * 0.25}
-                r={pos.size * 0.4}
+                cx={pos.x - pos.size * 0.28}
+                cy={pos.y - pos.size * 0.28}
+                r={pos.size * 0.45}
                 fill="white"
-                opacity={isHovered ? 0.25 : 0.15}
+                opacity={isHovered ? 0.35 : 0.22}
                 style={{
                   mixBlendMode: 'screen',
+                  transition: 'all 300ms cubic-bezier(0.34, 1.56, 0.64, 1)',
+                  filter: 'blur(2px)',
+                }}
+              />
+
+              {/* LAYER 5.5: Secondary rim light edge glow */}
+              <circle
+                cx={pos.x - pos.size * 0.35}
+                cy={pos.y - pos.size * 0.35}
+                r={pos.size * 0.55}
+                fill="white"
+                opacity={isHovered ? 0.15 : 0.08}
+                style={{
+                  mixBlendMode: 'lighten',
+                  filter: 'blur(4px)',
+                }}
+              />
+
+              {/* LAYER 6: Specular highlight - bright spot */}
+              <circle
+                cx={pos.x - pos.size * 0.15}
+                cy={pos.y - pos.size * 0.2}
+                r={pos.size * 0.08}
+                fill="white"
+                opacity={isHovered ? 0.95 : 0.7}
+                style={{
+                  transition: 'all 300ms cubic-bezier(0.34, 1.56, 0.64, 1)',
+                  filter: 'blur(0.5px)',
+                }}
+              />
+
+              {/* LAYER 7: Inner shadow - bottom-right with depth */}
+              <circle
+                cx={pos.x + pos.size * 0.22}
+                cy={pos.y + pos.size * 0.22}
+                r={pos.size * 0.35}
+                fill="black"
+                opacity={isHovered ? 0.25 : 0.12}
+                style={{
+                  mixBlendMode: 'multiply',
                   transition: 'all 300ms cubic-bezier(0.34, 1.56, 0.64, 1)',
                 }}
               />
 
-              {/* LAYER 6: Inner shadow - bottom-right */}
-              <circle
-                cx={pos.x + pos.size * 0.2}
-                cy={pos.y + pos.size * 0.2}
-                r={pos.size * 0.3}
-                fill="black"
-                opacity={isHovered ? 0.2 : 0.1}
-                style={{
-                  mixBlendMode: 'multiply',
-                }}
-              />
-
-              {/* LAYER 7: Border - subtle */}
+              {/* LAYER 8: Border rim - subtle edge definition */}
               <circle
                 cx={pos.x}
                 cy={pos.y}
                 r={pos.size}
                 fill="none"
                 stroke="white"
-                strokeWidth="1.5"
-                opacity={isHovered ? 0.3 : 0.1}
+                strokeWidth={isHovered ? 2 : 1}
+                opacity={isHovered ? 0.4 : 0.12}
                 style={{
                   transition: 'all 300ms cubic-bezier(0.34, 1.56, 0.64, 1)',
+                  filter: 'drop-shadow(0 0 8px rgba(255,255,255,0.1))',
                 }}
               />
 
