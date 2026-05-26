@@ -1,0 +1,5 @@
+{
+  "rootDirectory": "frontend",
+  "framework": "nextjs",
+  "outputDirectory": "frontend/.next"
+}
