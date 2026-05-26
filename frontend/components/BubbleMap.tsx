@@ -46,7 +46,10 @@ export default function BubbleMap({ commodities = mockCommodities }: { commoditi
   }, []);
 
   return (
-    <div className="relative w-full h-full glass-premium rounded-2xl overflow-hidden">
+    <div className="relative w-full h-full glass-premium-strong rounded-2xl overflow-hidden">
+      {/* Background gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-950/20 via-transparent to-purple-950/20 pointer-events-none"></div>
+
       {/* SVG Bubble Map */}
       <svg
         viewBox={viewBox}
@@ -101,16 +104,29 @@ export default function BubbleMap({ commodities = mockCommodities }: { commoditi
                 }}
               />
 
+              {/* LAYER 1.5: Enhanced outer atmosphere halo */}
+              <circle
+                cx={pos.x}
+                cy={pos.y}
+                r={pos.size + (isHovered ? 60 : 30)}
+                fill={color}
+                opacity={isHovered ? 0.15 : 0.06}
+                style={{
+                  transition: 'all 300ms cubic-bezier(0.34, 1.56, 0.64, 1)',
+                  filter: `blur(${isHovered ? 20 : 16}px)`,
+                }}
+              />
+
               {/* LAYER 2: Outer glow halo (sentiment color, scales with intensity) */}
               <circle
                 cx={pos.x}
                 cy={pos.y}
-                r={pos.size + (isHovered ? 40 : 20)}
+                r={pos.size + (isHovered ? 45 : 25)}
                 fill={color}
-                opacity={isHovered ? 0.25 : 0.12}
+                opacity={isHovered ? 0.30 : 0.15}
                 style={{
                   transition: 'all 300ms cubic-bezier(0.34, 1.56, 0.64, 1)',
-                  filter: `blur(${isHovered ? 12 : 8}px)`,
+                  filter: `blur(${isHovered ? 14 : 10}px)`,
                   animation: 'breathing 5s ease-in-out infinite',
                 }}
               />
@@ -134,12 +150,12 @@ export default function BubbleMap({ commodities = mockCommodities }: { commoditi
                 r={pos.size}
                 fill={`url(#bubble-gradient-${commodity.id})`}
                 filter={`url(#bubble-shadow-${commodity.id})`}
-                opacity={isHovered ? 1 : 0.9}
+                opacity={1}
                 style={{
                   transition: 'all 300ms cubic-bezier(0.34, 1.56, 0.64, 1)',
                   filter: isHovered
-                    ? `drop-shadow(0 0 25px ${color}) drop-shadow(0 8px 16px rgba(0,0,0,0.5))`
-                    : `drop-shadow(0 0 12px ${color}) drop-shadow(0 4px 8px rgba(0,0,0,0.3))`,
+                    ? `drop-shadow(0 0 35px ${color}) drop-shadow(0 0 50px ${color}80) drop-shadow(0 12px 24px rgba(0,0,0,0.6))`
+                    : `drop-shadow(0 0 20px ${color}) drop-shadow(0 0 35px ${color}60) drop-shadow(0 8px 16px rgba(0,0,0,0.4))`,
                 }}
               />
 
@@ -196,54 +212,64 @@ export default function BubbleMap({ commodities = mockCommodities }: { commoditi
                 }}
               />
 
-              {/* TEXT: TICKER SYMBOL - DOMINANT */}
+              {/* TEXT: COMMODITY NAME - Large and clear */}
               <text
                 x={pos.x}
-                y={pos.y - 15}
+                y={pos.y - 25}
                 textAnchor="middle"
                 dominantBaseline="middle"
-                fontSize={pos.size * 0.5}
-                fontWeight="800"
+                fontSize={pos.size * 0.55}
+                fontWeight="900"
                 fill="white"
                 fontFamily="'Monaco', 'Courier New', monospace"
-                letterSpacing="-1"
+                letterSpacing="-2"
                 style={{
-                  textShadow: '0 2px 8px rgba(0,0,0,0.5)',
                   transition: 'all 300ms cubic-bezier(0.34, 1.56, 0.64, 1)',
-                  filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.3))',
+                  filter: isHovered
+                    ? 'drop-shadow(0 0 8px rgba(255,255,255,0.8)) drop-shadow(0 4px 8px rgba(0,0,0,0.5))'
+                    : 'drop-shadow(0 2px 6px rgba(0,0,0,0.4))',
+                  fontFamily: 'system-ui, -apple-system, sans-serif',
                 }}
               >
                 {commodity.symbol}
               </text>
 
-              {/* TEXT: PRICE */}
+              {/* TEXT: PRICE - Large and prominent */}
               <text
                 x={pos.x}
-                y={pos.y + pos.size * 0.15}
+                y={pos.y + 8}
                 textAnchor="middle"
                 dominantBaseline="middle"
-                fontSize={pos.size * 0.28}
-                fontWeight="700"
+                fontSize={pos.size * 0.32}
+                fontWeight="800"
                 fill="white"
                 fontFamily="'Monaco', 'Courier New', monospace"
-                opacity="0.95"
+                style={{
+                  transition: 'all 300ms cubic-bezier(0.34, 1.56, 0.64, 1)',
+                  filter: isHovered
+                    ? 'drop-shadow(0 0 6px rgba(255,255,255,0.6)) drop-shadow(0 3px 6px rgba(0,0,0,0.5))'
+                    : 'drop-shadow(0 2px 4px rgba(0,0,0,0.4))',
+                }}
               >
-                ${commodity.currentPrice.toFixed(0)}
+                ${commodity.currentPrice.toFixed(2)}
               </text>
 
-              {/* TEXT: CHANGE % */}
+              {/* TEXT: CHANGE % - Colored and bold */}
               <text
                 x={pos.x}
-                y={pos.y + pos.size * 0.35}
+                y={pos.y + 32}
                 textAnchor="middle"
                 dominantBaseline="middle"
-                fontSize={pos.size * 0.2}
-                fontWeight="600"
-                fill={commodity.change24h > 0 ? '#10B981' : commodity.change24h < 0 ? '#EF4444' : '#F59E0B'}
+                fontSize={pos.size * 0.24}
+                fontWeight="700"
+                fill={commodity.change24h > 0 ? '#4ADE80' : commodity.change24h < 0 ? '#FF6B6B' : '#FBBF24'}
                 fontFamily="'Monaco', 'Courier New', monospace"
-                opacity="0.9"
+                style={{
+                  transition: 'all 300ms cubic-bezier(0.34, 1.56, 0.64, 1)',
+                  filter: 'drop-shadow(0 1px 3px rgba(0,0,0,0.5))',
+                }}
               >
-                {commodity.change24h > 0 ? '+' : ''}{commodity.change24h.toFixed(1)}%
+                {commodity.change24h > 0 ? '↑' : commodity.change24h < 0 ? '↓' : '→'} {Math.abs(commodity.change24h).toFixed(2)}%
               </text>
             </g>
           );
@@ -262,40 +288,44 @@ export default function BubbleMap({ commodities = mockCommodities }: { commoditi
           {commodities.find((c) => c.id === hoveredBubble) && (
             <div className="space-y-5">
               {/* Header with Enhanced Typography */}
-              <div className="flex items-start justify-between pb-5 border-b border-white/15">
+              <div className="flex items-start justify-between pb-6 border-b border-white/20">
                 <div>
-                  <h3 className="text-2xl font-black text-white mb-1 bg-clip-text">
+                  <h3 className="text-3xl font-black text-white mb-1 bg-clip-text">
                     {commodities.find((c) => c.id === hoveredBubble)?.name}
                   </h3>
-                  <p className="text-xs text-gray-500 uppercase tracking-widest font-semibold">
+                  <p className="text-xs text-gray-400 uppercase tracking-widest font-bold">
                     {commodities.find((c) => c.id === hoveredBubble)?.symbol}
                   </p>
                 </div>
-                <span className="text-5xl opacity-90">
+                <span className="text-6xl opacity-95">
                   {commodities.find((c) => c.id === hoveredBubble)?.emoji}
                 </span>
               </div>
 
-              {/* Price - Dominant (5-6xl for premium feel) */}
+              {/* Price - Dominant (7xl for ultra premium feel) */}
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1, duration: 0.3 }}
+                transition={{ delay: 0.08, duration: 0.4 }}
               >
-                <p className="text-xs text-gray-600 uppercase tracking-wider mb-3 font-semibold">Current Price</p>
-                <p className="text-6xl font-black text-white font-mono tracking-tighter" style={{
-                  textShadow: '0 2px 8px rgba(59, 130, 246, 0.2)'
+                <p className="text-xs text-gray-500 uppercase tracking-wider mb-4 font-bold">Current Price</p>
+                <p className="text-7xl font-black text-white font-mono tracking-tighter leading-none" style={{
+                  textShadow: '0 4px 16px rgba(59, 130, 246, 0.35)'
                 }}>
                   ${commodities.find((c) => c.id === hoveredBubble)?.currentPrice.toFixed(2)}
                 </p>
               </motion.div>
 
               {/* Change */}
-              <div>
-                <p className="text-xs text-gray-500 uppercase tracking-widest mb-2">24h Change</p>
-                <div className="flex items-baseline gap-2">
+              <motion.div
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.15, duration: 0.3 }}
+              >
+                <p className="text-xs text-gray-500 uppercase tracking-widest mb-3 font-bold">24h Change</p>
+                <div className="flex items-baseline gap-3">
                   <span
-                    className={`text-2xl font-bold font-mono ${
+                    className={`text-3xl font-black font-mono ${
                       (commodities.find((c) => c.id === hoveredBubble)?.change24h ?? 0) > 0
                         ? 'text-green-400'
                         : (commodities.find((c) => c.id === hoveredBubble)?.change24h ?? 0) < 0
@@ -307,7 +337,7 @@ export default function BubbleMap({ commodities = mockCommodities }: { commoditi
                     {commodities.find((c) => c.id === hoveredBubble)?.change24h.toFixed(2)}%
                   </span>
                   <span
-                    className={`text-lg font-bold ${
+                    className={`text-2xl font-bold ${
                       (commodities.find((c) => c.id === hoveredBubble)?.change24h ?? 0) > 0
                         ? 'text-green-400'
                         : (commodities.find((c) => c.id === hoveredBubble)?.change24h ?? 0) < 0
@@ -316,37 +346,42 @@ export default function BubbleMap({ commodities = mockCommodities }: { commoditi
                     }`}
                   >
                     {(commodities.find((c) => c.id === hoveredBubble)?.change24h ?? 0) > 0
-                      ? '▲'
+                      ? '↑'
                       : (commodities.find((c) => c.id === hoveredBubble)?.change24h ?? 0) < 0
-                      ? '▼'
-                      : '●'}
+                      ? '↓'
+                      : '→'}
                   </span>
                 </div>
-              </div>
+              </motion.div>
 
               {/* Data Grid */}
-              <div className="grid grid-cols-2 gap-4 pt-4 border-t border-white/10">
-                <div>
-                  <p className="text-xs text-gray-500 uppercase tracking-widest mb-2">Volatility</p>
-                  <p className="text-lg font-bold text-white">
+              <motion.div
+                className="grid grid-cols-2 gap-5 pt-6 border-t border-white/20"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.2, duration: 0.3 }}
+              >
+                <div className="glass-premium rounded-lg p-3">
+                  <p className="text-xs text-gray-400 uppercase tracking-widest mb-2 font-bold">Volatility</p>
+                  <p className="text-2xl font-black text-white">
                     {commodities.find((c) => c.id === hoveredBubble)?.volatility.toFixed(1)}%
                   </p>
                 </div>
-                <div>
-                  <p className="text-xs text-gray-500 uppercase tracking-widest mb-2">Sentiment</p>
+                <div className="glass-premium rounded-lg p-3">
+                  <p className="text-xs text-gray-400 uppercase tracking-widest mb-2 font-bold">Sentiment</p>
                   <span
-                    className="inline-block px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider"
+                    className="inline-block px-3 py-2 rounded-full text-xs font-bold uppercase tracking-wider"
                     style={{
                       backgroundColor:
                         sentimentColors[commodities.find((c) => c.id === hoveredBubble)?.sentiment || 'neutral'] +
-                        '40',
+                        '60',
                       color: sentimentColors[commodities.find((c) => c.id === hoveredBubble)?.sentiment || 'neutral'],
                     }}
                   >
                     {sentimentLabels[commodities.find((c) => c.id === hoveredBubble)?.sentiment || 'neutral']}
                   </span>
                 </div>
-              </div>
+              </motion.div>
             </div>
           )}
         </motion.div>
