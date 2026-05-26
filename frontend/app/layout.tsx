@@ -1,10 +1,11 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Inter, JetBrains_Mono } from 'next/font/google';
 import Navbar from '@/components/Navbar';
 import './globals.css';
 import '@/styles/commodity-variables.css';
 
 const inter = Inter({ subsets: ['latin'] });
+const jetbrains = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mono' });
 
 export const metadata: Metadata = {
   title: 'CommodityBubbles - Realtime Commodity Insights',
@@ -17,7 +18,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className={jetbrains.variable}>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>

@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -15,21 +17,127 @@
   --color-primary: #0F172A;
   --color-secondary: #E2E8F0;
   --color-accent: #06B6D4;
+
+  /* Typography system */
+  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Monaco', 'Courier New', monospace;
+
+  /* Font weights */
+  --fw-light: 300;
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+  --fw-black: 900;
 }
 
 html {
   scroll-behavior: smooth;
   color-scheme: dark;
+  font-size: clamp(14px, 1vw, 16px);
 }
 
 body {
   background-color: var(--color-primary);
   color: var(--color-secondary);
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: var(--font-sans);
+  font-weight: var(--fw-regular);
+  line-height: 1.6;
+  letter-spacing: 0.3px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Typography hierarchy */
+h1 {
+  font-size: clamp(28px, 5vw, 56px);
+  font-weight: var(--fw-black);
+  line-height: 1.2;
+  letter-spacing: -0.5px;
+}
+
+h2 {
+  font-size: clamp(24px, 4vw, 42px);
+  font-weight: var(--fw-bold);
+  line-height: 1.3;
+  letter-spacing: -0.3px;
+}
+
+h3 {
+  font-size: clamp(20px, 3vw, 28px);
+  font-weight: var(--fw-bold);
+  line-height: 1.4;
+  letter-spacing: -0.2px;
+}
+
+h4 {
+  font-size: clamp(16px, 2vw, 20px);
+  font-weight: var(--fw-semibold);
+  line-height: 1.4;
+  letter-spacing: 0px;
+}
+
+p, span, a {
+  font-size: clamp(14px, 1.2vw, 16px);
+  font-weight: var(--fw-regular);
+  line-height: 1.6;
+}
+
+small {
+  font-size: clamp(12px, 0.9vw, 14px);
+  font-weight: var(--fw-regular);
+  line-height: 1.5;
+}
+
+/* Monospace for data and code */
+.font-data, .font-mono, code, pre {
+  font-family: var(--font-mono);
+  font-weight: var(--fw-regular);
+  letter-spacing: -0.02em;
+  font-size: clamp(13px, 1vw, 15px);
+}
+
+.font-data-lg {
+  font-family: var(--font-mono);
+  font-size: clamp(16px, 1.2vw, 20px);
+  font-weight: var(--fw-semibold);
+  letter-spacing: -0.02em;
+}
+
+.font-data-xl {
+  font-family: var(--font-mono);
+  font-size: clamp(20px, 1.5vw, 28px);
+  font-weight: var(--fw-bold);
+  letter-spacing: -0.02em;
+}
+
+.font-data-2xl {
+  font-family: var(--font-mono);
+  font-size: clamp(28px, 2.5vw, 48px);
+  font-weight: var(--fw-bold);
+  letter-spacing: -0.02em;
+}
+
+/* Font weight utilities */
+.font-light {
+  font-weight: var(--fw-light);
+}
+
+.font-medium {
+  font-weight: var(--fw-medium);
+}
+
+.font-semibold {
+  font-weight: var(--fw-semibold);
+}
+
+.font-bold {
+  font-weight: var(--fw-bold);
+}
+
+.font-black {
+  font-weight: var(--fw-black);
 }
 
 /* Glassmorphism effect */
@@ -66,15 +174,22 @@ body {
 /* Button styles */
 button {
   transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-  font-weight: 500;
+  font-weight: var(--fw-semibold);
+  letter-spacing: 0.25px;
+  font-size: clamp(13px, 1vw, 15px);
 }
 
 button:hover {
-  transform: translateY(-3px) scale(1.02);
+  transform: translateY(-2px) scale(1.02);
 }
 
 button:active {
-  transform: translateY(-1px) scale(0.98);
+  transform: translateY(0px) scale(0.98);
+}
+
+button:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
 }
 
 /* Input styles */
@@ -87,6 +202,10 @@ select {
   color: var(--color-secondary);
   padding: 0.75rem;
   transition: all 0.2s ease-in-out;
+  font-family: var(--font-sans);
+  font-weight: var(--fw-regular);
+  font-size: clamp(13px, 1vw, 15px);
+  letter-spacing: 0.2px;
 }
 
 input:focus,
@@ -283,7 +402,25 @@ select:focus {
   /* ====== TEXT UTILITIES ====== */
 
   .font-mono-tight {
-    font-family: 'Monaco', 'Courier New', monospace;
+    font-family: var(--font-mono);
+    letter-spacing: -0.02em;
+    font-weight: var(--fw-medium);
+  }
+
+  .text-mono {
+    font-family: var(--font-mono);
+    letter-spacing: -0.02em;
+  }
+
+  .text-mono-light {
+    font-family: var(--font-mono);
+    font-weight: var(--fw-light);
+    letter-spacing: -0.02em;
+  }
+
+  .text-mono-bold {
+    font-family: var(--font-mono);
+    font-weight: var(--fw-bold);
     letter-spacing: -0.02em;
   }
 
@@ -377,6 +514,55 @@ select:focus {
       r: 1.02;
       opacity: 1;
     }
+  }
+
+  /* Spring physics animations */
+  @keyframes spring-pop {
+    0% {
+      transform: scale(0.95);
+      opacity: 0;
+    }
+    50% {
+      transform: scale(1.02);
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  .animate-spring-pop {
+    animation: spring-pop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  @keyframes ripple {
+    0% {
+      transform: scale(0);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(4);
+      opacity: 0;
+    }
+  }
+
+  .animate-ripple {
+    animation: ripple 0.6s ease-out;
+  }
+
+  @keyframes slide-up {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-slide-up {
+    animation: slide-up 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
 }
 
