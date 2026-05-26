@@ -302,7 +302,7 @@ export default function BubbleMap({ commodities = mockCommodities }: { commoditi
           animate={{ opacity: 1, x: 0, y: 0 }}
           exit={{ opacity: 0, x: -20 }}
           transition={{ duration: 0.35, ease: [0.34, 1.56, 0.64, 1] }}
-          className="absolute bottom-12 left-4 right-4 sm:left-6 sm:right-auto sm:min-w-[340px] glass-premium-strong rounded-xl p-6 sm:p-7 pointer-events-none z-50"
+          className="absolute bottom-12 left-4 right-4 sm:left-6 sm:right-auto sm:min-w-[380px] glass-premium-strong rounded-2xl p-8 sm:p-10 pointer-events-none z-50 shadow-2xl"
         >
           {commodities.find((c) => c.id === hoveredBubble) && (
             <div className="space-y-5">
@@ -328,8 +328,8 @@ export default function BubbleMap({ commodities = mockCommodities }: { commoditi
                 transition={{ delay: 0.08, duration: 0.4 }}
               >
                 <p className="text-xs text-gray-500 uppercase tracking-wider mb-4 font-bold">Current Price</p>
-                <p className="text-7xl font-black text-white font-mono tracking-tighter leading-none" style={{
-                  textShadow: '0 4px 16px rgba(59, 130, 246, 0.35)'
+                <p className="text-8xl font-black text-white font-mono tracking-tighter leading-tight" style={{
+                  textShadow: '0 6px 20px rgba(59, 130, 246, 0.45), 0 0 30px rgba(6, 182, 212, 0.2)'
                 }}>
                   ${commodities.find((c) => c.id === hoveredBubble)?.currentPrice.toFixed(2)}
                 </p>
@@ -342,9 +342,9 @@ export default function BubbleMap({ commodities = mockCommodities }: { commoditi
                 transition={{ delay: 0.15, duration: 0.3 }}
               >
                 <p className="text-xs text-gray-500 uppercase tracking-widest mb-3 font-bold">24h Change</p>
-                <div className="flex items-baseline gap-3">
+                <div className="flex items-baseline gap-4">
                   <span
-                    className={`text-3xl font-black font-mono ${
+                    className={`text-4xl font-black font-mono ${
                       (commodities.find((c) => c.id === hoveredBubble)?.change24h ?? 0) > 0
                         ? 'text-green-400'
                         : (commodities.find((c) => c.id === hoveredBubble)?.change24h ?? 0) < 0
