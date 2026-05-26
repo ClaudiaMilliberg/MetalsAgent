@@ -12,55 +12,86 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="sticky top-0 z-50 glass-premium border-b border-white/10">
+    <nav className="sticky top-0 z-50 glass-premium-strong border-b border-white/10 shadow-xl">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          {/* Logo */}
-          <div className="flex items-center gap-3">
-            <div className="text-2xl">🫧</div>
-            <h1 className="text-xl font-bold text-white hidden sm:block tracking-tight">
-              CommodityBubbles
-            </h1>
+        <div className="flex justify-between items-center h-16 sm:h-20">
+          {/* Logo Section */}
+          <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
+            <button
+              onClick={() => router.push('/')}
+              className="flex items-center gap-2 sm:gap-3 hover:opacity-80 transition-opacity duration-300 rounded-lg px-2 sm:px-3 py-1.5 hover:bg-white/5"
+            >
+              <div className="text-2xl sm:text-3xl flex-shrink-0">🫧</div>
+              <h1 className="text-lg sm:text-xl font-black text-white hidden sm:block tracking-tight whitespace-nowrap">
+                CommodityBubbles
+              </h1>
+            </button>
+          </div>
+
+          {/* Center Navigation Links - Hidden on Mobile */}
+          <div className="hidden lg:flex items-center gap-1">
+            <a href="/dashboard" className="px-4 py-2 rounded-lg text-sm font-semibold text-gray-300 hover:text-white hover:bg-white/10 transition duration-300">
+              Dashboard
+            </a>
+            <a href="/bubbles" className="px-4 py-2 rounded-lg text-sm font-semibold text-gray-300 hover:text-white hover:bg-white/10 transition duration-300">
+              Bubbles
+            </a>
+            <a href="/mines" className="px-4 py-2 rounded-lg text-sm font-semibold text-gray-300 hover:text-white hover:bg-white/10 transition duration-300">
+              Mines
+            </a>
           </div>
 
           {/* Status Indicator */}
-          <div className="flex items-center gap-3 px-4 py-2 rounded-lg bg-green-500/10 border border-green-500/30">
-            <div className="w-2.5 h-2.5 bg-green-400 rounded-full animate-pulse shadow-lg shadow-green-500/50"></div>
-            <span className="text-xs text-green-300 font-semibold hidden sm:block uppercase tracking-widest">Live Data</span>
+          <div className="hidden sm:flex items-center gap-2 px-3 sm:px-4 py-2 rounded-lg bg-emerald-500/10 border border-emerald-500/30 mx-2 sm:mx-4">
+            <div className="w-2 h-2 sm:w-2.5 sm:h-2.5 bg-emerald-400 rounded-full animate-pulse shadow-lg shadow-emerald-500/50 flex-shrink-0"></div>
+            <span className="text-xs text-emerald-300 font-semibold uppercase tracking-widest whitespace-nowrap">Live</span>
           </div>
 
           {/* User Menu */}
-          <div className="relative">
+          <div className="relative flex-shrink-0">
             <button
               onClick={() => setUserMenuOpen(!userMenuOpen)}
-              className="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-white/10 transition duration-300 ease-premium"
+              className="flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3 py-2 rounded-lg hover:bg-white/10 transition duration-300 ease-premium border border-transparent hover:border-white/20"
+              title="User menu"
             >
-              <div className="w-8 h-8 bg-blue-500/20 rounded-full border border-blue-500 flex items-center justify-center">
-                <span className="text-xs font-bold text-blue-400">U</span>
+              <div className="w-8 h-8 bg-gradient-to-br from-blue-500/30 to-cyan-500/30 rounded-full border border-blue-500/50 flex items-center justify-center flex-shrink-0 shadow-lg shadow-blue-500/20">
+                <span className="text-xs font-bold text-blue-300">👤</span>
               </div>
-              <span className="text-sm text-gray-300 hidden sm:block">User</span>
-              <span className="text-gray-400">▼</span>
+              <span className="text-sm text-gray-300 hidden sm:block font-semibold">User</span>
+              <span className={`text-gray-400 text-xs sm:text-sm transition-transform duration-300 ${userMenuOpen ? 'rotate-180' : ''}`}>▼</span>
             </button>
 
             {/* Dropdown Menu */}
             {userMenuOpen && (
-              <div className="absolute right-0 mt-2 w-48 glass-premium border-white/10 rounded-lg shadow-2xl overflow-hidden">
-                <button className="w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-white/10 transition duration-300">
-                  Profile
-                </button>
-                <button className="w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-white/10 transition duration-300">
-                  Settings
-                </button>
-                <button className="w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-white/10 transition duration-300 border-t border-white/10">
-                  Help
-                </button>
-                <button
-                  onClick={handleLogout}
-                  className="w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-red-500/10 transition duration-300 border-t border-white/10"
-                >
-                  Logout
-                </button>
-              </div>
+              <>
+                {/* Backdrop for mobile */}
+                <div
+                  className="fixed inset-0 sm:absolute z-40"
+                  onClick={() => setUserMenuOpen(false)}
+                  style={{ top: '100%', left: '-9999px', right: '-9999px', bottom: '-9999px' }}
+                />
+                <div className="absolute right-0 mt-2 w-56 sm:w-48 glass-premium-strong border-white/10 rounded-xl shadow-2xl overflow-hidden z-50">
+                  <div className="p-3 border-b border-white/10">
+                    <p className="text-xs text-gray-400 uppercase tracking-widest font-semibold mb-1">Account</p>
+                    <p className="text-sm font-semibold text-white">Demo User</p>
+                  </div>
+                  <button className="w-full text-left px-4 py-3 text-sm text-gray-300 hover:bg-white/10 transition duration-300 flex items-center gap-2">
+                    <span>👤</span> Profile
+                  </button>
+                  <button className="w-full text-left px-4 py-3 text-sm text-gray-300 hover:bg-white/10 transition duration-300 flex items-center gap-2">
+                    <span>⚙️</span> Settings
+                  </button>
+                  <button className="w-full text-left px-4 py-3 text-sm text-gray-300 hover:bg-white/10 transition duration-300 border-t border-white/10 flex items-center gap-2">
+                    <span>❓</span> Help & Support
+                  </button>
+                  <button
+                    onClick={handleLogout}
+                    className="w-full text-left px-4 py-3 text-sm text-red-400 hover:bg-red-500/10 transition duration-300 border-t border-white/10 flex items-center gap-2 font-semibold"
+                  >
+                    <span>🚪</span> Logout
+                  </button>
+                </div>
+              </>
             )}
           </div>
         </div>
