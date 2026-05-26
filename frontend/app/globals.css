@@ -319,6 +319,24 @@ select:focus {
   .animate-shimmer {
     animation: shimmer 2s infinite;
   }
+
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px) translateX(0px);
+    }
+    50% {
+      transform: translateY(-30px) translateX(20px);
+    }
+  }
+
+  @keyframes float-reverse {
+    0%, 100% {
+      transform: translateY(0px) translateX(0px);
+    }
+    50% {
+      transform: translateY(30px) translateX(-20px);
+    }
+  }
 }
 
 /* ====== REDUCED MOTION SUPPORT ====== */

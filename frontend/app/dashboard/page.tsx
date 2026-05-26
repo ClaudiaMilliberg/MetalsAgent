@@ -68,13 +68,41 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0a0e27] via-[#0d1135] to-[#1a0f2e] text-white relative overflow-hidden">
-      {/* Atmospheric background lights */}
+    <div className="min-h-screen bg-gradient-to-br from-[#030810] via-[#0a0e1f] to-[#0f0820] text-white relative overflow-hidden">
+      {/* Ultra-deep cinematic background layers */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {/* Top-right blue light */}
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl"></div>
-        {/* Bottom-left purple light */}
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-purple-500/5 rounded-full blur-3xl"></div>
+        {/* Radial grid structure - subtle spatial reference */}
+        <div className="absolute inset-0 opacity-[0.02]" style={{
+          backgroundImage: 'radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.3) 1px, transparent 1px)',
+          backgroundSize: '100px 100px'
+        }}></div>
+
+        {/* Primary atmospheric orb - top right */}
+        <div className="absolute -top-64 -right-64 w-[600px] h-[600px] bg-blue-600/15 rounded-full blur-3xl opacity-40 animate-pulse" style={{
+          animationDuration: '8s'
+        }}></div>
+
+        {/* Secondary atmospheric orb - bottom left */}
+        <div className="absolute -bottom-64 -left-64 w-[500px] h-[500px] bg-cyan-600/10 rounded-full blur-3xl opacity-30" style={{
+          animation: 'float 15s ease-in-out infinite'
+        }}></div>
+
+        {/* Tertiary atmospheric orb - center */}
+        <div className="absolute top-1/2 left-1/3 w-[400px] h-[400px] bg-purple-600/8 rounded-full blur-3xl opacity-20" style={{
+          animation: 'float-reverse 20s ease-in-out infinite'
+        }}></div>
+
+        {/* Vignette effect - edges darker */}
+        <div className="absolute inset-0 bg-radial-gradient" style={{
+          background: 'radial-gradient(ellipse at center, transparent 0%, rgba(0, 0, 0, 0.4) 100%)',
+          pointerEvents: 'none'
+        }}></div>
+
+        {/* Subtle noise texture overlay */}
+        <div className="absolute inset-0 opacity-[0.02]" style={{
+          backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" /%3E%3C/filter%3E%3Crect width="400" height="400" filter="url(%23noiseFilter)" /%3E%3C/svg%3E")',
+          backgroundSize: '400px 400px'
+        }}></div>
       </div>
 
       <Navbar />
