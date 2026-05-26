@@ -94,7 +94,7 @@ export default function Dashboard() {
         }}></div>
 
         {/* PRIMARY ATMOSPHERIC ORB - Top Right (Blue dominant with enhanced glow) */}
-        <div className="absolute -top-96 -right-96 w-[950px] h-[950px] rounded-full opacity-65 animate-pulse" style={{
+        <div className="absolute -top-96 -right-96 sm:w-[950px] sm:h-[950px] w-[600px] h-[600px] md:w-[950px] md:h-[950px] rounded-full opacity-65 animate-pulse" style={{
           animationDuration: '8s',
           background: 'radial-gradient(circle at 40% 40%, rgba(59, 130, 246, 0.3) 0%, rgba(37, 99, 235, 0.1) 50%, transparent 100%)',
           filter: 'blur(80px)',
@@ -102,7 +102,7 @@ export default function Dashboard() {
         }}></div>
 
         {/* SECONDARY ATMOSPHERIC ORB - Bottom Left (Cyan with rim light) */}
-        <div className="absolute -bottom-72 -left-72 w-[750px] h-[750px] rounded-full opacity-55" style={{
+        <div className="absolute -bottom-72 -left-72 sm:w-[750px] sm:h-[750px] w-[450px] h-[450px] md:w-[750px] md:h-[750px] rounded-full opacity-55" style={{
           background: 'radial-gradient(circle at 30% 30%, rgba(34, 211, 238, 0.35) 0%, rgba(34, 211, 238, 0.1) 45%, transparent 100%)',
           filter: 'blur(90px)',
           animation: 'float 16s ease-in-out infinite',
@@ -110,7 +110,7 @@ export default function Dashboard() {
         }}></div>
 
         {/* TERTIARY ATMOSPHERIC ORB - Center-left (Purple with depth) */}
-        <div className="absolute top-1/3 left-1/4 w-[550px] h-[550px] rounded-full opacity-45" style={{
+        <div className="absolute top-1/3 left-1/4 sm:w-[550px] sm:h-[550px] w-[350px] h-[350px] md:w-[550px] md:h-[550px] rounded-full opacity-45" style={{
           background: 'radial-gradient(circle at 35% 35%, rgba(168, 85, 247, 0.25) 0%, rgba(168, 85, 247, 0.08) 50%, transparent 100%)',
           filter: 'blur(85px)',
           animation: 'float-reverse 22s ease-in-out infinite',
@@ -118,7 +118,7 @@ export default function Dashboard() {
         }}></div>
 
         {/* FOURTH ORB - Right center accent (Cyan rim) */}
-        <div className="absolute top-1/2 -right-36 w-[450px] h-[450px] rounded-full opacity-40" style={{
+        <div className="absolute top-1/2 -right-36 sm:w-[450px] sm:h-[450px] w-[300px] h-[300px] md:w-[450px] md:h-[450px] rounded-full opacity-40" style={{
           background: 'radial-gradient(circle at 30% 30%, rgba(6, 182, 212, 0.3) 0%, rgba(6, 182, 212, 0.08) 50%, transparent 100%)',
           filter: 'blur(75px)',
           animation: 'float 28s ease-in-out infinite',
@@ -146,17 +146,17 @@ export default function Dashboard() {
 
       <Navbar />
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 relative z-10">
+      <main className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-6 sm:py-8 md:py-12 relative z-10">
         {/* Hero Section with Bubble Map */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8 sm:mb-12">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6 mb-6 sm:mb-8 md:mb-12">
           {/* Bubble Map - Takes 2/3 on desktop */}
-          <div className="lg:col-span-2 h-72 sm:h-96 lg:h-[500px] rounded-2xl overflow-hidden shadow-2xl">
+          <div className="lg:col-span-2 h-56 sm:h-72 md:h-96 lg:h-[500px] rounded-xl sm:rounded-2xl overflow-hidden shadow-2xl">
             <BubbleMap commodities={commodities} />
           </div>
 
           {/* Quick Stats Panel - Takes 1/3 on desktop */}
-          <div className="glass-premium-strong p-6 sm:p-8 rounded-2xl shadow-2xl">
-            <div className="space-y-8">
+          <div className="glass-premium-strong p-5 sm:p-6 md:p-8 rounded-xl sm:rounded-2xl shadow-2xl">
+            <div className="space-y-6 sm:space-y-8">
               {/* Portfolio Value */}
               <div>
                 <p className="text-xs text-gray-500 uppercase tracking-widest mb-3">Total Portfolio Value</p>
@@ -219,7 +219,7 @@ export default function Dashboard() {
             </button>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
             {commodities.map((commodity) => (
               <PriceCard
                 key={commodity.id}
@@ -239,9 +239,9 @@ export default function Dashboard() {
         </div>
 
         {/* News Feed Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
           {/* News Feed - Takes 2/3 on desktop */}
-          <div className="lg:col-span-2 glass-premium-strong p-6 sm:p-8 rounded-2xl shadow-2xl">
+          <div className="lg:col-span-2 glass-premium-strong p-5 sm:p-6 md:p-8 rounded-xl sm:rounded-2xl shadow-2xl">
             <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4 sm:gap-0 mb-8">
               <div>
                 <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white mb-2 leading-tight">Latest News</h2>
@@ -255,10 +255,10 @@ export default function Dashboard() {
           </div>
 
           {/* Sentiment Summary - Takes 1/3 on desktop */}
-          <div className="glass-premium-strong p-6 sm:p-8 rounded-2xl shadow-2xl">
-            <h3 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white mb-6 leading-tight">Sentiment Overview</h3>
+          <div className="glass-premium-strong p-5 sm:p-6 md:p-8 rounded-xl sm:rounded-2xl shadow-2xl">
+            <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-black text-white mb-4 sm:mb-6 leading-tight">Sentiment Overview</h3>
 
-            <div className="space-y-4 sm:space-y-5">
+            <div className="space-y-3 sm:space-y-4 md:space-y-5">
               {/* Bullish Card */}
               <div className="group rounded-lg p-5 border border-white/10 bg-gradient-to-r from-green-500/5 to-transparent hover:border-green-500/40 hover:bg-green-500/15 transition-all duration-300 ease-premium cursor-pointer hover:-translate-y-1">
                 <div className="flex items-center justify-between mb-3">
@@ -313,9 +313,9 @@ export default function Dashboard() {
       </main>
 
       {/* Footer */}
-      <footer className="mt-16 sm:mt-20 border-t border-white/10 relative z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-12 mb-12">
+      <footer className="mt-12 sm:mt-16 md:mt-20 border-t border-white/10 relative z-10">
+        <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-8 sm:py-12 md:py-16 lg:py-20">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 md:gap-12 mb-8 sm:mb-12">
             {/* Company */}
             <div>
               <h4 className="text-white font-bold text-lg mb-4">CommodityBubbles</h4>

@@ -162,12 +162,12 @@ export default function BubblesPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#030810] via-[#0a0e1f] to-[#0f0820] p-4 sm:p-6">
+    <div className="min-h-screen bg-gradient-to-br from-[#030810] via-[#0a0e1f] to-[#0f0820] p-3 sm:p-4 md:p-6">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="mb-8 sm:mb-12">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-3">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white leading-tight">🫧 Sentiment Bubbles</h1>
+        <div className="mb-6 sm:mb-8 md:mb-12">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 mb-2 sm:mb-3">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white leading-tight">🫧 Sentiment Bubbles</h1>
             <button
               onClick={() => {
                 setLoading(true);
@@ -193,9 +193,9 @@ export default function BubblesPage() {
         </div>
 
         {/* Controls */}
-        <div className="mb-8 space-y-4">
+        <div className="mb-6 sm:mb-8 space-y-3 sm:space-y-4">
           {/* Search and Sort Row */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-3 md:gap-4">
             {/* Search */}
             <input
               type="text"
@@ -218,11 +218,11 @@ export default function BubblesPage() {
           </div>
 
           {/* Source Filter Row */}
-          <div className="flex flex-wrap gap-2 md:gap-3">
+          <div className="flex flex-wrap gap-2 sm:gap-2.5">
             <span className="text-xs text-gray-400 uppercase tracking-wider self-center font-semibold">Signals:</span>
             <button
               onClick={() => setVisibleSources((v) => ({ ...v, reddit: !v.reddit }))}
-              className={`px-3 py-2 rounded-lg text-sm font-semibold transition duration-300 ease-premium border ${
+              className={`px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm font-semibold transition duration-300 ease-premium border touch-target ${
                 visibleSources.reddit
                   ? 'bg-orange-600/50 text-orange-200 border-orange-500/50 shadow-lg shadow-orange-500/20'
                   : 'bg-slate-800/50 text-slate-400 border-slate-700 hover:bg-slate-700/50'
@@ -233,7 +233,7 @@ export default function BubblesPage() {
             </button>
             <button
               onClick={() => setVisibleSources((v) => ({ ...v, news: !v.news }))}
-              className={`px-3 py-2 rounded-lg text-sm font-semibold transition duration-300 ease-premium border ${
+              className={`px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm font-semibold transition duration-300 ease-premium border touch-target ${
                 visibleSources.news
                   ? 'bg-white/20 text-white border-white/50 shadow-lg shadow-white/20'
                   : 'bg-slate-800/50 text-slate-400 border-slate-700 hover:bg-slate-700/50'
@@ -244,7 +244,7 @@ export default function BubblesPage() {
             </button>
             <button
               onClick={() => setVisibleSources((v) => ({ ...v, twitter: !v.twitter }))}
-              className={`px-3 py-2 rounded-lg text-sm font-semibold transition duration-300 ease-premium border ${
+              className={`px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm font-semibold transition duration-300 ease-premium border touch-target ${
                 visibleSources.twitter
                   ? 'bg-blue-600/50 text-blue-200 border-blue-500/50 shadow-lg shadow-blue-500/20'
                   : 'bg-slate-800/50 text-slate-400 border-slate-700 hover:bg-slate-700/50'
@@ -255,7 +255,7 @@ export default function BubblesPage() {
             </button>
             <button
               onClick={() => setVisibleSources((v) => ({ ...v, onchain: !v.onchain }))}
-              className={`px-3 py-2 rounded-lg text-sm font-semibold transition duration-300 ease-premium border ${
+              className={`px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm font-semibold transition duration-300 ease-premium border touch-target ${
                 visibleSources.onchain
                   ? 'bg-purple-600/50 text-purple-200 border-purple-500/50 shadow-lg shadow-purple-500/20'
                   : 'bg-slate-800/50 text-slate-400 border-slate-700 hover:bg-slate-700/50'

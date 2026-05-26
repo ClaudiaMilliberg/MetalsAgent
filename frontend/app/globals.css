@@ -279,8 +279,9 @@ select:focus {
     border-radius: 1rem;
     position: relative;
     box-shadow:
-      inset 0 1px 3px rgba(255, 255, 255, 0.15),
-      inset 0 0 30px rgba(255, 255, 255, 0.10),
+      inset 0 2px 4px rgba(255, 255, 255, 0.2),
+      inset 0 -1px 2px rgba(0, 0, 0, 0.1),
+      inset 0 0 30px rgba(255, 255, 255, 0.12),
       0 12px 48px rgba(0, 0, 0, 0.6),
       0 0 0 1px rgba(255, 255, 255, 0.12);
   }
@@ -291,24 +292,26 @@ select:focus {
     top: 0;
     left: 0;
     right: 0;
-    height: 1px;
-    background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.3), transparent);
+    height: 1.5px;
+    background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.4), transparent);
     border-radius: 1rem 1rem 0 0;
     pointer-events: none;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
   }
 
   .glass-premium-strong {
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.20) 0%, rgba(255, 255, 255, 0.10) 100%);
-    backdrop-filter: blur(36px);
-    -webkit-backdrop-filter: blur(36px);
-    border: 1px solid rgba(255, 255, 255, 0.30);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0.10) 100%);
+    backdrop-filter: blur(40px);
+    -webkit-backdrop-filter: blur(40px);
+    border: 1px solid rgba(255, 255, 255, 0.32);
     border-radius: 1rem;
     position: relative;
     box-shadow:
-      inset 0 1px 3px rgba(255, 255, 255, 0.18),
-      inset 0 0 40px rgba(255, 255, 255, 0.14),
-      0 18px 72px rgba(0, 0, 0, 0.7),
-      0 0 0 1px rgba(255, 255, 255, 0.15);
+      inset 0 2px 5px rgba(255, 255, 255, 0.22),
+      inset 0 -2px 4px rgba(0, 0, 0, 0.15),
+      inset 0 0 50px rgba(255, 255, 255, 0.16),
+      0 20px 60px rgba(0, 0, 0, 0.75),
+      0 0 0 1px rgba(255, 255, 255, 0.18);
   }
 
   .glass-premium-strong::before {
@@ -317,10 +320,41 @@ select:focus {
     top: 0;
     left: 0;
     right: 0;
-    height: 1.5px;
-    background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.4), transparent);
+    height: 2px;
+    background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.5), transparent);
     border-radius: 1rem 1rem 0 0;
     pointer-events: none;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  }
+
+  /* Detail card styling */
+  .detail-card {
+    @apply glass-premium-strong rounded-2xl p-8 relative overflow-hidden;
+    animation: slide-up 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .detail-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.2), transparent);
+    pointer-events: none;
+  }
+
+  /* Data card styling with depth */
+  .data-card {
+    @apply rounded-lg p-5 border border-white/10 transition-all duration-300 ease-premium;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 100%);
+    box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.08);
+  }
+
+  .data-card:hover {
+    @apply border-white/20;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 255, 0.04) 100%);
+    box-shadow: inset 0 1px 3px rgba(255, 255, 255, 0.12);
   }
 
   /* ====== PREMIUM NAVIGATION TABS ====== */
@@ -563,6 +597,31 @@ select:focus {
 
   .animate-slide-up {
     animation: slide-up 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  /* ====== MOBILE TOUCH OPTIMIZATION ====== */
+
+  .touch-target {
+    @apply min-h-[44px] min-w-[44px] flex items-center justify-center;
+  }
+
+  /* Responsive font scaling for mobile */
+  @media (max-width: 640px) {
+    h1 {
+      font-size: clamp(24px, 6vw, 32px);
+    }
+    h2 {
+      font-size: clamp(20px, 5vw, 28px);
+    }
+    h3 {
+      font-size: clamp(16px, 4vw, 24px);
+    }
+    h4, h5, h6 {
+      font-size: clamp(14px, 3vw, 18px);
+    }
+    body {
+      font-size: clamp(13px, 2vw, 14px);
+    }
   }
 }
 

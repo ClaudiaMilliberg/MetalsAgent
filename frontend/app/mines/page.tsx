@@ -74,12 +74,12 @@ export default function MinesPage() {
   const totalDisruptionPercent = disruptions.reduce((sum, d) => sum + d.affectedOutput, 0);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#030810] via-[#0a0e1f] to-[#0f0820] p-4 sm:p-6">
+    <div className="min-h-screen bg-gradient-to-br from-[#030810] via-[#0a0e1f] to-[#0f0820] p-3 sm:p-4 md:p-6">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="mb-8 sm:mb-12">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-3">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white leading-tight">⛏️ Mining Operations</h1>
+        <div className="mb-6 sm:mb-8 md:mb-12">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 mb-2 sm:mb-3">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white leading-tight">⛏️ Mining Operations</h1>
             <button
               onClick={() => {
                 setLoading(true);
@@ -105,7 +105,7 @@ export default function MinesPage() {
         </div>
 
         {/* Supply at Risk Card */}
-        <div className={`mb-8 rounded-2xl border p-6 sm:p-8 shadow-2xl transition-all duration-300 ${
+        <div className={`mb-6 sm:mb-8 rounded-xl sm:rounded-2xl border p-5 sm:p-6 md:p-8 shadow-2xl transition-all duration-300 ${
           totalDisruptionPercent > 15
             ? 'glass-premium-strong border-red-500/40 bg-gradient-to-br from-red-950/30 to-red-950/10'
             : 'glass-premium-strong border-green-500/40 bg-gradient-to-br from-green-950/20 to-green-950/5'
