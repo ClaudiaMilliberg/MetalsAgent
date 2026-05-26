@@ -8,7 +8,7 @@ import {
   CircleDollarSign,
   Hexagon,
   BatteryCharging,
-  Flake,
+  Snowflake,
   Gem,
 } from 'lucide-react';
 import { getCommodityColor } from '@/lib/cinematic-design-system';

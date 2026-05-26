@@ -150,7 +150,7 @@ export const COMMODITY_COLORS = {
   cobalt: {
     name: 'Cobalt',
     tier: 3,
-    icon: 'Flake',
+    icon: 'Snowflake',
     primary: '#1E90FF',
     gradient: {
       center: '#6EB5FF',
