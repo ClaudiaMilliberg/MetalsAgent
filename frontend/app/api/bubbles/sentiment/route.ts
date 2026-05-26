@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { fetchRedditCommodityPosts, findCommodityMentions } from '@/lib/reddit';
 import { fetchCommodityNews } from '@/lib/gdelt';
+import { fetchMetalPrice } from '@/lib/metals-live';
 
 // Real sentiment data - aggregate from Reddit + News + GDELT
 const getRealSentiment = async () => {
@@ -61,7 +62,7 @@ export async function GET() {
     const redditMentions = findCommodityMentions(redditPosts, commodityList);
 
     // Build sentiment scores
-    const commodities = commodityList.map((name) => {
+    const commodities = await Promise.all(commodityList.map(async (name) => {
       const redditData = redditMentions.find((m) => m.commodity.toLowerCase() === name);
       const newsData = newsEvents.filter((e) => e.title.toLowerCase().includes(name));
 
@@ -71,6 +72,19 @@ export async function GET() {
         ? newsData.reduce((sum, e) => sum + (e.sentiment || 0), 0) / (newsData.length || 1) * 10
         : 0;
       const avgScore = (redditScore + newsScore) / 2;
+
+      // Fetch real price data from metals.live
+      let price = Math.random() * 5000 + 100;
+      let change24h = (Math.random() - 0.5) * 10;
+      try {
+        const metalPrice = await fetchMetalPrice(name);
+        if (metalPrice) {
+          price = metalPrice.price;
+          change24h = metalPrice.changePercent;
+        }
+      } catch (e) {
+        // Fallback to random if API fails
+      }
 
       const sentiment = avgScore > 40 ? 'bullish' : avgScore < -40 ? 'bearish' : 'neutral';
 
@@ -82,12 +96,12 @@ export async function GET() {
         onchain: 20 + Math.random() * 25,
       };
 
-      const total = Object.values(signalBreakdown).reduce((a, b) => a + b, 0);
+      const total = Object.values(signalBreakdown).reduce((a: number, b: number) => a + b, 0);
       const normalized = Object.fromEntries(
         Object.entries(signalBreakdown).map(([k, v]) => [k, (v / total) * 100])
       ) as any;
 
-      const dominantSource = Object.entries(normalized).sort(([, a], [, b]) => b - a)[0];
+      const dominantSource = Object.entries(normalized).sort(([, a], [, b]) => (b as number) - (a as number))[0];
       const glowMap: Record<string, string> = {
         reddit: 'orange',
         news: 'white',
@@ -98,8 +112,8 @@ export async function GET() {
       return {
         id: name,
         name: name.charAt(0).toUpperCase() + name.slice(1),
-        price: Math.random() * 5000 + 100,
-        change24h: (avgScore / 100) * 5 + (Math.random() - 0.5) * 3,
+        price,
+        change24h,
         sentiment,
         score: Math.max(0, Math.min(100, avgScore + 50)),
         volatility: 5 + Math.random() * 15,
@@ -113,7 +127,7 @@ export async function GET() {
         confidence: 65 + Math.random() * 30,
         lastUpdated: new Date().toISOString(),
       };
-    });
+    }));
 
     return NextResponse.json(
       {

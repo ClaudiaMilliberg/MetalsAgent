@@ -28,37 +28,22 @@ export interface InfrastructureProject {
   commodityAffected: string[];
 }
 
+interface SentimentData {
+  sentiment: 'bullish' | 'bearish' | 'neutral';
+  score: number;
+  mentionCount: number;
+  articles: Array<{
+    title: string;
+    source: string;
+    url: string;
+  }>;
+}
+
 interface SentimentResponse {
-  copper?: {
-    sentiment: 'bullish' | 'bearish' | 'neutral';
-    score: number;
-    mentionCount: number;
-    articles: Array<{
-      title: string;
-      source: string;
-      url: string;
-    }>;
-  };
-  uranium?: {
-    sentiment: 'bullish' | 'bearish' | 'neutral';
-    score: number;
-    mentionCount: number;
-    articles: Array<{
-      title: string;
-      source: string;
-      url: string;
-    }>;
-  };
-  water?: {
-    sentiment: 'bullish' | 'bearish' | 'neutral';
-    score: number;
-    mentionCount: number;
-    articles: Array<{
-      title: string;
-      source: string;
-      url: string;
-    }>;
-  };
+  [key: string]: SentimentData | undefined;
+  copper?: SentimentData;
+  uranium?: SentimentData;
+  water?: SentimentData;
 }
 
 interface CommoditiesState {

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 interface Disruption {
   id: string;
@@ -30,6 +30,7 @@ interface Props {
 
 export default function DisruptionPanel({ disruptions, loading }: Props) {
   const [activeTab, setActiveTab] = useState<'disruptions' | 'supply' | 'futures'>('disruptions');
+  const [futuresGranularity, setFuturesGranularity] = useState<'summary' | 'monthly' | 'quarterly'>('summary');
 
   // Mock supply additions data
   const supplyAdditions: Supply[] = [
@@ -65,34 +66,61 @@ export default function DisruptionPanel({ disruptions, loading }: Props) {
     },
   ];
 
-  // Mock futures timeline
-  const futuresTimeline = [
-    {
-      months: 0,
-      forecast: 'Current: Tight supply, risks elevated',
-      priceTarget: 4.65,
-    },
-    {
-      months: 3,
-      forecast: 'Q2: Kamoa ramps, supply eases slightly',
-      priceTarget: 4.42,
-    },
-    {
-      months: 6,
-      forecast: 'H2: Seasonal demand decline expected',
-      priceTarget: 4.18,
-    },
-    {
-      months: 12,
-      forecast: '2027: Major supply additions online',
-      priceTarget: 3.95,
-    },
-    {
-      months: 24,
-      forecast: '2028: EV demand ramp offsets supply',
-      priceTarget: 4.35,
-    },
-  ];
+  // Generate futures timeline based on granularity
+  const generateFuturesTimeline = () => {
+    const basePrices = { 0: 4.65, 3: 4.42, 6: 4.18, 12: 3.95, 24: 4.35 };
+    const baseForecasts = {
+      0: 'Current: Tight supply, risks elevated',
+      3: 'Q2: Kamoa ramps, supply eases slightly',
+      6: 'H2: Seasonal demand decline expected',
+      12: '2027: Major supply additions online',
+      24: '2028: EV demand ramp offsets supply',
+    };
+
+    if (futuresGranularity === 'summary') {
+      // High-level 5-point timeline
+      return Object.entries(basePrices).map(([months, price]) => ({
+        months: parseInt(months),
+        forecast: baseForecasts[parseInt(months) as keyof typeof baseForecasts] || '',
+        priceTarget: price,
+      }));
+    }
+
+    if (futuresGranularity === 'monthly') {
+      // Monthly breakdown from 0 to 24 months
+      const timeline = [];
+      for (let m = 0; m <= 24; m += 1) {
+        // Interpolate prices
+        let price = 4.65;
+        if (m <= 3) price = 4.65 - (0.23 / 3) * m;
+        else if (m <= 6) price = 4.42 - (0.24 / 3) * (m - 3);
+        else if (m <= 12) price = 4.18 - (0.23 / 6) * (m - 6);
+        else if (m <= 24) price = 3.95 + (0.40 / 12) * (m - 12);
+
+        timeline.push({
+          months: m,
+          forecast: m === 0 ? 'Now' : `+${m}mo`,
+          priceTarget: parseFloat(price.toFixed(2)),
+        });
+      }
+      return timeline;
+    }
+
+    // Quarterly breakdown
+    return [
+      { months: 0, forecast: 'Q1 Current', priceTarget: 4.65 },
+      { months: 3, forecast: 'Q2', priceTarget: 4.42 },
+      { months: 6, forecast: 'Q3', priceTarget: 4.18 },
+      { months: 9, forecast: 'Q4', priceTarget: 4.07 },
+      { months: 12, forecast: 'Q1 2027', priceTarget: 3.95 },
+      { months: 15, forecast: 'Q2 2027', priceTarget: 4.05 },
+      { months: 18, forecast: 'Q3 2027', priceTarget: 4.15 },
+      { months: 21, forecast: 'Q4 2027', priceTarget: 4.25 },
+      { months: 24, forecast: 'Q1 2028', priceTarget: 4.35 },
+    ];
+  };
+
+  const futuresTimeline = generateFuturesTimeline();
 
   const severityColor = (severity: string) => {
     switch (severity) {
@@ -222,12 +250,49 @@ export default function DisruptionPanel({ disruptions, loading }: Props) {
       {activeTab === 'futures' && (
         <>
           <h2 className="text-lg font-bold text-white mb-4">Price Futures Timeline</h2>
-          <div className="space-y-2 text-xs">
+
+          {/* Granularity Controls */}
+          <div className="flex gap-1 mb-4">
+            <button
+              onClick={() => setFuturesGranularity('summary')}
+              className={`px-2 py-1 text-xs font-semibold rounded transition ${
+                futuresGranularity === 'summary'
+                  ? 'bg-emerald-600 text-white'
+                  : 'bg-slate-700 text-slate-300 hover:bg-slate-600'
+              }`}
+            >
+              Summary
+            </button>
+            <button
+              onClick={() => setFuturesGranularity('monthly')}
+              className={`px-2 py-1 text-xs font-semibold rounded transition ${
+                futuresGranularity === 'monthly'
+                  ? 'bg-emerald-600 text-white'
+                  : 'bg-slate-700 text-slate-300 hover:bg-slate-600'
+              }`}
+            >
+              Monthly
+            </button>
+            <button
+              onClick={() => setFuturesGranularity('quarterly')}
+              className={`px-2 py-1 text-xs font-semibold rounded transition ${
+                futuresGranularity === 'quarterly'
+                  ? 'bg-emerald-600 text-white'
+                  : 'bg-slate-700 text-slate-300 hover:bg-slate-600'
+              }`}
+            >
+              Quarterly
+            </button>
+          </div>
+
+          <div className="space-y-2 text-xs max-h-72 overflow-y-auto">
             {futuresTimeline.map((f, i) => (
               <div key={i} className="bg-slate-700/30 border border-slate-600/50 rounded p-2">
                 <div className="flex justify-between items-start">
                   <div className="flex-1">
-                    <p className="font-semibold text-slate-300">{f.months === 0 ? 'Now' : `+${f.months}mo`}</p>
+                    <p className="font-semibold text-slate-300">
+                      {f.months === 0 ? 'Now' : `+${f.months}mo`}
+                    </p>
                     <p className="text-slate-400 text-xs mt-1">{f.forecast}</p>
                   </div>
                   <div className="text-right ml-2">

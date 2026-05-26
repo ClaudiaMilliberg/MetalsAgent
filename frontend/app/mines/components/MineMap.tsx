@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 interface Mine {
   id: string;
@@ -177,14 +177,46 @@ interface Props {
 
 export default function MineMap({ selectedRegion }: Props) {
   const [selectedMine, setSelectedMine] = useState<Mine | null>(null);
+  const [colorPhase, setColorPhase] = useState(0);
 
-  const getStatusColor = (status: string, riskLevel: string) => {
-    if (status === 'producing' && riskLevel === 'low') return '#22c55e'; // Green
-    if (status === 'producing' && riskLevel === 'medium') return '#eab308'; // Yellow
-    if (status === 'producing' && riskLevel === 'high') return '#ef4444'; // Red
-    if (status === 'ramping') return '#eab308'; // Yellow
-    if (status === 'development') return '#3b82f6'; // Blue
-    if (status === 'blocked') return '#6b7280'; // Gray
+  // Animate color phase every 100ms for smooth color transitions
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setColorPhase((prev) => (prev + 1) % 360);
+    }, 50);
+    return () => clearInterval(interval);
+  }, []);
+
+  const getStatusColor = (status: string, riskLevel: string, phase: number) => {
+    // High risk: Cycle through red → orange → red
+    if (status === 'producing' && riskLevel === 'high') {
+      const hueOffset = (phase / 360) * 30; // Cycle 30 degrees in hue space (red-orange range)
+      const hue = 0 + hueOffset;
+      return `hsl(${hue}, 100%, 45%)`;
+    }
+
+    // Medium risk: Cycle yellow slowly
+    if ((status === 'producing' && riskLevel === 'medium') || status === 'ramping') {
+      const slowPhase = (phase / 2) % 360; // Slower animation
+      const hue = 45 + ((slowPhase / 360) * 15); // Yellow-orange range
+      return `hsl(${hue}, 100%, 45%)`;
+    }
+
+    // Low risk: Green with subtle brightness pulse
+    if (status === 'producing' && riskLevel === 'low') {
+      const lightness = 45 + (Math.sin((phase / 360) * Math.PI * 2) * 5);
+      return `hsl(120, 100%, ${lightness}%)`;
+    }
+
+    // Development: Blue with slow pulse
+    if (status === 'development') {
+      const lightness = 45 + (Math.sin((phase / 4) / 360 * Math.PI * 2) * 3);
+      return `hsl(210, 100%, ${lightness}%)`;
+    }
+
+    // Blocked: Gray
+    if (status === 'blocked') return '#6b7280';
+
     return '#64748b';
   };
 
@@ -218,6 +250,7 @@ export default function MineMap({ selectedRegion }: Props) {
           {filteredMines.map((mine) => {
             const x = ((mine.lng + 180) / 360) * 1000;
             const y = ((90 - mine.lat) / 180) * 600;
+            const baseColor = getStatusColor(mine.status, mine.riskLevel, colorPhase);
 
             return (
               <g
@@ -225,14 +258,34 @@ export default function MineMap({ selectedRegion }: Props) {
                 onClick={() => setSelectedMine(mine)}
                 style={{ cursor: 'pointer' }}
               >
-                {/* Glow effect for high risk */}
+                {/* Multi-layer glow effect for high risk */}
                 {mine.riskLevel === 'high' && (
+                  <>
+                    <circle
+                      cx={x}
+                      cy={y}
+                      r="35"
+                      fill={baseColor}
+                      opacity="0.08"
+                    />
+                    <circle
+                      cx={x}
+                      cy={y}
+                      r="28"
+                      fill={baseColor}
+                      opacity="0.12"
+                    />
+                  </>
+                )}
+
+                {/* Medium risk glow */}
+                {mine.riskLevel === 'medium' && (
                   <circle
                     cx={x}
                     cy={y}
-                    r="25"
-                    fill={getStatusColor(mine.status, mine.riskLevel)}
-                    opacity="0.2"
+                    r="22"
+                    fill={baseColor}
+                    opacity="0.15"
                   />
                 )}
 
@@ -241,23 +294,39 @@ export default function MineMap({ selectedRegion }: Props) {
                   cx={x}
                   cy={y}
                   r="12"
-                  fill={getStatusColor(mine.status, mine.riskLevel)}
+                  fill={baseColor}
                   stroke={selectedMine?.id === mine.id ? '#fff' : 'none'}
                   strokeWidth="2"
                 />
 
-                {/* Pulse animation for high risk */}
+                {/* Outer ring - high risk */}
                 {mine.riskLevel === 'high' && (
                   <circle
                     cx={x}
                     cy={y}
-                    r="12"
+                    r="16"
                     fill="none"
-                    stroke={getStatusColor(mine.status, mine.riskLevel)}
-                    strokeWidth="1"
-                    opacity="0.5"
+                    stroke={baseColor}
+                    strokeWidth="1.5"
+                    opacity="0.6"
                     style={{
-                      animation: 'pulse 2s infinite',
+                      animation: 'pulse-ring 1.5s infinite',
+                    }}
+                  />
+                )}
+
+                {/* Outer ring - medium risk */}
+                {mine.riskLevel === 'medium' && (
+                  <circle
+                    cx={x}
+                    cy={y}
+                    r="15"
+                    fill="none"
+                    stroke={baseColor}
+                    strokeWidth="1"
+                    opacity="0.4"
+                    style={{
+                      animation: 'pulse-ring 2.5s infinite',
                     }}
                   />
                 )}
@@ -265,11 +334,27 @@ export default function MineMap({ selectedRegion }: Props) {
             );
           })}
 
-          {/* Pulse animation */}
+          {/* Animations */}
           <style>{`
             @keyframes pulse {
               0%, 100% { r: 12; opacity: 0.5; }
               50% { r: 20; opacity: 0; }
+            }
+            @keyframes pulse-ring {
+              0% {
+                r: 16;
+                stroke-width: 1.5;
+                opacity: 0.8;
+              }
+              50% {
+                r: 24;
+                opacity: 0.2;
+              }
+              100% {
+                r: 16;
+                stroke-width: 1.5;
+                opacity: 0.8;
+              }
             }
           `}</style>
         </svg>

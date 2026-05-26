@@ -66,7 +66,15 @@ export default function BubblesPage() {
 
   const filteredCommodities = commodities
     .filter((c) => {
-      if (!visibleSources[c.glow]) return false;
+      // Map glow color to source
+      const sourceMap: Record<string, keyof typeof visibleSources> = {
+        orange: 'reddit',
+        white: 'news',
+        blue: 'twitter',
+        purple: 'onchain',
+      };
+      const source = sourceMap[c.glow as keyof typeof sourceMap] || 'news';
+      if (!visibleSources[source]) return false;
       if (searchTerm && !c.name.toLowerCase().includes(searchTerm.toLowerCase())) return false;
       return true;
     })

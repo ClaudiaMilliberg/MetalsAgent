@@ -6,9 +6,21 @@ interface Commodity {
   id: string;
   name: string;
   price: number;
+  change24h: number;
   sentiment: 'bullish' | 'bearish' | 'neutral';
+  score: number;
   volatility: number;
-  glow: string;
+  glow: 'orange' | 'blue' | 'white' | 'purple';
+  signalBreakdown: {
+    reddit: number;
+    news: number;
+    twitter: number;
+    onchain: number;
+  };
+  headlines: string[];
+  demand: string;
+  confidence: number;
+  lastUpdated: string;
 }
 
 interface Props {
