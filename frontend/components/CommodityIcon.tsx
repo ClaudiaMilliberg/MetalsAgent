@@ -33,7 +33,7 @@ export default function CommodityIcon({ symbol, size = 24, showGlow = true }: Co
     CircleDollarSign,
     Hexagon,
     BatteryCharging,
-    Flake,
+    Snowflake,
     Gem,
   };
 
