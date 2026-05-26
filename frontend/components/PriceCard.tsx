@@ -51,7 +51,21 @@ export default function PriceCard({
   }, [priceHistory]);
 
   return (
-    <div className="glass-premium rounded-xl p-5 group cursor-pointer hover:border-blue-500/30 transition-all duration-500 ease-premium hover:-translate-y-1 relative">
+    <div
+      className="glass-premium rounded-xl p-6 group cursor-pointer transition-all duration-500 ease-premium hover:-translate-y-2 relative overflow-hidden border-t-2"
+      style={{
+        borderTopColor: colors.bg,
+        boxShadow: `inset 0 0 0 1px rgba(255,255,255,0.05)`,
+      }}
+      onMouseEnter={(e) => {
+        const el = e.currentTarget as HTMLDivElement;
+        el.style.boxShadow = `0 0 30px ${colors.bg}40, inset 0 0 0 1px rgba(255,255,255,0.05)`;
+      }}
+      onMouseLeave={(e) => {
+        const el = e.currentTarget as HTMLDivElement;
+        el.style.boxShadow = `inset 0 0 0 1px rgba(255,255,255,0.05)`;
+      }}
+    >
       {/* Header with emoji and sentiment */}
       <div className="flex justify-between items-start mb-5">
         <div className="flex items-center gap-3">

@@ -91,19 +91,19 @@ export default function Dashboard() {
 
               {/* Status */}
               <div className="pt-6 border-t border-white/10">
-                <div className="flex items-center gap-3 px-4 py-3 rounded-lg bg-green-500/10 border border-green-500/30 w-fit">
-                  <div className="w-2.5 h-2.5 bg-green-400 rounded-full animate-pulse shadow-lg shadow-green-500/50"></div>
-                  <p className="text-green-300 text-sm font-semibold uppercase tracking-wider">Live & Updating</p>
+                <div className="flex items-center gap-2 px-4 py-3 rounded-lg glass-premium border-green-500/30 w-fit hover:border-green-500/50 hover:bg-green-500/5 transition-all duration-300">
+                  <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse shadow-lg shadow-green-500/75"></div>
+                  <p className="text-green-300 text-xs font-semibold uppercase tracking-widest">Live & Updating</p>
                 </div>
               </div>
 
               {/* Action Buttons */}
               <div className="pt-6 border-t border-white/10 space-y-3">
-                <button className="w-full px-6 py-4 bg-gradient-to-r from-blue-600 to-blue-500 text-white font-bold rounded-lg hover:shadow-lg hover:shadow-blue-500/50 transition duration-500 transform hover:scale-103 active:scale-98 relative overflow-hidden group ease-premium">
+                <button className="w-full px-6 py-4 bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-bold rounded-lg hover:shadow-2xl hover:shadow-blue-500/60 transition duration-500 transform hover:scale-105 active:scale-98 relative overflow-hidden group ease-premium">
                   <span className="relative z-10">View Prices</span>
-                  <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 transform translate-x-full group-hover:translate-x-0 transition duration-700"></div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/25 to-white/0 transform translate-x-full group-hover:translate-x-0 transition duration-700"></div>
                 </button>
-                <button className="w-full px-6 py-4 border-2 border-blue-500 text-blue-400 font-bold rounded-lg hover:bg-blue-500/10 transition duration-500 ease-premium transform hover:scale-103 active:scale-98">
+                <button className="w-full px-6 py-4 border-2 border-blue-500/50 text-blue-300 font-bold rounded-lg hover:bg-blue-500/10 hover:border-blue-400 transition duration-500 ease-premium transform hover:scale-105 active:scale-98">
                   Set Alerts
                 </button>
               </div>
@@ -112,19 +112,19 @@ export default function Dashboard() {
         </div>
 
         {/* Commodity Filter Tabs */}
-        <div className="mb-8 flex gap-2 border-b border-white/10 pb-4 overflow-x-auto">
+        <div className="mb-8 flex gap-3 border-b border-white/10 pb-4 overflow-x-auto">
           {['All Commodities', 'Metals', 'Energy', 'Agriculture'].map((tab) => (
             <button
               key={tab}
-              className={`px-6 py-2 font-semibold text-sm whitespace-nowrap transition-all duration-300 ease-premium relative ${
+              className={`px-6 py-2.5 font-semibold text-sm whitespace-nowrap transition-all duration-300 ease-premium relative rounded-lg ${
                 tab === 'All Commodities'
-                  ? 'text-white'
-                  : 'text-gray-400 hover:text-gray-200'
+                  ? 'text-white bg-blue-500/10 border border-blue-500/30'
+                  : 'text-gray-400 hover:text-gray-200 border border-transparent hover:border-white/10 hover:bg-white/5'
               }`}
             >
               {tab}
               {tab === 'All Commodities' && (
-                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-500/0 via-blue-500 to-blue-500/0 shadow-lg shadow-blue-500/50"></div>
+                <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-blue-500/0 via-blue-500/10 to-blue-500/0 pointer-events-none"></div>
               )}
             </button>
           ))}
@@ -132,12 +132,12 @@ export default function Dashboard() {
 
         {/* Price Cards Grid */}
         <div className="mb-8">
-          <div className="flex justify-between items-center mb-6">
+          <div className="flex justify-between items-center mb-8">
             <div>
-              <h2 className="text-3xl font-black text-white mb-1">Commodities</h2>
-              <p className="text-xs text-gray-500 uppercase tracking-widest">Live Market Data</p>
+              <h2 className="text-3xl font-black text-white mb-2">Commodities</h2>
+              <p className="text-xs text-gray-500 uppercase tracking-widest">Live Market Data — 24 Assets</p>
             </div>
-            <button className="text-blue-400 text-sm font-semibold hover:text-blue-300 transition">
+            <button className="px-4 py-2 text-blue-300 text-sm font-semibold hover:text-blue-200 hover:bg-blue-500/10 border border-blue-500/30 rounded-lg transition-all duration-300 ease-premium hover:border-blue-500/50">
               View All →
             </button>
           </div>
@@ -176,45 +176,48 @@ export default function Dashboard() {
 
           {/* Sentiment Summary - Takes 1/3 on desktop */}
           <div className="glass-premium-strong p-8">
-            <h3 className="text-xl font-bold text-white mb-6">Sentiment Summary</h3>
+            <h3 className="text-xl font-bold text-white mb-6">Sentiment Overview</h3>
 
-            <div className="space-y-4">
-              {/* Bullish */}
-              <div>
-                <div className="flex justify-between items-center mb-2">
-                  <span className="text-gray-400 text-sm flex items-center gap-2">
-                    <span className="text-lg">📈</span> Bullish
-                  </span>
-                  <span className="text-white font-semibold">50%</span>
+            <div className="space-y-3">
+              {/* Bullish Card */}
+              <div className="group rounded-lg p-4 border border-white/5 bg-gradient-to-r from-green-500/5 to-transparent hover:border-green-500/30 hover:bg-green-500/10 transition-all duration-300 ease-premium cursor-pointer">
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center gap-2">
+                    <div className="w-2.5 h-2.5 rounded-full bg-green-400 shadow-lg shadow-green-500/50"></div>
+                    <span className="text-sm font-semibold text-gray-300">Bullish</span>
+                  </div>
+                  <span className="text-lg font-black text-green-400">50%</span>
                 </div>
-                <div className="w-full bg-gray-700/30 rounded-full h-2 overflow-hidden">
-                  <div className="bg-green-500 h-full rounded-full" style={{ width: '50%' }}></div>
+                <div className="w-full bg-gray-700/20 rounded-full h-1.5 overflow-hidden">
+                  <div className="bg-gradient-to-r from-green-500 to-green-400 h-full rounded-full shadow-lg shadow-green-500/50" style={{ width: '50%' }}></div>
                 </div>
               </div>
 
-              {/* Bearish */}
-              <div>
-                <div className="flex justify-between items-center mb-2">
-                  <span className="text-gray-400 text-sm flex items-center gap-2">
-                    <span className="text-lg">📉</span> Bearish
-                  </span>
-                  <span className="text-white font-semibold">25%</span>
+              {/* Bearish Card */}
+              <div className="group rounded-lg p-4 border border-white/5 bg-gradient-to-r from-red-500/5 to-transparent hover:border-red-500/30 hover:bg-red-500/10 transition-all duration-300 ease-premium cursor-pointer">
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center gap-2">
+                    <div className="w-2.5 h-2.5 rounded-full bg-red-400 shadow-lg shadow-red-500/50"></div>
+                    <span className="text-sm font-semibold text-gray-300">Bearish</span>
+                  </div>
+                  <span className="text-lg font-black text-red-400">25%</span>
                 </div>
-                <div className="w-full bg-gray-700/30 rounded-full h-2 overflow-hidden">
-                  <div className="bg-red-500 h-full rounded-full" style={{ width: '25%' }}></div>
+                <div className="w-full bg-gray-700/20 rounded-full h-1.5 overflow-hidden">
+                  <div className="bg-gradient-to-r from-red-500 to-red-400 h-full rounded-full shadow-lg shadow-red-500/50" style={{ width: '25%' }}></div>
                 </div>
               </div>
 
-              {/* Neutral */}
-              <div>
-                <div className="flex justify-between items-center mb-2">
-                  <span className="text-gray-400 text-sm flex items-center gap-2">
-                    <span className="text-lg">➡️</span> Neutral
-                  </span>
-                  <span className="text-white font-semibold">25%</span>
+              {/* Neutral Card */}
+              <div className="group rounded-lg p-4 border border-white/5 bg-gradient-to-r from-amber-500/5 to-transparent hover:border-amber-500/30 hover:bg-amber-500/10 transition-all duration-300 ease-premium cursor-pointer">
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center gap-2">
+                    <div className="w-2.5 h-2.5 rounded-full bg-amber-400 shadow-lg shadow-amber-500/50"></div>
+                    <span className="text-sm font-semibold text-gray-300">Neutral</span>
+                  </div>
+                  <span className="text-lg font-black text-amber-400">25%</span>
                 </div>
-                <div className="w-full bg-gray-700/30 rounded-full h-2 overflow-hidden">
-                  <div className="bg-amber-500 h-full rounded-full" style={{ width: '25%' }}></div>
+                <div className="w-full bg-gray-700/20 rounded-full h-1.5 overflow-hidden">
+                  <div className="bg-gradient-to-r from-amber-500 to-amber-400 h-full rounded-full shadow-lg shadow-amber-500/50" style={{ width: '25%' }}></div>
                 </div>
               </div>
             </div>
