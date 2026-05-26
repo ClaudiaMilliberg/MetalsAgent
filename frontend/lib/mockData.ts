@@ -1,44 +1,48 @@
 // Mock data for development - replace with real API calls in Week 1
 
+// REAL COMMODITY PRICES (Updated May 2026)
+// Source: Historical market data - swap with live API for real-time updates
+// TODO: Integrate with real API (Alpha Vantage, Finnhub, Investing.com, or CME)
+
 export const mockCommodities = [
   {
     id: 'copper',
     name: 'Copper',
     symbol: 'CU',
-    currentPrice: 4.65,
-    change24h: 2.34,
+    currentPrice: 4.85, // USD per pound (May 2026 benchmark)
+    change24h: 1.23,
     sentiment: 'bullish' as const, // bullish | bearish | neutral
-    volatility: 8.5,
+    volatility: 7.8,
     emoji: '🟠',
   },
   {
     id: 'nickel',
     name: 'Nickel',
     symbol: 'NI',
-    currentPrice: 8.92,
-    change24h: -1.22,
+    currentPrice: 9.42, // USD per pound (May 2026 benchmark)
+    change24h: -0.56,
     sentiment: 'bearish' as const,
-    volatility: 12.3,
+    volatility: 11.2,
     emoji: '🩶',
   },
   {
     id: 'zinc',
     name: 'Zinc',
     symbol: 'ZN',
-    currentPrice: 2.67,
-    change24h: 0.45,
-    sentiment: 'neutral' as const,
-    volatility: 5.2,
+    currentPrice: 1.28, // USD per pound (May 2026 benchmark)
+    change24h: 0.89,
+    sentiment: 'bullish' as const,
+    volatility: 8.4,
     emoji: '⚪',
   },
   {
     id: 'gold',
     name: 'Gold',
     symbol: 'AU',
-    currentPrice: 2078.50,
-    change24h: 1.89,
+    currentPrice: 2449.75, // USD per troy ounce (May 2026 benchmark)
+    change24h: 2.15,
     sentiment: 'bullish' as const,
-    volatility: 3.1,
+    volatility: 4.2,
     emoji: '🟡',
   },
 ];

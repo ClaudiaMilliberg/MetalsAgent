@@ -7,6 +7,7 @@ import BubbleMap from '@/components/BubbleMap';
 import PriceCard from '@/components/PriceCard';
 import NewsFeed from '@/components/NewsFeed';
 import { mockCommodities, mockNews, mockPriceHistory, mockPortfolioValue } from '@/lib/mockData';
+import { getCommodityPrices } from '@/lib/commodityPriceService';
 
 interface Commodity {
   id: string;
@@ -26,9 +27,26 @@ export default function Dashboard() {
   const [portfolioValue, setPortfolioValue] = useState(mockPortfolioValue);
 
   useEffect(() => {
-    // Fast data loading - render immediately
-    setIsLoading(false);
-    // Removed artificial delay for instant UI response
+    const loadPrices = async () => {
+      try {
+        // Attempt to fetch real commodity prices from Finnhub API
+        const apiPrices = await getCommodityPrices('finnhub');
+
+        // If API returns data, use it; otherwise fall back to mock data
+        if (apiPrices && apiPrices.length > 0) {
+          setCommodities(apiPrices);
+        } else {
+          setCommodities(mockCommodities);
+        }
+      } catch (error) {
+        console.error('Error fetching commodity prices, using mock data:', error);
+        setCommodities(mockCommodities);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadPrices();
   }, []);
 
   if (isLoading) {
