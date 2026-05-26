@@ -26,12 +26,9 @@ export default function Dashboard() {
   const [portfolioValue, setPortfolioValue] = useState(mockPortfolioValue);
 
   useEffect(() => {
-    // Simulate checking auth and loading data
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 500);
-
-    return () => clearTimeout(timer);
+    // Fast data loading - render immediately
+    setIsLoading(false);
+    // Removed artificial delay for instant UI response
   }, []);
 
   if (isLoading) {
