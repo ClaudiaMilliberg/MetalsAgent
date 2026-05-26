@@ -36,9 +36,32 @@ export default function Dashboard() {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-[#0a0e27] via-[#0d1135] to-[#1a0f2e]">
-        <div className="animate-spin">
-          <div className="h-12 w-12 border-4 border-blue-500 border-t-transparent rounded-full" />
+      <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-[#0a0e27] via-[#0d1135] to-[#1a0f2e] relative overflow-hidden">
+        {/* Atmospheric background */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-1/3 left-1/3 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-1/3 right-1/3 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl animate-pulse"></div>
+        </div>
+
+        <div className="relative z-10 flex flex-col items-center gap-4">
+          {/* Cinematic spinner */}
+          <div className="relative w-20 h-20">
+            {/* Outer rotating ring */}
+            <div className="absolute inset-0 rounded-full border-2 border-blue-500/30 animate-spin" style={{ animationDuration: '3s' }}></div>
+
+            {/* Middle ring */}
+            <div className="absolute inset-2 rounded-full border border-blue-400/40 animate-spin" style={{ animationDuration: '2s', animationDirection: 'reverse' }}></div>
+
+            {/* Inner dot */}
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="w-2 h-2 bg-blue-400 rounded-full shadow-lg shadow-blue-500/50"></div>
+            </div>
+
+            {/* Glow effect */}
+            <div className="absolute inset-0 rounded-full shadow-lg shadow-blue-500/30 blur-xl"></div>
+          </div>
+
+          <p className="text-sm text-gray-400 font-semibold uppercase tracking-widest">Loading Markets...</p>
         </div>
       </div>
     );
@@ -69,10 +92,13 @@ export default function Dashboard() {
             <div className="space-y-8">
               {/* Portfolio Value */}
               <div>
-                <p className="text-xs text-gray-500 uppercase tracking-widest mb-2">Total Portfolio Value</p>
-                <h2 className="text-5xl sm:text-6xl font-black text-white font-mono mb-4 tracking-tight">
-                  ${portfolioValue.total.toLocaleString('en-US', { maximumFractionDigits: 2 })}
-                </h2>
+                <p className="text-xs text-gray-500 uppercase tracking-widest mb-3">Total Portfolio Value</p>
+                <div className="relative">
+                  <h2 className="text-5xl sm:text-7xl font-black text-white font-mono mb-4 tracking-tight bg-clip-text">
+                    ${portfolioValue.total.toLocaleString('en-US', { maximumFractionDigits: 2 })}
+                  </h2>
+                  <div className="absolute -inset-2 bg-gradient-to-r from-blue-500/10 via-cyan-500/10 to-blue-500/10 rounded-lg blur-lg opacity-50 -z-10"></div>
+                </div>
 
                 <div className="flex items-center gap-3 pt-4 border-t border-white/10">
                   <div>
@@ -165,9 +191,12 @@ export default function Dashboard() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* News Feed - Takes 2/3 on desktop */}
           <div className="lg:col-span-2 glass-premium-strong p-8">
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-2xl font-bold text-white">Latest News</h2>
-              <button className="text-blue-400 text-sm font-semibold hover:text-blue-300 transition">
+            <div className="flex justify-between items-center mb-8">
+              <div>
+                <h2 className="text-3xl font-black text-white mb-2">Latest News</h2>
+                <p className="text-xs text-gray-500 uppercase tracking-widest">Market Intel — Real-Time Updates</p>
+              </div>
+              <button className="px-4 py-2 text-blue-300 text-sm font-semibold hover:text-blue-200 hover:bg-blue-500/10 border border-blue-500/30 rounded-lg transition-all duration-300 ease-premium hover:border-blue-500/50">
                 See All →
               </button>
             </div>
@@ -233,20 +262,48 @@ export default function Dashboard() {
       </main>
 
       {/* Footer */}
-      <footer className="mt-12 py-6 border-t border-white/10 relative z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col sm:flex-row justify-between items-center text-gray-500 text-xs">
+      <footer className="mt-16 border-t border-white/10 relative z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 mb-8">
+            {/* Company */}
+            <div>
+              <h4 className="text-white font-semibold mb-4">CommodityBubbles</h4>
+              <p className="text-gray-400 text-xs leading-relaxed">Real-time commodity market intelligence for modern traders.</p>
+            </div>
+
+            {/* Links */}
+            <div>
+              <h4 className="text-white font-semibold mb-4">Legal</h4>
+              <div className="space-y-2">
+                <a href="#" className="text-gray-400 text-xs hover:text-blue-400 transition duration-300">
+                  Privacy Policy
+                </a>
+                <br />
+                <a href="#" className="text-gray-400 text-xs hover:text-blue-400 transition duration-300">
+                  Terms of Service
+                </a>
+              </div>
+            </div>
+
+            {/* Support */}
+            <div>
+              <h4 className="text-white font-semibold mb-4">Support</h4>
+              <p className="text-gray-400 text-xs">
+                Questions? Reach out at
+                <br />
+                <a href="mailto:support@example.com" className="text-blue-400 hover:text-blue-300 transition">
+                  support@example.com
+                </a>
+              </p>
+            </div>
+          </div>
+
+          {/* Bottom bar */}
+          <div className="border-t border-white/5 pt-8 flex flex-col sm:flex-row justify-between items-center text-gray-500 text-xs">
             <p>© 2026 CommodityBubbles. All rights reserved.</p>
-            <div className="flex gap-6 mt-4 sm:mt-0">
-              <a href="#" className="hover:text-gray-300 transition">
-                Privacy
-              </a>
-              <a href="#" className="hover:text-gray-300 transition">
-                Terms
-              </a>
-              <a href="#" className="hover:text-gray-300 transition">
-                Support
-              </a>
+            <div className="flex items-center gap-2 mt-4 sm:mt-0">
+              <span className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse shadow-lg shadow-green-500/50"></span>
+              <span className="text-gray-400">All Systems Operational</span>
             </div>
           </div>
         </div>
