@@ -51,18 +51,18 @@ export default function PriceCard({
   }, [priceHistory]);
 
   return (
-    <div className="glass-premium rounded-xl p-5 group cursor-pointer hover:border-blue-500/30 transition-all duration-500 ease-premium hover:-translate-y-1 relative">
+    <div className="glass-premium rounded-xl sm:rounded-2xl p-5 sm:p-6 group cursor-pointer hover:glass-premium-strong transition-all duration-500 ease-premium hover:-translate-y-1 hover:shadow-xl relative overflow-hidden border-white/10 hover:border-blue-500/30">
       {/* Header with emoji and sentiment */}
-      <div className="flex justify-between items-start mb-5">
-        <div className="flex items-center gap-3">
-          <span className="text-3xl">{emoji}</span>
-          <div>
-            <h3 className="text-sm font-bold text-white">{name}</h3>
+      <div className="flex justify-between items-start mb-5 sm:mb-6 gap-3">
+        <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
+          <span className="text-2.5xl sm:text-3xl flex-shrink-0">{emoji}</span>
+          <div className="min-w-0">
+            <h3 className="text-sm sm:text-base font-bold text-white truncate">{name}</h3>
             <p className="text-xs text-gray-400 uppercase tracking-wider">{symbol}</p>
           </div>
         </div>
         <div
-          className="px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider"
+          className="px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full text-xs font-bold uppercase tracking-wider flex-shrink-0"
           style={{
             backgroundColor: colors.light,
             color: colors.text,
@@ -73,11 +73,11 @@ export default function PriceCard({
       </div>
 
       {/* Price - Large and Dominant */}
-      <div className="mb-4">
-        <p className="text-3xl font-black text-white font-mono tracking-tight">${currentPrice.toFixed(2)}</p>
+      <div className="mb-4 sm:mb-5">
+        <p className="text-2.5xl sm:text-3xl lg:text-4xl font-black text-white font-mono tracking-tight">${currentPrice.toFixed(2)}</p>
         <div className="flex items-center gap-2 mt-2">
           <span
-            className="text-lg font-bold font-mono"
+            className="text-base sm:text-lg font-bold font-mono"
             style={{
               color: change24h > 0 ? '#10B981' : change24h < 0 ? '#EF4444' : '#F59E0B',
             }}
@@ -95,7 +95,7 @@ export default function PriceCard({
       </div>
 
       {/* Mini chart sparkline */}
-      <div className="mb-4 h-12 -mx-2">
+      <div className="mb-4 sm:mb-5 h-10 sm:h-12 -mx-2">
         <svg
           viewBox="0 0 100 40"
           className="w-full h-full"
@@ -134,14 +134,14 @@ export default function PriceCard({
       </div>
 
       {/* Stats footer */}
-      <div className="grid grid-cols-2 gap-3 pt-4 border-t border-white/10">
+      <div className="grid grid-cols-2 gap-3 pt-4 sm:pt-5 border-t border-white/10">
         <div>
           <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">Volatility</p>
-          <p className="text-sm font-bold text-white">{volatility.toFixed(1)}%</p>
+          <p className="text-sm sm:text-base font-bold text-white">{volatility.toFixed(1)}%</p>
         </div>
         <div className="text-right">
           <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">24h Range</p>
-          <p className="text-sm font-bold text-white">${(currentPrice * 0.03).toFixed(2)}</p>
+          <p className="text-sm sm:text-base font-bold text-white">${(currentPrice * 0.03).toFixed(2)}</p>
         </div>
       </div>
 
