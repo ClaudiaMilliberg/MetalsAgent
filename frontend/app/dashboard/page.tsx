@@ -92,19 +92,35 @@ export default function Dashboard() {
           backgroundSize: '100px 100px'
         }}></div>
 
-        {/* Primary atmospheric orb - top right */}
-        <div className="absolute -top-64 -right-64 w-[600px] h-[600px] bg-blue-600/15 rounded-full blur-3xl opacity-40 animate-pulse" style={{
-          animationDuration: '8s'
+        {/* PRIMARY ATMOSPHERIC ORB - Top Right (Blue dominant) */}
+        <div className="absolute -top-96 -right-96 w-[900px] h-[900px] bg-blue-600/20 rounded-full blur-3xl opacity-60 animate-pulse" style={{
+          animationDuration: '7s',
+          filter: 'blur(60px)',
+          boxShadow: '0 0 120px rgba(37, 99, 235, 0.4), inset 0 0 80px rgba(59, 130, 246, 0.2)'
         }}></div>
 
-        {/* Secondary atmospheric orb - bottom left */}
-        <div className="absolute -bottom-64 -left-64 w-[500px] h-[500px] bg-cyan-600/10 rounded-full blur-3xl opacity-30" style={{
-          animation: 'float 15s ease-in-out infinite'
+        {/* SECONDARY ATMOSPHERIC ORB - Bottom Left (Cyan accent) */}
+        <div className="absolute -bottom-80 -left-80 w-[700px] h-[700px] rounded-full opacity-50" style={{
+          background: 'radial-gradient(circle, rgba(34, 211, 238, 0.25) 0%, transparent 70%)',
+          filter: 'blur(80px)',
+          animation: 'float 18s ease-in-out infinite',
+          boxShadow: '0 0 100px rgba(34, 211, 238, 0.3)'
         }}></div>
 
-        {/* Tertiary atmospheric orb - center */}
-        <div className="absolute top-1/2 left-1/3 w-[400px] h-[400px] bg-purple-600/8 rounded-full blur-3xl opacity-20" style={{
-          animation: 'float-reverse 20s ease-in-out infinite'
+        {/* TERTIARY ATMOSPHERIC ORB - Center (Purple accent) */}
+        <div className="absolute top-1/3 left-1/4 w-[500px] h-[500px] rounded-full opacity-40" style={{
+          background: 'radial-gradient(circle, rgba(168, 85, 247, 0.15) 0%, transparent 70%)',
+          filter: 'blur(70px)',
+          animation: 'float-reverse 20s ease-in-out infinite',
+          boxShadow: '0 0 80px rgba(168, 85, 247, 0.25)'
+        }}></div>
+
+        {/* FOURTH ORB - Accent glow (right center) */}
+        <div className="absolute top-1/2 -right-40 w-[400px] h-[400px] rounded-full opacity-35" style={{
+          background: 'radial-gradient(circle, rgba(6, 182, 212, 0.2) 0%, transparent 70%)',
+          filter: 'blur(60px)',
+          animation: 'float 25s ease-in-out infinite',
+          boxShadow: '0 0 60px rgba(6, 182, 212, 0.2)'
         }}></div>
 
         {/* Vignette effect - edges darker */}

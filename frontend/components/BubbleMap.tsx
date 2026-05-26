@@ -131,19 +131,23 @@ export default function BubbleMap({ commodities = mockCommodities }: { commoditi
                 }}
               />
 
-              {/* LAYER 3: Gradients & Filters */}
+              {/* LAYER 3: Ultra-Deep Gradients & Filters */}
               <defs>
-                <radialGradient id={`bubble-gradient-${commodity.id}`} cx="35%" cy="35%">
+                <radialGradient id={`bubble-gradient-${commodity.id}`} cx="30%" cy="30%">
                   <stop offset="0%" stopColor={color} stopOpacity="1" />
-                  <stop offset="70%" stopColor={color} stopOpacity="0.9" />
-                  <stop offset="100%" stopColor={color} stopOpacity="0.7" />
+                  <stop offset="40%" stopColor={color} stopOpacity="0.95" />
+                  <stop offset="70%" stopColor={color} stopOpacity="0.85" />
+                  <stop offset="100%" stopColor={color} stopOpacity="0.6" />
                 </radialGradient>
                 <filter id={`bubble-shadow-${commodity.id}`}>
-                  <feGaussianBlur in="SourceGraphic" stdDeviation="3" />
+                  <feGaussianBlur in="SourceGraphic" stdDeviation="4" />
+                  <feComponentTransfer>
+                    <feFuncA type="linear" slope="1.2" />
+                  </feComponentTransfer>
                 </filter>
               </defs>
 
-              {/* LAYER 4: Main bubble with radial gradient */}
+              {/* LAYER 4: Main bubble with ultra-deep drop shadow */}
               <circle
                 cx={pos.x}
                 cy={pos.y}
@@ -154,35 +158,50 @@ export default function BubbleMap({ commodities = mockCommodities }: { commoditi
                 style={{
                   transition: 'all 300ms cubic-bezier(0.34, 1.56, 0.64, 1)',
                   filter: isHovered
-                    ? `drop-shadow(0 0 35px ${color}) drop-shadow(0 0 50px ${color}80) drop-shadow(0 12px 24px rgba(0,0,0,0.6))`
-                    : `drop-shadow(0 0 20px ${color}) drop-shadow(0 0 35px ${color}60) drop-shadow(0 8px 16px rgba(0,0,0,0.4))`,
+                    ? `drop-shadow(0 0 40px ${color}) drop-shadow(0 0 60px ${color}90) drop-shadow(0 0 80px ${color}40) drop-shadow(0 16px 32px rgba(0,0,0,0.8))`
+                    : `drop-shadow(0 0 25px ${color}) drop-shadow(0 0 40px ${color}70) drop-shadow(0 0 60px ${color}30) drop-shadow(0 10px 20px rgba(0,0,0,0.5))`,
                 }}
               />
 
-              {/* LAYER 5: Rim light - top-left highlight (enhanced) */}
+              {/* LAYER 5: Rim light - top-left highlight (ultra-enhanced) */}
               <circle
-                cx={pos.x - pos.size * 0.3}
-                cy={pos.y - pos.size * 0.3}
-                r={pos.size * 0.5}
+                cx={pos.x - pos.size * 0.28}
+                cy={pos.y - pos.size * 0.28}
+                r={pos.size * 0.55}
                 fill="white"
-                opacity={isHovered ? 0.35 : 0.2}
+                opacity={isHovered ? 0.40 : 0.25}
                 style={{
                   mixBlendMode: 'screen',
                   transition: 'all 300ms cubic-bezier(0.34, 1.56, 0.64, 1)',
+                  filter: 'blur(2px)',
                 }}
               />
 
               {/* LAYER 5.5: Specular highlight dot - bright light source */}
               <circle
-                cx={pos.x - pos.size * 0.35}
-                cy={pos.y - pos.size * 0.35}
-                r={pos.size * 0.12}
+                cx={pos.x - pos.size * 0.36}
+                cy={pos.y - pos.size * 0.36}
+                r={pos.size * 0.15}
                 fill="white"
-                opacity={isHovered ? 0.8 : 0.6}
+                opacity={isHovered ? 0.95 : 0.75}
                 style={{
                   mixBlendMode: 'screen',
                   transition: 'all 300ms cubic-bezier(0.34, 1.56, 0.64, 1)',
-                  filter: 'blur(1px)',
+                  filter: 'blur(0.5px)',
+                }}
+              />
+
+              {/* LAYER 5.7: Tertiary highlight - edge glow */}
+              <circle
+                cx={pos.x - pos.size * 0.25}
+                cy={pos.y - pos.size * 0.45}
+                r={pos.size * 0.3}
+                fill="#ffffff"
+                opacity={isHovered ? 0.25 : 0.12}
+                style={{
+                  mixBlendMode: 'lighten',
+                  transition: 'all 300ms cubic-bezier(0.34, 1.56, 0.64, 1)',
+                  filter: 'blur(3px)',
                 }}
               />
 
