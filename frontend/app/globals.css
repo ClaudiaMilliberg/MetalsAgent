@@ -145,3 +145,135 @@ select:focus {
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(6, 182, 212, 0.8);
 }
+
+/* ========== PREMIUM DESIGN SYSTEM UTILITIES ========== */
+
+@layer components {
+  /* ====== GLASS PANELS ====== */
+
+  .glass-premium {
+    @apply bg-white/5 backdrop-blur-2xl border border-white/10 rounded-2xl;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%);
+    box-shadow:
+      inset 0 0 20px rgba(255, 255, 255, 0.05),
+      0 8px 32px rgba(0, 0, 0, 0.3);
+  }
+
+  .glass-premium-strong {
+    @apply bg-white/8 backdrop-blur-3xl border border-white/15 rounded-2xl;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.04) 100%);
+    box-shadow:
+      inset 0 0 30px rgba(255, 255, 255, 0.08),
+      0 12px 48px rgba(0, 0, 0, 0.4);
+  }
+
+  /* ====== GLOW EFFECTS ====== */
+
+  .glow-accent {
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+  }
+
+  .glow-green {
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+  }
+
+  .glow-red {
+    box-shadow: 0 0 20px rgba(239, 68, 68, 0.3);
+  }
+
+  .glow-amber {
+    box-shadow: 0 0 20px rgba(245, 158, 11, 0.3);
+  }
+
+  /* ====== PREMIUM EASING CURVES ====== */
+
+  .ease-premium {
+    transition-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .ease-premium-in {
+    transition-timing-function: cubic-bezier(0.43, 0.13, 0.15, 0.96);
+  }
+
+  .ease-premium-out {
+    transition-timing-function: cubic-bezier(0.17, 0.84, 0.44, 1);
+  }
+
+  .ease-premium-inout {
+    transition-timing-function: cubic-bezier(0.35, 0.07, 0.65, 0.93);
+  }
+
+  /* ====== DURATIONS ====== */
+
+  .duration-smooth {
+    transition-duration: 500ms;
+  }
+
+  .duration-slow {
+    transition-duration: 700ms;
+  }
+
+  /* ====== SCALE UTILITIES ====== */
+
+  .hover\:scale-103:hover {
+    transform: scale(1.03);
+  }
+
+  .hover\:scale-104:hover {
+    transform: scale(1.04);
+  }
+
+  .active\:scale-98:active {
+    transform: scale(0.98);
+  }
+
+  /* ====== TEXT UTILITIES ====== */
+
+  .tracking-widest-plus {
+    letter-spacing: 0.15em;
+  }
+
+  .font-mono-tight {
+    font-family: 'Monaco', 'Courier New', monospace;
+    letter-spacing: -0.02em;
+  }
+}
+
+/* ====== REDUCED MOTION SUPPORT ====== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .transition-all,
+  .transition {
+    transition-duration: 100ms;
+  }
+
+  .duration-smooth,
+  .duration-slow {
+    transition-duration: 100ms;
+  }
+
+  .ease-premium,
+  .ease-premium-in,
+  .ease-premium-out,
+  .ease-premium-inout {
+    transition-timing-function: linear;
+  }
+
+  .hover\:scale-103:hover,
+  .hover\:scale-104:hover {
+    transform: none;
+  }
+}
+
+/* ====== COLOR SCHEME ====== */
+html {
+  color-scheme: dark;
+}

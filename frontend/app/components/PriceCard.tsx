@@ -51,40 +51,33 @@ export default function PriceCard({
   }, [priceHistory]);
 
   return (
-    <div
-      className="bg-gradient-to-br from-secondary to-primary border border-gray-700/50 rounded-xl p-4 hover:border-gray-600/50 hover:shadow-lg transition-all duration-300 backdrop-blur group cursor-pointer"
-      style={{
-        borderColor: sentiment === 'bullish' ? colors.bg + '33' : sentiment === 'bearish' ? colors.bg + '33' : colors.bg + '1a',
-      }}
-    >
-      {/* Header */}
-      <div className="flex justify-between items-start mb-4">
-        <div className="flex items-center gap-2">
-          <span className="text-2xl">{emoji}</span>
+    <div className="glass-premium rounded-xl p-5 group cursor-pointer hover:border-blue-500/30 transition-all duration-500 ease-premium hover:-translate-y-1 relative">
+      {/* Header with emoji and sentiment */}
+      <div className="flex justify-between items-start mb-5">
+        <div className="flex items-center gap-3">
+          <span className="text-3xl">{emoji}</span>
           <div>
-            <h3 className="text-sm font-semibold text-white">{name}</h3>
-            <p className="text-xs text-gray-400">{symbol}</p>
+            <h3 className="text-sm font-bold text-white">{name}</h3>
+            <p className="text-xs text-gray-400 uppercase tracking-wider">{symbol}</p>
           </div>
         </div>
-
-        {/* Sentiment badge */}
         <div
-          className="px-2 py-1 rounded-full text-xs font-bold"
+          className="px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider"
           style={{
             backgroundColor: colors.light,
             color: colors.text,
           }}
         >
-          {sentiment === 'bullish' ? '📈' : sentiment === 'bearish' ? '📉' : '➡️'}
+          {sentiment === 'bullish' ? '▲' : sentiment === 'bearish' ? '▼' : '●'}
         </div>
       </div>
 
-      {/* Price */}
-      <div className="mb-3">
-        <p className="text-2xl font-bold text-white font-mono">${currentPrice.toFixed(2)}</p>
-        <div className="flex items-center gap-2 mt-1">
+      {/* Price - Large and Dominant */}
+      <div className="mb-4">
+        <p className="text-3xl font-black text-white font-mono tracking-tight">${currentPrice.toFixed(2)}</p>
+        <div className="flex items-center gap-2 mt-2">
           <span
-            className="text-sm font-semibold font-mono"
+            className="text-lg font-bold font-mono"
             style={{
               color: change24h > 0 ? '#10B981' : change24h < 0 ? '#EF4444' : '#F59E0B',
             }}
@@ -92,7 +85,6 @@ export default function PriceCard({
             {change24h > 0 ? '+' : ''}{change24h.toFixed(2)}%
           </span>
           <span
-            className="text-sm"
             style={{
               color: change24h > 0 ? '#10B981' : change24h < 0 ? '#EF4444' : '#F59E0B',
             }}
@@ -103,7 +95,7 @@ export default function PriceCard({
       </div>
 
       {/* Mini chart sparkline */}
-      <div className="mb-3 h-12 -mx-2">
+      <div className="mb-4 h-12 -mx-2">
         <svg
           viewBox="0 0 100 40"
           className="w-full h-full"
@@ -134,7 +126,7 @@ export default function PriceCard({
               points={sparklinePoints}
               fill="none"
               stroke={colors.bg}
-              strokeWidth="1.5"
+              strokeWidth="2"
               vectorEffect="non-scaling-stroke"
             />
           )}
@@ -142,19 +134,19 @@ export default function PriceCard({
       </div>
 
       {/* Stats footer */}
-      <div className="grid grid-cols-2 gap-2 pt-3 border-t border-gray-700/30">
+      <div className="grid grid-cols-2 gap-3 pt-4 border-t border-white/10">
         <div>
-          <p className="text-xs text-gray-400">Volatility</p>
-          <p className="text-sm font-semibold text-white">{volatility.toFixed(1)}%</p>
+          <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">Volatility</p>
+          <p className="text-sm font-bold text-white">{volatility.toFixed(1)}%</p>
         </div>
         <div className="text-right">
-          <p className="text-xs text-gray-400">24h Range</p>
-          <p className="text-sm font-semibold text-white">${(currentPrice * 0.03).toFixed(2)}</p>
+          <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">24h Range</p>
+          <p className="text-sm font-bold text-white">${(currentPrice * 0.03).toFixed(2)}</p>
         </div>
       </div>
 
-      {/* Hover effect - subtle animation */}
-      <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-accent/0 via-accent/5 to-accent/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+      {/* Hover effect - subtle shimmer animation */}
+      <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-blue-500/0 via-blue-500/5 to-blue-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
     </div>
   );
 }

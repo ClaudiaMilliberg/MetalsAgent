@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useMemo } from 'react';
+import { motion } from 'framer-motion';
 import { mockCommodities, mockBubblePositions } from '@/lib/mockData';
 
 type Sentiment = 'bullish' | 'bearish' | 'neutral';
@@ -45,7 +46,7 @@ export default function BubbleMap({ commodities = mockCommodities }: { commoditi
   }, []);
 
   return (
-    <div className="relative w-full h-full bg-gradient-to-br from-secondary to-primary rounded-2xl overflow-hidden border border-gray-700/50">
+    <div className="relative w-full h-full glass-premium rounded-2xl overflow-hidden">
       {/* SVG Bubble Map */}
       <svg
         viewBox={viewBox}
@@ -55,7 +56,7 @@ export default function BubbleMap({ commodities = mockCommodities }: { commoditi
         {/* Grid background */}
         <defs>
           <pattern id="grid" width="100" height="100" patternUnits="userSpaceOnUse">
-            <path d="M 100 0 L 0 0 0 100" fill="none" stroke="#374151" strokeWidth="0.5" opacity="0.3" />
+            <path d="M 100 0 L 0 0 0 100" fill="none" stroke="#374151" strokeWidth="0.5" opacity="0.2" />
           </pattern>
         </defs>
         <rect width="1000" height="600" fill="url(#grid)" />
@@ -74,161 +75,253 @@ export default function BubbleMap({ commodities = mockCommodities }: { commoditi
               onMouseEnter={() => setHoveredBubble(commodity.id)}
               onMouseLeave={() => setHoveredBubble(null)}
               style={{ cursor: 'pointer' }}
-              className="transition-all duration-300"
+              className="transition-all duration-500"
             >
-              {/* Glow effect when hovered */}
-              {isHovered && (
-                <circle
-                  cx={pos.x}
-                  cy={pos.y}
-                  r={pos.size + 40}
-                  fill={color}
-                  opacity="0.15"
-                  className="animate-pulse"
-                />
-              )}
+              {/* LAYER 1: Deep shadow beneath */}
+              <ellipse
+                cx={pos.x}
+                cy={pos.y + pos.size + 8}
+                rx={pos.size * 0.85}
+                ry={pos.size * 0.15}
+                fill="black"
+                opacity="0.25"
+                style={{
+                  filter: 'blur(8px)',
+                  transition: 'all 300ms cubic-bezier(0.34, 1.56, 0.64, 1)',
+                }}
+              />
 
-              {/* Main bubble circle */}
+              {/* LAYER 2: Outer glow (sentiment color) */}
+              <circle
+                cx={pos.x}
+                cy={pos.y}
+                r={pos.size + (isHovered ? 30 : 15)}
+                fill={color}
+                opacity={isHovered ? 0.2 : 0.08}
+                style={{
+                  transition: 'all 300ms cubic-bezier(0.34, 1.56, 0.64, 1)',
+                }}
+              />
+
+              {/* LAYER 3: Gradients & Filters */}
+              <defs>
+                <radialGradient id={`bubble-gradient-${commodity.id}`} cx="35%" cy="35%">
+                  <stop offset="0%" stopColor={color} stopOpacity="1" />
+                  <stop offset="70%" stopColor={color} stopOpacity="0.9" />
+                  <stop offset="100%" stopColor={color} stopOpacity="0.7" />
+                </radialGradient>
+                <filter id={`bubble-shadow-${commodity.id}`}>
+                  <feGaussianBlur in="SourceGraphic" stdDeviation="3" />
+                </filter>
+              </defs>
+
+              {/* LAYER 4: Main bubble with radial gradient */}
               <circle
                 cx={pos.x}
                 cy={pos.y}
                 r={pos.size}
-                fill={color}
-                opacity={isHovered ? 1 : 0.85}
-                className="transition-all duration-300 drop-shadow-lg hover:drop-shadow-2xl"
+                fill={`url(#bubble-gradient-${commodity.id})`}
+                filter={`url(#bubble-shadow-${commodity.id})`}
+                opacity={isHovered ? 1 : 0.9}
                 style={{
-                  filter: isHovered ? `drop-shadow(0 0 20px ${color})` : `drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3))`,
+                  transition: 'all 300ms cubic-bezier(0.34, 1.56, 0.64, 1)',
+                  filter: isHovered
+                    ? `drop-shadow(0 0 25px ${color}) drop-shadow(0 8px 16px rgba(0,0,0,0.5))`
+                    : `drop-shadow(0 0 12px ${color}) drop-shadow(0 4px 8px rgba(0,0,0,0.3))`,
                 }}
               />
 
-              {/* Bubble border */}
+              {/* LAYER 5: Rim light - top-left highlight */}
+              <circle
+                cx={pos.x - pos.size * 0.25}
+                cy={pos.y - pos.size * 0.25}
+                r={pos.size * 0.4}
+                fill="white"
+                opacity={isHovered ? 0.25 : 0.15}
+                style={{
+                  mixBlendMode: 'screen',
+                  transition: 'all 300ms cubic-bezier(0.34, 1.56, 0.64, 1)',
+                }}
+              />
+
+              {/* LAYER 6: Inner shadow - bottom-right */}
+              <circle
+                cx={pos.x + pos.size * 0.2}
+                cy={pos.y + pos.size * 0.2}
+                r={pos.size * 0.3}
+                fill="black"
+                opacity={isHovered ? 0.2 : 0.1}
+                style={{
+                  mixBlendMode: 'multiply',
+                }}
+              />
+
+              {/* LAYER 7: Border - subtle */}
               <circle
                 cx={pos.x}
                 cy={pos.y}
                 r={pos.size}
                 fill="none"
                 stroke="white"
-                strokeWidth="2"
-                opacity={isHovered ? 0.5 : 0.2}
-                className="transition-all duration-300"
+                strokeWidth="1.5"
+                opacity={isHovered ? 0.3 : 0.1}
+                style={{
+                  transition: 'all 300ms cubic-bezier(0.34, 1.56, 0.64, 1)',
+                }}
               />
 
-              {/* Commodity symbol - large price label */}
+              {/* TEXT: TICKER SYMBOL - DOMINANT */}
               <text
                 x={pos.x}
-                y={pos.y - 10}
+                y={pos.y - 15}
                 textAnchor="middle"
                 dominantBaseline="middle"
-                fontSize="28"
+                fontSize={pos.size * 0.5}
+                fontWeight="800"
+                fill="white"
+                fontFamily="'Monaco', 'Courier New', monospace"
+                letterSpacing="-1"
+                style={{
+                  textShadow: '0 2px 8px rgba(0,0,0,0.5)',
+                  transition: 'all 300ms cubic-bezier(0.34, 1.56, 0.64, 1)',
+                  filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.3))',
+                }}
+              >
+                {commodity.symbol}
+              </text>
+
+              {/* TEXT: PRICE */}
+              <text
+                x={pos.x}
+                y={pos.y + pos.size * 0.15}
+                textAnchor="middle"
+                dominantBaseline="middle"
+                fontSize={pos.size * 0.28}
                 fontWeight="700"
                 fill="white"
-                fontFamily="'Monaco', monospace"
-                className="transition-all duration-300 select-none"
+                fontFamily="'Monaco', 'Courier New', monospace"
+                opacity="0.95"
               >
-                ${commodity.currentPrice.toFixed(2)}
+                ${commodity.currentPrice.toFixed(0)}
               </text>
 
-              {/* Commodity name */}
+              {/* TEXT: CHANGE % */}
               <text
                 x={pos.x}
-                y={pos.y + 25}
+                y={pos.y + pos.size * 0.35}
                 textAnchor="middle"
                 dominantBaseline="middle"
-                fontSize="16"
+                fontSize={pos.size * 0.2}
                 fontWeight="600"
-                fill="white"
-                className="transition-all duration-300 select-none"
-              >
-                {commodity.name}
-              </text>
-
-              {/* Change percentage */}
-              <text
-                x={pos.x}
-                y={pos.y + 50}
-                textAnchor="middle"
-                dominantBaseline="middle"
-                fontSize="14"
-                fontWeight="600"
-                fill="white"
-                fontFamily="'Monaco', monospace"
+                fill={commodity.change24h > 0 ? '#10B981' : commodity.change24h < 0 ? '#EF4444' : '#F59E0B'}
+                fontFamily="'Monaco', 'Courier New', monospace"
                 opacity="0.9"
-                className="transition-all duration-300 select-none"
               >
-                {commodity.change24h > 0 ? '+' : ''}{commodity.change24h.toFixed(2)}%
+                {commodity.change24h > 0 ? '+' : ''}{commodity.change24h.toFixed(1)}%
               </text>
             </g>
           );
         })}
       </svg>
 
-      {/* Hover info card */}
+      {/* Enhanced Hover Detail Card with Animation */}
       {hoveredBubble && (
-        <div className="absolute bottom-6 left-6 bg-secondary/95 backdrop-blur border border-gray-700/50 rounded-lg p-4 min-w-[240px] pointer-events-none">
+        <motion.div
+          initial={{ opacity: 0, x: -20, y: 20 }}
+          animate={{ opacity: 1, x: 0, y: 0 }}
+          exit={{ opacity: 0, x: -20 }}
+          transition={{ duration: 0.35, ease: [0.34, 1.56, 0.64, 1] }}
+          className="absolute bottom-12 left-6 glass-premium-strong rounded-xl p-7 min-w-[320px] pointer-events-none z-50"
+        >
           {commodities.find((c) => c.id === hoveredBubble) && (
-            <>
-              <div className="flex items-center justify-between mb-3">
-                <h3 className="text-lg font-bold text-white">
-                  {commodities.find((c) => c.id === hoveredBubble)?.name}
-                </h3>
-                <span className="text-2xl">
+            <div className="space-y-5">
+              {/* Header */}
+              <div className="flex items-start justify-between pb-4 border-b border-white/10">
+                <div>
+                  <h3 className="text-xl font-bold text-white mb-1">
+                    {commodities.find((c) => c.id === hoveredBubble)?.name}
+                  </h3>
+                  <p className="text-xs text-gray-400 uppercase tracking-widest">
+                    {commodities.find((c) => c.id === hoveredBubble)?.symbol}
+                  </p>
+                </div>
+                <span className="text-4xl">
                   {commodities.find((c) => c.id === hoveredBubble)?.emoji}
                 </span>
               </div>
 
-              <div className="space-y-2 text-sm">
-                <div className="flex justify-between">
-                  <span className="text-gray-400">Price</span>
-                  <span className="text-white font-mono">
-                    ${commodities.find((c) => c.id === hoveredBubble)?.currentPrice.toFixed(2)}
-                  </span>
-                </div>
+              {/* Price - Dominant */}
+              <div>
+                <p className="text-xs text-gray-500 uppercase tracking-widest mb-2">Current Price</p>
+                <p className="text-3xl font-black text-white font-mono tracking-tight">
+                  ${commodities.find((c) => c.id === hoveredBubble)?.currentPrice.toFixed(2)}
+                </p>
+              </div>
 
-                <div className="flex justify-between">
-                  <span className="text-gray-400">24h Change</span>
+              {/* Change */}
+              <div>
+                <p className="text-xs text-gray-500 uppercase tracking-widest mb-2">24h Change</p>
+                <div className="flex items-baseline gap-2">
                   <span
-                    className={`font-mono font-semibold ${
+                    className={`text-2xl font-bold font-mono ${
                       (commodities.find((c) => c.id === hoveredBubble)?.change24h ?? 0) > 0
                         ? 'text-green-400'
-                        : 'text-red-400'
+                        : (commodities.find((c) => c.id === hoveredBubble)?.change24h ?? 0) < 0
+                        ? 'text-red-400'
+                        : 'text-amber-400'
                     }`}
                   >
                     {(commodities.find((c) => c.id === hoveredBubble)?.change24h ?? 0) > 0 ? '+' : ''}
                     {commodities.find((c) => c.id === hoveredBubble)?.change24h.toFixed(2)}%
                   </span>
-                </div>
-
-                <div className="flex justify-between">
-                  <span className="text-gray-400">Volatility</span>
-                  <span className="text-white font-mono">
-                    {commodities.find((c) => c.id === hoveredBubble)?.volatility.toFixed(1)}%
+                  <span
+                    className={`text-lg font-bold ${
+                      (commodities.find((c) => c.id === hoveredBubble)?.change24h ?? 0) > 0
+                        ? 'text-green-400'
+                        : (commodities.find((c) => c.id === hoveredBubble)?.change24h ?? 0) < 0
+                        ? 'text-red-400'
+                        : 'text-amber-400'
+                    }`}
+                  >
+                    {(commodities.find((c) => c.id === hoveredBubble)?.change24h ?? 0) > 0
+                      ? '▲'
+                      : (commodities.find((c) => c.id === hoveredBubble)?.change24h ?? 0) < 0
+                      ? '▼'
+                      : '●'}
                   </span>
                 </div>
+              </div>
 
-                <div className="border-t border-gray-700/50 pt-2 mt-2">
-                  <span className="text-gray-400">Sentiment</span>
-                  <div className="mt-1">
-                    <span
-                      className="inline-block px-3 py-1 rounded-full text-xs font-semibold"
-                      style={{
-                        backgroundColor:
-                          sentimentColors[commodities.find((c) => c.id === hoveredBubble)?.sentiment || 'neutral'] +
-                          '26',
-                        color: sentimentColors[commodities.find((c) => c.id === hoveredBubble)?.sentiment || 'neutral'],
-                      }}
-                    >
-                      {sentimentLabels[commodities.find((c) => c.id === hoveredBubble)?.sentiment || 'neutral']}
-                    </span>
-                  </div>
+              {/* Data Grid */}
+              <div className="grid grid-cols-2 gap-4 pt-4 border-t border-white/10">
+                <div>
+                  <p className="text-xs text-gray-500 uppercase tracking-widest mb-2">Volatility</p>
+                  <p className="text-lg font-bold text-white">
+                    {commodities.find((c) => c.id === hoveredBubble)?.volatility.toFixed(1)}%
+                  </p>
+                </div>
+                <div>
+                  <p className="text-xs text-gray-500 uppercase tracking-widest mb-2">Sentiment</p>
+                  <span
+                    className="inline-block px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider"
+                    style={{
+                      backgroundColor:
+                        sentimentColors[commodities.find((c) => c.id === hoveredBubble)?.sentiment || 'neutral'] +
+                        '40',
+                      color: sentimentColors[commodities.find((c) => c.id === hoveredBubble)?.sentiment || 'neutral'],
+                    }}
+                  >
+                    {sentimentLabels[commodities.find((c) => c.id === hoveredBubble)?.sentiment || 'neutral']}
+                  </span>
                 </div>
               </div>
-            </>
+            </div>
           )}
-        </div>
+        </motion.div>
       )}
 
       {/* Legend */}
-      <div className="absolute top-6 right-6 bg-secondary/80 backdrop-blur border border-gray-700/50 rounded-lg p-3 text-xs space-y-2">
+      <div className="absolute top-6 right-6 glass-premium rounded-lg p-3 text-xs space-y-2">
         <div className="font-bold text-white mb-2">Sentiment</div>
         <div className="flex items-center gap-2">
           <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#10B981' }}></div>
