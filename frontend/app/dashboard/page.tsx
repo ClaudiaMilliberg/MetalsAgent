@@ -6,6 +6,7 @@ import Navbar from '@/components/Navbar';
 import BubbleMap from '@/components/BubbleMap';
 import PriceCard from '@/components/PriceCard';
 import NewsFeed from '@/components/NewsFeed';
+import NavTabs from '@/components/NavTabs';
 import { mockCommodities, mockNews, mockPriceHistory, mockPortfolioValue } from '@/lib/mockData';
 import { getCommodityPrices } from '@/lib/commodityPriceService';
 
@@ -197,46 +198,7 @@ export default function Dashboard() {
         </div>
 
         {/* Premium Navigation Tabs - Control Surface */}
-        <div className="mb-8 sm:mb-12 flex gap-2 sm:gap-3 border-b border-white/20 pb-4 sm:pb-6 overflow-x-auto group scroll-smooth snap-x snap-mandatory">
-          {[
-            { label: 'All Commodities', icon: '⊚', color: 'blue' },
-            { label: 'Metals', icon: '▪', color: 'cyan' },
-            { label: 'Energy', icon: '⚡', color: 'yellow' },
-            { label: 'Agriculture', icon: '🌾', color: 'green' }
-          ].map((tab) => (
-            <button
-              key={tab.label}
-              className={`
-                relative px-4 sm:px-6 py-2.5 sm:py-3 font-semibold text-xs sm:text-sm whitespace-nowrap transition-all duration-400 ease-premium
-                rounded-lg border flex items-center gap-2 sm:gap-3 group/tab snap-center flex-shrink-0
-                ${
-                  tab.label === 'All Commodities'
-                    ? `
-                      text-white bg-gradient-to-b from-blue-500/25 to-blue-600/5 border-2 border-blue-500/60
-                      shadow-lg shadow-blue-500/40 hover:shadow-2xl hover:shadow-blue-500/60
-                      before:absolute before:inset-0 before:rounded-lg before:bg-gradient-to-r before:from-blue-400/0 before:via-white/8 before:to-blue-400/0 before:animate-shimmer
-                      after:absolute after:top-0 after:inset-x-0 after:h-1 after:bg-gradient-to-r after:from-transparent after:via-blue-400 after:to-transparent
-                      hover:translate-y-[-3px] hover:border-blue-400/80
-                    `
-                    : `
-                      text-gray-500 hover:text-gray-200 border border-transparent hover:border-white/30
-                      hover:bg-white/8 hover:text-white hover:translate-y-[-2px]
-                    `
-                }
-              `}
-            >
-              <span className="text-lg font-bold group-hover/tab:scale-110 transition-transform">{tab.icon}</span>
-              <span className="relative z-10 font-semibold">{tab.label}</span>
-
-              {tab.label === 'All Commodities' && (
-                <>
-                  <div className="absolute inset-0 rounded-lg ring-2 ring-blue-400/50 pointer-events-none animate-pulse"></div>
-                  <div className="absolute -bottom-1 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-blue-400 to-transparent blur-sm"></div>
-                </>
-              )}
-            </button>
-          ))}
-        </div>
+        <NavTabs onTabChange={(label) => console.log('Tab changed:', label)} />
 
         {/* Price Cards Grid */}
         <div className="mb-12 sm:mb-16">
