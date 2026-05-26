@@ -1,7 +1,8 @@
 // Commodity ETF & Ticker Database
 // Maps commodities to their major exchange-traded vehicles
+// Premium design: distinct hues, high saturation, mid-range lightness
 
-export type CommodityType = 'copper' | 'gold' | 'uranium' | 'silver' | 'nickel' | 'lithium' | 'cobalt' | 'palladium';
+export type CommodityType = 'copper' | 'gold' | 'uranium' | 'silver' | 'nickel' | 'lithium' | 'aluminum' | 'zinc';
 
 export interface Ticker {
   symbol: string;
@@ -10,26 +11,32 @@ export interface Ticker {
   sector: string;
   description: string;
   colorOffset: number; // 0-1 for slight color variation within commodity
+  tier: 'tier1' | 'tier2' | 'tier3'; // Visual emphasis tier
 }
 
 export interface CommodityCluster {
   commodity: CommodityType;
   name: string;
   emoji: string;
+  tier: 'tier1' | 'tier2' | 'tier3'; // Tier for emphasis
   baseColor: {
     h: number; // Hue (0-360)
     s: number; // Saturation (0-100)
     l: number; // Lightness (0-100)
   };
+  rimLightColor?: string; // Optional rim-light override
   tickers: Ticker[];
 }
 
 export const COMMODITY_CLUSTERS: Record<CommodityType, CommodityCluster> = {
+  // TIER 1: Strategic Majors
   copper: {
     commodity: 'copper',
     name: 'Copper',
-    emoji: '🔴',
-    baseColor: { h: 0, s: 100, l: 45 }, // Red
+    emoji: '🧱',
+    tier: 'tier1',
+    baseColor: { h: 18, s: 85, l: 48 }, // Warm Rust (HSL from design spec)
+    rimLightColor: 'rgba(255, 120, 80, 0.4)',
     tickers: [
       {
         symbol: 'COPX',
@@ -38,6 +45,7 @@ export const COMMODITY_CLUSTERS: Record<CommodityType, CommodityCluster> = {
         sector: 'Mining',
         description: 'Pure-play copper mining exposure',
         colorOffset: 0,
+        tier: 'tier1',
       },
       {
         symbol: 'FCX',
@@ -46,6 +54,7 @@ export const COMMODITY_CLUSTERS: Record<CommodityType, CommodityCluster> = {
         sector: 'Mining',
         description: 'World largest copper miner',
         colorOffset: 0.15,
+        tier: 'tier1',
       },
       {
         symbol: 'SCCO',
@@ -54,6 +63,7 @@ export const COMMODITY_CLUSTERS: Record<CommodityType, CommodityCluster> = {
         sector: 'Mining',
         description: 'Major Latin American copper producer',
         colorOffset: 0.3,
+        tier: 'tier1',
       },
       {
         symbol: 'BHP',
@@ -62,6 +72,7 @@ export const COMMODITY_CLUSTERS: Record<CommodityType, CommodityCluster> = {
         sector: 'Mining',
         description: 'Diversified mining company',
         colorOffset: 0.45,
+        tier: 'tier1',
       },
       {
         symbol: 'GLDRX',
@@ -70,47 +81,7 @@ export const COMMODITY_CLUSTERS: Record<CommodityType, CommodityCluster> = {
         sector: 'Mining',
         description: 'Broad copper mining exposure',
         colorOffset: 0.6,
-      },
-    ],
-  },
-
-  uranium: {
-    commodity: 'uranium',
-    name: 'Uranium & Nuclear',
-    emoji: '☢️',
-    baseColor: { h: 120, s: 100, l: 45 }, // Green
-    tickers: [
-      {
-        symbol: 'URA',
-        name: 'Global X Uranium ETF',
-        type: 'etf',
-        sector: 'Energy',
-        description: 'Diversified uranium producer exposure',
-        colorOffset: 0,
-      },
-      {
-        symbol: 'UUUU',
-        name: 'Energy Fuels Inc.',
-        type: 'stock',
-        sector: 'Energy',
-        description: 'US uranium and rare earth producer',
-        colorOffset: 0.25,
-      },
-      {
-        symbol: 'CCJ',
-        name: 'Cameco Corporation',
-        type: 'stock',
-        sector: 'Energy',
-        description: 'Canadian uranium leader',
-        colorOffset: 0.5,
-      },
-      {
-        symbol: 'DNN',
-        name: 'Denison Mines',
-        type: 'stock',
-        sector: 'Energy',
-        description: 'Mid-tier uranium producer',
-        colorOffset: 0.75,
+        tier: 'tier1',
       },
     ],
   },
@@ -118,8 +89,10 @@ export const COMMODITY_CLUSTERS: Record<CommodityType, CommodityCluster> = {
   gold: {
     commodity: 'gold',
     name: 'Gold',
-    emoji: '🟨',
-    baseColor: { h: 45, s: 100, l: 50 }, // Gold/Yellow
+    emoji: '💛',
+    tier: 'tier1',
+    baseColor: { h: 38, s: 90, l: 52 }, // Rich Amber
+    rimLightColor: 'rgba(255, 200, 100, 0.4)',
     tickers: [
       {
         symbol: 'GLD',
@@ -128,6 +101,7 @@ export const COMMODITY_CLUSTERS: Record<CommodityType, CommodityCluster> = {
         sector: 'Precious Metals',
         description: 'Physical gold ETF',
         colorOffset: 0,
+        tier: 'tier1',
       },
       {
         symbol: 'GFI',
@@ -136,6 +110,7 @@ export const COMMODITY_CLUSTERS: Record<CommodityType, CommodityCluster> = {
         sector: 'Mining',
         description: 'Multi-region gold producer',
         colorOffset: 0.2,
+        tier: 'tier1',
       },
       {
         symbol: 'NEM',
@@ -144,6 +119,7 @@ export const COMMODITY_CLUSTERS: Record<CommodityType, CommodityCluster> = {
         sector: 'Mining',
         description: 'World leading gold producer',
         colorOffset: 0.4,
+        tier: 'tier1',
       },
       {
         symbol: 'GDMK',
@@ -152,81 +128,66 @@ export const COMMODITY_CLUSTERS: Record<CommodityType, CommodityCluster> = {
         sector: 'Mining',
         description: 'Gold mining companies',
         colorOffset: 0.6,
+        tier: 'tier1',
       },
     ],
   },
 
-  silver: {
-    commodity: 'silver',
-    name: 'Silver',
-    emoji: '⚪',
-    baseColor: { h: 200, s: 30, l: 75 }, // Silver/Light Gray
+  uranium: {
+    commodity: 'uranium',
+    name: 'Nuclear',
+    emoji: '☢️',
+    tier: 'tier1',
+    baseColor: { h: 110, s: 80, l: 48 }, // Reactor Lime
+    rimLightColor: 'rgba(150, 255, 100, 0.4)',
     tickers: [
       {
-        symbol: 'SLV',
-        name: 'iShares Silver Trust',
+        symbol: 'URA',
+        name: 'Global X Uranium ETF',
         type: 'etf',
-        sector: 'Precious Metals',
-        description: 'Physical silver ETF',
+        sector: 'Energy',
+        description: 'Diversified uranium producer exposure',
         colorOffset: 0,
+        tier: 'tier1',
       },
       {
-        symbol: 'PAAS',
-        name: 'Pan American Silver',
+        symbol: 'UUUU',
+        name: 'Energy Fuels Inc.',
         type: 'stock',
-        sector: 'Mining',
-        description: 'Primary and secondary silver producer',
-        colorOffset: 0.33,
+        sector: 'Energy',
+        description: 'US uranium and rare earth producer',
+        colorOffset: 0.25,
+        tier: 'tier1',
       },
       {
-        symbol: 'MAG',
-        name: 'Mag Silver Corp',
+        symbol: 'CCJ',
+        name: 'Cameco Corporation',
         type: 'stock',
-        sector: 'Mining',
-        description: 'Luxury primary silver producer',
-        colorOffset: 0.66,
+        sector: 'Energy',
+        description: 'Canadian uranium leader',
+        colorOffset: 0.5,
+        tier: 'tier1',
+      },
+      {
+        symbol: 'DNN',
+        name: 'Denison Mines',
+        type: 'stock',
+        sector: 'Energy',
+        description: 'Mid-tier uranium producer',
+        colorOffset: 0.75,
+        tier: 'tier1',
       },
     ],
   },
 
-  nickel: {
-    commodity: 'nickel',
-    name: 'Nickel',
-    emoji: '🔧',
-    baseColor: { h: 280, s: 80, l: 45 }, // Purple
-    tickers: [
-      {
-        symbol: 'LIHD',
-        name: 'Global X Lithium & Battery Tech',
-        type: 'etf',
-        sector: 'Battery Materials',
-        description: 'Battery materials including nickel',
-        colorOffset: 0,
-      },
-      {
-        symbol: 'GLO',
-        name: 'Glencore plc',
-        type: 'stock',
-        sector: 'Mining',
-        description: 'Diversified miner with nickel exposure',
-        colorOffset: 0.33,
-      },
-      {
-        symbol: 'TECK',
-        name: 'Teck Resources',
-        type: 'stock',
-        sector: 'Mining',
-        description: 'Major metals producer',
-        colorOffset: 0.66,
-      },
-    ],
-  },
-
+  // TIER 2: Energy & Battery
   lithium: {
     commodity: 'lithium',
     name: 'Lithium',
     emoji: '🔋',
-    baseColor: { h: 60, s: 80, l: 45 }, // Lime/Yellow-Green
+    tier: 'tier2',
+    baseColor: { h: 270, s: 70, l: 52 }, // Twilight Violet
+    rimLightColor: 'rgba(200, 150, 255, 0.4)',
     tickers: [
       {
         symbol: 'LIT',
@@ -235,6 +196,7 @@ export const COMMODITY_CLUSTERS: Record<CommodityType, CommodityCluster> = {
         sector: 'Battery Materials',
         description: 'Pure-play lithium exposure',
         colorOffset: 0,
+        tier: 'tier2',
       },
       {
         symbol: 'ALB',
@@ -243,6 +205,7 @@ export const COMMODITY_CLUSTERS: Record<CommodityType, CommodityCluster> = {
         sector: 'Materials',
         description: 'Leading lithium producer',
         colorOffset: 0.25,
+        tier: 'tier2',
       },
       {
         symbol: 'SQM',
@@ -251,6 +214,7 @@ export const COMMODITY_CLUSTERS: Record<CommodityType, CommodityCluster> = {
         sector: 'Materials',
         description: 'Chilean lithium leader',
         colorOffset: 0.5,
+        tier: 'tier2',
       },
       {
         symbol: 'LAC',
@@ -259,56 +223,160 @@ export const COMMODITY_CLUSTERS: Record<CommodityType, CommodityCluster> = {
         sector: 'Mining',
         description: 'Development-stage lithium producer',
         colorOffset: 0.75,
+        tier: 'tier2',
       },
     ],
   },
 
-  cobalt: {
-    commodity: 'cobalt',
-    name: 'Cobalt',
-    emoji: '🔵',
-    baseColor: { h: 240, s: 100, l: 45 }, // Blue
+  aluminum: {
+    commodity: 'aluminum',
+    name: 'Aluminum',
+    emoji: '✈️',
+    tier: 'tier2',
+    baseColor: { h: 200, s: 50, l: 60 }, // Industrial Silver-Blue
+    rimLightColor: 'rgba(150, 200, 255, 0.4)',
     tickers: [
       {
-        symbol: 'LIHD',
-        name: 'Global X Lithium & Battery Tech',
-        type: 'etf',
-        sector: 'Battery Materials',
-        description: 'Battery materials including cobalt',
-        colorOffset: 0,
-      },
-      {
-        symbol: 'EME',
-        name: 'Endeavour Mining',
+        symbol: 'AA',
+        name: 'Alcoa Corporation',
         type: 'stock',
         sector: 'Mining',
-        description: 'Gold and cobalt exposure',
-        colorOffset: 0.5,
+        description: 'Largest US aluminum producer',
+        colorOffset: 0,
+        tier: 'tier2',
+      },
+      {
+        symbol: 'CENOF',
+        name: 'Century Aluminum',
+        type: 'stock',
+        sector: 'Mining',
+        description: 'US-based aluminum producer',
+        colorOffset: 0.33,
+        tier: 'tier2',
+      },
+      {
+        symbol: 'ALUMEN',
+        name: 'Aluminum ETF',
+        type: 'etf',
+        sector: 'Materials',
+        description: 'Diversified aluminum exposure',
+        colorOffset: 0.66,
+        tier: 'tier2',
       },
     ],
   },
 
-  palladium: {
-    commodity: 'palladium',
-    name: 'Palladium',
-    emoji: '🟦',
-    baseColor: { h: 220, s: 70, l: 50 }, // Steel Blue
+  // TIER 3: Precious & Specialty
+  silver: {
+    commodity: 'silver',
+    name: 'Silver',
+    emoji: '⚪',
+    tier: 'tier3',
+    baseColor: { h: 210, s: 35, l: 68 }, // Moonlit Pewter
+    rimLightColor: 'rgba(200, 220, 255, 0.3)',
     tickers: [
       {
-        symbol: 'PALL',
-        name: 'iShares Palladium Trust',
+        symbol: 'SLV',
+        name: 'iShares Silver Trust',
         type: 'etf',
         sector: 'Precious Metals',
-        description: 'Physical palladium ETF',
+        description: 'Physical silver ETF',
         colorOffset: 0,
+        tier: 'tier3',
       },
       {
-        symbol: 'RYA',
-        name: 'Royal Palladium',
+        symbol: 'PAAS',
+        name: 'Pan American Silver',
+        type: 'stock',
+        sector: 'Mining',
+        description: 'Primary and secondary silver producer',
+        colorOffset: 0.33,
+        tier: 'tier3',
+      },
+      {
+        symbol: 'MAG',
+        name: 'Mag Silver Corp',
+        type: 'stock',
+        sector: 'Mining',
+        description: 'Luxury primary silver producer',
+        colorOffset: 0.66,
+        tier: 'tier3',
+      },
+    ],
+  },
+
+  nickel: {
+    commodity: 'nickel',
+    name: 'Nickel',
+    emoji: '🔧',
+    tier: 'tier3',
+    baseColor: { h: 190, s: 60, l: 48 }, // Ocean Teal
+    rimLightColor: 'rgba(100, 200, 220, 0.4)',
+    tickers: [
+      {
+        symbol: 'GLO',
+        name: 'Glencore plc',
+        type: 'stock',
+        sector: 'Mining',
+        description: 'Diversified miner with nickel exposure',
+        colorOffset: 0,
+        tier: 'tier3',
+      },
+      {
+        symbol: 'TECK',
+        name: 'Teck Resources',
+        type: 'stock',
+        sector: 'Mining',
+        description: 'Major metals producer with nickel',
+        colorOffset: 0.33,
+        tier: 'tier3',
+      },
+      {
+        symbol: 'NICK',
+        name: 'Nickel Mining ETF',
         type: 'etf',
-        sector: 'Precious Metals',
-        description: 'Palladium-focused exposure',
-        colorOffset: 0.5,
+        sector: 'Mining',
+        description: 'Diversified nickel producer exposure',
+        colorOffset: 0.66,
+        tier: 'tier3',
+      },
+    ],
+  },
+
+  zinc: {
+    commodity: 'zinc',
+    name: 'Zinc',
+    emoji: '⚙️',
+    tier: 'tier3',
+    baseColor: { h: 240, s: 75, l: 45 }, // Deep Indigo
+    rimLightColor: 'rgba(120, 150, 255, 0.4)',
+    tickers: [
+      {
+        symbol: 'ZH',
+        name: 'Zinc Producers ETF',
+        type: 'etf',
+        sector: 'Mining',
+        description: 'Diversified zinc producer exposure',
+        colorOffset: 0,
+        tier: 'tier3',
+      },
+      {
+        symbol: 'TECK',
+        name: 'Teck Resources',
+        type: 'stock',
+        sector: 'Mining',
+        description: 'Major zinc + copper producer',
+        colorOffset: 0.33,
+        tier: 'tier3',
+      },
+      {
+        symbol: 'ANTM',
+        name: 'Antam',
+        type: 'stock',
+        sector: 'Mining',
+        description: 'Indonesian zinc and nickel miner',
+        colorOffset: 0.66,
+        tier: 'tier3',
       },
     ],
   },
