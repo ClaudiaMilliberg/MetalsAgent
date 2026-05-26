@@ -53,13 +53,23 @@ export default function BubbleMap({ commodities = mockCommodities }: { commoditi
         className="w-full h-full"
         style={{ backgroundColor: 'transparent' }}
       >
-        {/* Grid background */}
+        {/* Grid background with depth */}
         <defs>
           <pattern id="grid" width="100" height="100" patternUnits="userSpaceOnUse">
-            <path d="M 100 0 L 0 0 0 100" fill="none" stroke="#374151" strokeWidth="0.5" opacity="0.2" />
+            <path d="M 100 0 L 0 0 0 100" fill="none" stroke="#374151" strokeWidth="0.5" opacity="0.15" />
           </pattern>
+          <pattern id="grid-major" width="400" height="400" patternUnits="userSpaceOnUse">
+            <path d="M 400 0 L 0 0 0 400" fill="none" stroke="#475569" strokeWidth="1" opacity="0.1" />
+          </pattern>
+          <linearGradient id="grid-fade" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor="rgba(59, 130, 246, 0.05)" />
+            <stop offset="50%" stopColor="transparent" />
+            <stop offset="100%" stopColor="rgba(147, 51, 234, 0.05)" />
+          </linearGradient>
         </defs>
+        <rect width="1000" height="600" fill="url(#grid-major)" />
         <rect width="1000" height="600" fill="url(#grid)" />
+        <rect width="1000" height="600" fill="url(#grid-fade)" />
 
         {/* Bubbles */}
         {commodities.map((commodity) => {

@@ -256,6 +256,56 @@ select:focus {
     font-family: 'Monaco', 'Courier New', monospace;
     letter-spacing: -0.02em;
   }
+
+  /* ====== ADVANCED GLOW & DEPTH ====== */
+
+  .glow-pulse-blue {
+    animation: glow-pulse 2s ease-in-out infinite;
+  }
+
+  .glow-pulse-green {
+    animation: glow-pulse-green 2s ease-in-out infinite;
+  }
+
+  .shadow-depth {
+    box-shadow:
+      0 20px 25px -5px rgba(0, 0, 0, 0.4),
+      0 10px 10px -5px rgba(0, 0, 0, 0.2);
+  }
+
+  .shadow-depth-lg {
+    box-shadow:
+      0 25px 50px -12px rgba(0, 0, 0, 0.5),
+      0 15px 20px -10px rgba(0, 0, 0, 0.3);
+  }
+
+  /* ====== KEYFRAME ANIMATIONS ====== */
+
+  @keyframes glow-pulse {
+    0%, 100% {
+      box-shadow:
+        0 0 20px rgba(59, 130, 246, 0.2),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+    }
+    50% {
+      box-shadow:
+        0 0 40px rgba(59, 130, 246, 0.4),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+    }
+  }
+
+  @keyframes glow-pulse-green {
+    0%, 100% {
+      box-shadow:
+        0 0 20px rgba(16, 185, 129, 0.2),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+    }
+    50% {
+      box-shadow:
+        0 0 40px rgba(16, 185, 129, 0.4),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+    }
+  }
 }
 
 /* ====== REDUCED MOTION SUPPORT ====== */

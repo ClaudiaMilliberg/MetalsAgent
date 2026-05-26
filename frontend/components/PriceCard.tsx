@@ -159,8 +159,17 @@ export default function PriceCard({
         </div>
       </div>
 
-      {/* Hover effect - subtle shimmer animation */}
-      <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-blue-500/0 via-blue-500/5 to-blue-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+      {/* Hover effect - shimmer animation */}
+      <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-blue-500/0 via-white/10 to-blue-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none animate-shimmer"></div>
+
+      {/* Hover glow effect */}
+      <div
+        className="absolute -inset-4 rounded-xl opacity-0 group-hover:opacity-30 transition-opacity duration-500 pointer-events-none blur-xl"
+        style={{
+          backgroundColor: colors.bg,
+          opacity: 0,
+        }}
+      ></div>
     </div>
   );
 }
