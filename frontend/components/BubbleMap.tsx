@@ -261,28 +261,34 @@ export default function BubbleMap({ commodities = mockCommodities }: { commoditi
         >
           {commodities.find((c) => c.id === hoveredBubble) && (
             <div className="space-y-5">
-              {/* Header */}
-              <div className="flex items-start justify-between pb-4 border-b border-white/10">
+              {/* Header with Enhanced Typography */}
+              <div className="flex items-start justify-between pb-5 border-b border-white/15">
                 <div>
-                  <h3 className="text-xl font-bold text-white mb-1">
+                  <h3 className="text-2xl font-black text-white mb-1 bg-clip-text">
                     {commodities.find((c) => c.id === hoveredBubble)?.name}
                   </h3>
-                  <p className="text-xs text-gray-400 uppercase tracking-widest">
+                  <p className="text-xs text-gray-500 uppercase tracking-widest font-semibold">
                     {commodities.find((c) => c.id === hoveredBubble)?.symbol}
                   </p>
                 </div>
-                <span className="text-4xl">
+                <span className="text-5xl opacity-90">
                   {commodities.find((c) => c.id === hoveredBubble)?.emoji}
                 </span>
               </div>
 
-              {/* Price - Dominant */}
-              <div>
-                <p className="text-xs text-gray-500 uppercase tracking-widest mb-2">Current Price</p>
-                <p className="text-3xl font-black text-white font-mono tracking-tight">
+              {/* Price - Dominant (5-6xl for premium feel) */}
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1, duration: 0.3 }}
+              >
+                <p className="text-xs text-gray-600 uppercase tracking-wider mb-3 font-semibold">Current Price</p>
+                <p className="text-6xl font-black text-white font-mono tracking-tighter" style={{
+                  textShadow: '0 2px 8px rgba(59, 130, 246, 0.2)'
+                }}>
                   ${commodities.find((c) => c.id === hoveredBubble)?.currentPrice.toFixed(2)}
                 </p>
-              </div>
+              </motion.div>
 
               {/* Change */}
               <div>
