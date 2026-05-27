@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server';
 import { fetchAllMetalPrices } from '@/lib/metals-live';
 import { fetchFuturesPrice } from '@/lib/yahoo-finance';
 
+export const dynamic = 'force-dynamic';
+
 // Commodity prices from metals.live
 const getPrices = async () => {
   try {

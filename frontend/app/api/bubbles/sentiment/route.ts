@@ -3,6 +3,8 @@ import { fetchRedditCommodityPosts, findCommodityMentions } from '@/lib/reddit';
 import { fetchCommodityNews } from '@/lib/gdelt';
 import { fetchMetalPrice } from '@/lib/metals-live';
 
+export const dynamic = 'force-dynamic';
+
 // Real sentiment data - aggregate from Reddit + News + GDELT
 const getRealSentiment = async () => {
   const commodities = [

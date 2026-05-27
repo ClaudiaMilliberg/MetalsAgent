@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 import { getSentimentOnly } from '@/lib/dataService';
 
+export const dynamic = 'force-dynamic';
+
 /**
  * GET /api/commodities/sentiment
  *

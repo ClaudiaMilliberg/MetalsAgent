@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 import { getPricesOnly, getInfrastructureProjects } from '@/lib/dataService';
 
+export const dynamic = 'force-dynamic';
+
 /**
  * GET /api/commodities/live
  *

@@ -4,6 +4,8 @@ import { fetchCommodityNews } from '@/lib/gdelt';
 import { fetchMetalPrice } from '@/lib/metals-live';
 import { COMMODITY_CLUSTERS, CommodityType } from '@/lib/commodity-tickers';
 
+export const dynamic = 'force-dynamic';
+
 interface TickerData {
   ticker: {
     symbol: string;
