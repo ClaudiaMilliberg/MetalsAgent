@@ -14,9 +14,19 @@
   --color-bullish: #10B981;
   --color-bearish: #EF4444;
   --color-neutral: #F59E0B;
-  --color-primary: #0F172A;
+  --color-primary: #0a0e1a;
   --color-secondary: #E2E8F0;
   --color-accent: #06B6D4;
+
+  /* Neon commodity colors */
+  --color-copper: #f97316;
+  --color-gold: #eab308;
+  --color-uranium: #06b6d4;
+  --color-lithium: #84cc16;
+  --color-palladium: #a855f7;
+  --color-nickel: #ec4899;
+  --color-silver: #f0f9ff;
+  --color-aluminum: #22d3ee;
 
   /* Typography system */
   --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -39,7 +49,12 @@ html {
 }
 
 body {
-  background-color: var(--color-primary);
+  background:
+    radial-gradient(ellipse 80% 40% at 50% -10%, rgba(168, 85, 247, 0.05) 0%, transparent 50%),
+    radial-gradient(ellipse 60% 50% at 20% 60%, rgba(6, 182, 212, 0.03) 0%, transparent 40%),
+    radial-gradient(ellipse 70% 60% at 80% 70%, rgba(249, 115, 22, 0.02) 0%, transparent 50%),
+    linear-gradient(135deg, #0a0e1a 0%, #0f1329 100%);
+  background-attachment: fixed;
   color: var(--color-secondary);
   font-family: var(--font-sans);
   font-weight: var(--fw-regular);

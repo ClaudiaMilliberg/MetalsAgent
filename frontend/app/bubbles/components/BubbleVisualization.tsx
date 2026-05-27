@@ -79,18 +79,42 @@ export default function BubbleVisualization({ commodities, selectedCommodity, on
       }
     };
 
-    const glowColor = (glow: string) => {
+    const glowColor = (glow: string, intensity: number = 1) => {
+      const alpha = 0.4 * intensity;
       switch (glow) {
         case 'orange':
-          return 'rgba(249,115,22,0.4)';
+          return `rgba(249,115,22,${alpha})`;
         case 'blue':
-          return 'rgba(59,130,246,0.4)';
+          return `rgba(59,130,246,${alpha})`;
         case 'purple':
-          return 'rgba(168,85,247,0.4)';
+          return `rgba(168,85,247,${alpha})`;
         case 'white':
-          return 'rgba(255,255,255,0.2)';
+          return `rgba(255,255,255,${0.2 * intensity})`;
+        case 'yellow':
+          return `rgba(234,179,8,${alpha})`;
+        case 'cyan':
+          return `rgba(6,182,212,${alpha})`;
         default:
-          return 'rgba(100,116,139,0.2)';
+          return `rgba(100,116,139,${0.2 * intensity})`;
+      }
+    };
+
+    const getNeonColor = (glow: string) => {
+      switch (glow) {
+        case 'orange':
+          return '#f97316';
+        case 'blue':
+          return '#3b82f6';
+        case 'purple':
+          return '#a855f7';
+        case 'white':
+          return '#f0f9ff';
+        case 'yellow':
+          return '#eab308';
+        case 'cyan':
+          return '#06b6d4';
+        default:
+          return '#64748b';
       }
     };
 
@@ -120,41 +144,78 @@ export default function BubbleVisualization({ commodities, selectedCommodity, on
         const isSelected = selectedCommodity?.id === bubble.commodity.id;
         const scale = isSelected ? 1.3 : 1;
         const actualRadius = bubble.radius * scale;
+        const glowIntensity = isSelected ? 2 : 1;
 
-        // Draw glow
-        const glowRadius = actualRadius + 10;
-        const gradient = ctx.createRadialGradient(bubble.x, bubble.y, actualRadius, bubble.x, bubble.y, glowRadius);
-        gradient.addColorStop(0, glowColor(bubble.commodity.glow));
-        gradient.addColorStop(1, 'rgba(0,0,0,0)');
-        ctx.fillStyle = gradient;
+        // 7-LAYER GLOW EFFECT
+        // Layer 1-3: Outer soft glow bloom
+        for (let i = 3; i >= 1; i--) {
+          const bloomRadius = actualRadius + 30 * i;
+          const bloomGradient = ctx.createRadialGradient(bubble.x, bubble.y, actualRadius + 20 * (i - 1), bubble.x, bubble.y, bloomRadius);
+          bloomGradient.addColorStop(0, glowColor(bubble.commodity.glow, glowIntensity * (0.3 / i)));
+          bloomGradient.addColorStop(1, 'rgba(0,0,0,0)');
+          ctx.fillStyle = bloomGradient;
+          ctx.beginPath();
+          ctx.arc(bubble.x, bubble.y, bloomRadius, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        // Layer 4: Mid glow halo
+        const midGlowRadius = actualRadius + 15;
+        const midGradient = ctx.createRadialGradient(bubble.x, bubble.y, actualRadius, bubble.x, bubble.y, midGlowRadius);
+        midGradient.addColorStop(0, glowColor(bubble.commodity.glow, glowIntensity * 0.6));
+        midGradient.addColorStop(1, glowColor(bubble.commodity.glow, 0.1));
+        ctx.fillStyle = midGradient;
         ctx.beginPath();
-        ctx.arc(bubble.x, bubble.y, glowRadius, 0, Math.PI * 2);
+        ctx.arc(bubble.x, bubble.y, midGlowRadius, 0, Math.PI * 2);
         ctx.fill();
 
-        // Draw bubble
+        // Layer 5: Core bubble with sentiment color
         ctx.fillStyle = sentimentColor(bubble.commodity.sentiment);
+        ctx.shadowColor = glowColor(bubble.commodity.glow, glowIntensity);
+        ctx.shadowBlur = isSelected ? 25 : 15;
+        ctx.beginPath();
+        ctx.arc(bubble.x, bubble.y, actualRadius, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.shadowColor = 'transparent';
+
+        // Layer 6: Inner highlight (white core glow)
+        const highlightGradient = ctx.createRadialGradient(
+          bubble.x - actualRadius * 0.3,
+          bubble.y - actualRadius * 0.3,
+          0,
+          bubble.x,
+          bubble.y,
+          actualRadius
+        );
+        highlightGradient.addColorStop(0, 'rgba(255,255,255,0.3)');
+        highlightGradient.addColorStop(1, 'rgba(255,255,255,0)');
+        ctx.fillStyle = highlightGradient;
         ctx.beginPath();
         ctx.arc(bubble.x, bubble.y, actualRadius, 0, Math.PI * 2);
         ctx.fill();
 
-        // Draw border for selected
+        // Layer 7: Selected state glow ring
         if (isSelected) {
-          ctx.strokeStyle = '#fff';
-          ctx.lineWidth = 3;
+          ctx.strokeStyle = getNeonColor(bubble.commodity.glow);
+          ctx.lineWidth = 4;
+          ctx.globalAlpha = 0.8;
+          ctx.beginPath();
+          ctx.arc(bubble.x, bubble.y, actualRadius + 5, 0, Math.PI * 2);
           ctx.stroke();
+          ctx.globalAlpha = 1;
         }
 
-        // Draw commodity name
-        ctx.fillStyle = '#fff';
-        ctx.font = 'bold 12px Arial';
+        // Draw commodity name (bold, larger)
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 14px JetBrains Mono, monospace';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
-        ctx.fillText(bubble.commodity.name, bubble.x, bubble.y - 5);
+        ctx.fillText(bubble.commodity.name.toUpperCase(), bubble.x, bubble.y - 6);
 
-        // Draw price
-        ctx.font = '10px Arial';
-        ctx.fillStyle = '#e2e8f0';
-        ctx.fillText(`$${bubble.commodity.price.toFixed(0)}`, bubble.x, bubble.y + 8);
+        // Draw price (monospace, larger)
+        ctx.font = 'bold 12px JetBrains Mono, monospace';
+        ctx.fillStyle = getNeonColor(bubble.commodity.glow);
+        ctx.fillText(`$${bubble.commodity.price.toFixed(2)}`, bubble.x, bubble.y + 8);
       });
 
       requestAnimationFrame(animate);

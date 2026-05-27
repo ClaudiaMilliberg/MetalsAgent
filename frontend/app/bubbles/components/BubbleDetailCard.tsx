@@ -1,5 +1,7 @@
 'use client';
 
+import { motion } from 'framer-motion';
+
 interface Commodity {
   id: string;
   name: string;
@@ -33,12 +35,26 @@ export default function BubbleDetailCard({ commodity }: { commodity: Commodity }
   }[commodity.sentiment];
 
   return (
-    <div className={`rounded-lg border backdrop-blur-sm p-6 h-96 overflow-y-auto ${sentimentBg}`}>
+    <motion.div
+      initial={{ opacity: 0, y: 20, scale: 0.95 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      exit={{ opacity: 0, y: 20, scale: 0.95 }}
+      transition={{ duration: 0.4, ease: 'easeOut' }}
+      className={`rounded-2xl border backdrop-blur-2xl p-8 h-96 overflow-y-auto shadow-2xl transition-all duration-300
+        ${sentimentBg} border-white/20 bg-glass-dark`}
+    >
       {/* Header */}
-      <div className="mb-4 pb-4 border-b border-slate-600">
-        <h2 className="text-2xl font-bold text-white mb-2">{commodity.name}</h2>
-        <div className="flex items-baseline gap-3">
-          <p className="text-3xl font-bold text-white">${commodity.price.toFixed(2)}</p>
+      <div className="mb-6 pb-4 border-b border-white/10">
+        <motion.h2
+          className="text-3xl font-bold text-white mb-3"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.1 }}
+        >
+          {commodity.name.toUpperCase()}
+        </motion.h2>
+        <div className="flex items-baseline gap-4">
+          <p className="text-5xl font-bold text-white font-mono tracking-tight">${commodity.price.toFixed(2)}</p>
           <p className={`text-lg font-semibold ${commodity.change24h >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
             {commodity.change24h >= 0 ? '+' : ''}
             {commodity.change24h.toFixed(2)}%
@@ -47,22 +63,29 @@ export default function BubbleDetailCard({ commodity }: { commodity: Commodity }
       </div>
 
       {/* Sentiment */}
-      <div className="mb-4">
-        <p className={`text-sm font-semibold ${sentimentColor} uppercase mb-2`}>{commodity.sentiment}</p>
-        <div className="w-full bg-slate-700/50 rounded-full h-2">
-          <div
+      <motion.div
+        className="mb-6"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.2 }}
+      >
+        <p className={`text-xs font-bold ${sentimentColor} uppercase mb-3 tracking-widest`}>{commodity.sentiment}</p>
+        <div className="w-full bg-white/5 rounded-full h-3 overflow-hidden border border-white/10">
+          <motion.div
             className={`h-full rounded-full transition-all ${
               commodity.sentiment === 'bullish'
-                ? 'bg-emerald-500'
+                ? 'bg-emerald-500 shadow-lg shadow-emerald-500/50'
                 : commodity.sentiment === 'bearish'
-                ? 'bg-red-500'
-                : 'bg-amber-500'
+                ? 'bg-red-500 shadow-lg shadow-red-500/50'
+                : 'bg-amber-500 shadow-lg shadow-amber-500/50'
             }`}
-            style={{ width: `${commodity.score}%` }}
-          ></div>
+            initial={{ width: 0 }}
+            animate={{ width: `${commodity.score}%` }}
+            transition={{ delay: 0.3, duration: 0.8 }}
+          ></motion.div>
         </div>
-        <p className="text-xs text-slate-400 mt-1">Sentiment Score: {commodity.score.toFixed(0)}/100</p>
-      </div>
+        <p className="text-xs text-white/60 mt-2 font-mono">Score: {commodity.score.toFixed(0)}/100</p>
+      </motion.div>
 
       {/* Signal Breakdown */}
       <div className="mb-4 pb-4 border-b border-slate-600">
@@ -129,15 +152,20 @@ export default function BubbleDetailCard({ commodity }: { commodity: Commodity }
       )}
 
       {/* Demand & Confidence */}
-      <div className="text-xs text-slate-400 space-y-1">
+      <motion.div
+        className="text-xs text-white/70 space-y-2 font-mono"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.4 }}
+      >
         <p>
-          <span className="font-semibold text-slate-300">Demand:</span> {commodity.demand}
+          <span className="font-bold text-white/90">Demand:</span> {commodity.demand}
         </p>
         <p>
-          <span className="font-semibold text-slate-300">7-day Confidence:</span>{' '}
+          <span className="font-bold text-white/90">7-day Confidence:</span>{' '}
           {commodity.confidence.toFixed(0)}%
         </p>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 }
