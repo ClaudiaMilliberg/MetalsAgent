@@ -1,6 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { MessageCircle, Newspaper, Radio, Link as LinkIcon } from 'lucide-react';
+import { motion } from 'framer-motion';
 import BubbleVisualization from './components/BubbleVisualization';
 import BubbleDetailCard from './components/BubbleDetailCard';
 
@@ -220,50 +222,62 @@ export default function BubblesPage() {
           {/* Source Filter Row */}
           <div className="flex flex-wrap gap-2 sm:gap-2.5">
             <span className="text-xs text-gray-400 uppercase tracking-wider self-center font-semibold">Signals:</span>
-            <button
+            <motion.button
               onClick={() => setVisibleSources((v) => ({ ...v, reddit: !v.reddit }))}
-              className={`px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm font-semibold transition duration-300 ease-premium border touch-target ${
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className={`px-3 sm:px-4 py-2 sm:py-2.5 rounded-lg text-xs sm:text-sm font-semibold transition duration-300 ease-premium border flex items-center gap-2 touch-target ${
                 visibleSources.reddit
-                  ? 'bg-orange-600/50 text-orange-200 border-orange-500/50 shadow-lg shadow-orange-500/20'
+                  ? 'bg-orange-600/50 text-orange-200 border-orange-500/50 shadow-lg shadow-orange-500/30'
                   : 'bg-slate-800/50 text-slate-400 border-slate-700 hover:bg-slate-700/50'
               }`}
               title="Toggle Reddit signals"
             >
-              🔴 Reddit
-            </button>
-            <button
+              <MessageCircle size={16} />
+              <span className="hidden sm:inline">Reddit</span>
+            </motion.button>
+            <motion.button
               onClick={() => setVisibleSources((v) => ({ ...v, news: !v.news }))}
-              className={`px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm font-semibold transition duration-300 ease-premium border touch-target ${
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className={`px-3 sm:px-4 py-2 sm:py-2.5 rounded-lg text-xs sm:text-sm font-semibold transition duration-300 ease-premium border flex items-center gap-2 touch-target ${
                 visibleSources.news
-                  ? 'bg-white/20 text-white border-white/50 shadow-lg shadow-white/20'
+                  ? 'bg-white/20 text-white border-white/50 shadow-lg shadow-white/30'
                   : 'bg-slate-800/50 text-slate-400 border-slate-700 hover:bg-slate-700/50'
               }`}
               title="Toggle News signals"
             >
-              📰 News
-            </button>
-            <button
+              <Newspaper size={16} />
+              <span className="hidden sm:inline">News</span>
+            </motion.button>
+            <motion.button
               onClick={() => setVisibleSources((v) => ({ ...v, twitter: !v.twitter }))}
-              className={`px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm font-semibold transition duration-300 ease-premium border touch-target ${
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className={`px-3 sm:px-4 py-2 sm:py-2.5 rounded-lg text-xs sm:text-sm font-semibold transition duration-300 ease-premium border flex items-center gap-2 touch-target ${
                 visibleSources.twitter
-                  ? 'bg-blue-600/50 text-blue-200 border-blue-500/50 shadow-lg shadow-blue-500/20'
+                  ? 'bg-blue-600/50 text-blue-200 border-blue-500/50 shadow-lg shadow-blue-500/30'
                   : 'bg-slate-800/50 text-slate-400 border-slate-700 hover:bg-slate-700/50'
               }`}
               title="Toggle X/Twitter signals"
             >
-              𝕏 Twitter
-            </button>
-            <button
+              <Radio size={16} />
+              <span className="hidden sm:inline">Twitter</span>
+            </motion.button>
+            <motion.button
               onClick={() => setVisibleSources((v) => ({ ...v, onchain: !v.onchain }))}
-              className={`px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm font-semibold transition duration-300 ease-premium border touch-target ${
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className={`px-3 sm:px-4 py-2 sm:py-2.5 rounded-lg text-xs sm:text-sm font-semibold transition duration-300 ease-premium border flex items-center gap-2 touch-target ${
                 visibleSources.onchain
-                  ? 'bg-purple-600/50 text-purple-200 border-purple-500/50 shadow-lg shadow-purple-500/20'
+                  ? 'bg-purple-600/50 text-purple-200 border-purple-500/50 shadow-lg shadow-purple-500/30'
                   : 'bg-slate-800/50 text-slate-400 border-slate-700 hover:bg-slate-700/50'
               }`}
               title="Toggle On-chain signals"
             >
-              ⛓️ On-chain
-            </button>
+              <LinkIcon size={16} />
+              <span className="hidden sm:inline">On-chain</span>
+            </motion.button>
           </div>
         </div>
 
